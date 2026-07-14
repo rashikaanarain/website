@@ -12,9 +12,9 @@ Brand palette (given directly by the client, not sampled):
 
 | Token | Hex | Role |
 |---|---|---|
-| `--green` | `#30CF8C` | **Dominant accent — dark backgrounds only.** The logo-mark green. |
+| `--pink` | `#DA6EAA` | **Default / dominant accent.** Eyebrows, primary buttons on dark, stat figures, live dot, footer titles, hero highlight. No light/dark restriction. |
+| `--green` | `#30CF8C` | Optional **secondary** accent — **dark backgrounds only.** The logo-mark green. |
 | `--green-soft` | `#CCEBDE` | Pale tint of green. Soft backgrounds. |
-| `--pink` | `#DA6EAA` | Secondary accent. Eyebrow labels, chips, link hovers. No light/dark restriction. |
 | `--pink-soft` | `#F1D0E2` | Pale tint of pink. Section background tints. |
 | `--forest` | `#111F26` | Dark background **and** the light-background stand-in for green. |
 | `--forest-deep` | `#0A151A` | Darkest background (deep sections, footer accents). |
@@ -31,9 +31,11 @@ Warm neutrals (the paper base — unchanged from PUCAR):
 | `--muted` | `#8A7E6E` | Tertiary text, captions. |
 | `--line` | `rgba(36,30,26,0.12)` | Hairline borders. |
 
-### The one hard rule — green on dark only
+### Accent usage
 
-Bright `--green` (`#30CF8C`) **only ever sits on a dark background.** On cream it fails contrast (1.8:1; WCAG text needs 4.5:1). Anywhere you'd want "green" on a light surface, use `--forest` instead — same hue, dark, 11–12:1 contrast. Green is reserved for: dark-section eyebrows/stats, primary buttons on dark, footer accents.
+The **default accent is `--pink` (`#DA6EAA`)** — used for eyebrows, the primary button on dark sections, stat figures, the live-status dot, footer column titles, and the hero "10x" highlight. Pink has no light/dark restriction.
+
+`--green` (`#30CF8C`) is now an **optional secondary accent**. If you use it, it **only ever sits on a dark background** — on cream it fails contrast (1.8:1; WCAG text needs 4.5:1). On a light surface use `--forest` instead (same hue, dark, 11–12:1 contrast). Green is not used anywhere in the current homepage; the token is kept available.
 
 ---
 
@@ -76,8 +78,8 @@ Base `.btn`:
 }
 ```
 
-**Primary** — context-aware (this is the green-on-dark rule in action):
-- On a **dark** background: `background: var(--green); color: var(--ink);` hover → `#51D79E` (lighter green, keeps ink legible).
+**Primary** — context-aware:
+- On a **dark** background: `background: var(--pink); color: var(--ink);` hover → `#E58DBB` (lighter pink, keeps ink legible).
 - On a **light** background: `background: var(--forest); color: var(--paper);` hover → `#1C3540`.
 
 **Ghost / secondary:**
@@ -140,12 +142,12 @@ Solid **black** (`#000`), light text, three-part grid: blurb left, sitemap colum
 
 ```css
 .site-footer{ background:#000; color:rgba(251,248,242,.8); padding:64px clamp(20px,5vw,72px) 32px; }
-.footer-col-title{ font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--green); }
+.footer-col-title{ font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--pink); }
 .footer-col a{ font-size:.85rem; color:rgba(251,248,242,.72); }
 .footer-col a:hover{ color:var(--paper); }
 ```
 
-Note green is used for the small column titles here — legal, because the footer is dark.
+The small column titles use the pink accent (`--pink`).
 
 ---
 

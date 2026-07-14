@@ -70,13 +70,15 @@ The system is borrowed from the sibling **PUCAR** site ([pucar.netlify.app](http
 ```css
 --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;   /* warm neutrals */
 --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;        /* text */
---green:#30CF8C; --green-soft:#CCEBDE;                     /* dominant accent */
---pink:#DA6EAA; --pink-soft:#F1D0E2;                       /* secondary accent */
+--pink:#DA6EAA; --pink-soft:#F1D0E2;                       /* default accent */
+--green:#30CF8C; --green-soft:#CCEBDE;                     /* secondary (dark-bg only, unused) */
 --forest:#111F26; --forest-deep:#0A151A;                   /* dark backgrounds */
 --line:rgba(36,30,26,0.12);
 ```
 
-**The one rule you must not break:** bright `--green` (`#30CF8C`) **only ever appears on a dark background** — it fails contrast on cream (1.8:1). On light surfaces, use `--forest` instead (same hue, dark). In the code this is handled by the `.on-dark` class: sections/bands with `class="on-dark"` flip eyebrows, primary buttons, and accents to green; everywhere else they resolve to forest. So: **if you add a dark section, give it `class="on-dark"`; if you add a light one, don't.**
+**Default accent is `--pink` (`#DA6EAA`)** — eyebrows, the primary button on dark sections, stat figures, the live dot, footer titles, and the hero "10x" highlight. Pink works on both light and dark backgrounds.
+
+**The one rule you must not break:** if you ever use bright `--green` (`#30CF8C`), it **only appears on a dark background** — it fails contrast on cream (1.8:1). On light surfaces use `--forest` instead. Sections rendered dark carry `class="on-dark"`, which is what flips the primary button and accents correctly; light sections omit it. So: **if you add a dark section, give it `class="on-dark"`; if you add a light one, don't.** (Green is currently unused — pink is the accent everywhere.)
 
 **Type:** Fraunces (serif) for all headings/display; Source Sans 3 (sans) for body/UI. Loaded via Google Fonts `<link>` in the head. Headings use `--font-display`, weight 500, tight line-height.
 
