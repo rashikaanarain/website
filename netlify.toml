@@ -5,6 +5,11 @@
   publish = "dist"
   command = "bun run build"
 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 # Sensible security headers for a static site.
 [[headers]]
   for = "/*"
