@@ -1,10 +1,9 @@
 # Netlify configuration for the OpenNyAI website
-# Plain static site: index.html + assets/ at the repo root, no build step.
+# Bun + Vite site. Netlify installs from bun.lock and builds into dist.
 
 [build]
-  # Serve the repository root as-is (nothing to compile).
-  publish = "."
-  command = ""
+  publish = "dist"
+  command = "bun run build"
 
 # Sensible security headers for a static site.
 [[headers]]

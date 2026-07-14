@@ -1,6 +1,6 @@
 # OpenNyAI Website
 
-The marketing/homepage site for **OpenNyAI** — an Agami mission using AI and a community of justicemakers to solve long-stuck justice problems in India. This repository is a plain static website (hand-written HTML + CSS, no build step) deployed on Netlify.
+The marketing/homepage site for **OpenNyAI** — an Agami mission using AI and a community of justicemakers to solve long-stuck justice problems in India. The site is built with React and Vite, uses Bun for package management and scripts, and is deployed on Netlify.
 
 This README is a **handoff document**: everything a new contributor or agent needs to understand the project, run it, change it, and ship it. Two companion docs go deeper where noted:
 
@@ -11,17 +11,14 @@ This README is a **handoff document**: everything a new contributor or agent nee
 
 ## 1. Quick start
 
-There is **no build and no dependencies**. It's static files.
-
-To preview locally, either double-click `index.html` to open it in a browser, or serve the folder (nicer for correct asset paths):
+Install dependencies and start the Vite development server:
 
 ```bash
-cd ~/Documents/OpenNyAI/Website
-python3 -m http.server 8000
-# then open http://localhost:8000
+bun install
+bun run dev
 ```
 
-To edit: open `index.html` in any text editor. All CSS lives in one `<style>` block in the `<head>` — there is no separate stylesheet. All copy is inline in the HTML body.
+Vite prints the local URL, normally `http://localhost:5173`. Use `bun run build` for a production build and `bun run preview` to inspect that build locally.
 
 ---
 
@@ -29,18 +26,25 @@ To edit: open `index.html` in any text editor. All CSS lives in one `<style>` bl
 
 ```
 Website/
-├── index.html          # The homepage — all markup + all CSS (in <head>). This is the whole site.
+├── index.html          # Vite HTML shell and page metadata
+├── src/
+│   ├── App.jsx         # Homepage React markup and copy
+│   ├── main.jsx        # React entrypoint
+│   └── styles.css      # Design system and homepage styles
 ├── assets/
 │   ├── opennyai-logo.svg        # White logo — used on dark backgrounds (footer)
 │   ├── opennyai-logo-dark.svg   # Dark (ink) logo — used on the light header
 │   └── agami-logo.svg           # Parent-org logo (available for the ecosystem switcher)
-├── netlify.toml        # Netlify deploy config (publish root, no build, security headers)
+├── package.json        # Bun/Vite scripts and dependencies
+├── bun.lock            # Locked dependency graph
+├── vite.config.js      # Vite React configuration
+├── netlify.toml        # Netlify build, publish, security, and caching config
 ├── README.md           # This file
 ├── DESIGN_SYSTEM.md    # Design system reference
 └── context.md          # Org strategy, mission, and messaging source-of-truth
 ```
 
-That's the entire site: one HTML file plus three SVGs. Keep it that way unless there's a strong reason to add tooling — the simplicity is deliberate.
+The site intentionally remains a small single-page React app without a router or additional state library.
 
 ---
 
@@ -78,7 +82,7 @@ The system is borrowed from the sibling **PUCAR** site ([pucar.netlify.app](http
 
 **Default accent is `--pink` (`#DA6EAA`)** — eyebrows, the primary button on dark sections, stat figures, the live dot, footer titles, and the hero "10x" highlight. Pink works on both light and dark backgrounds.
 
-**The one rule you must not break:** if you ever use bright `--green` (`#30CF8C`), it **only appears on a dark background** — it fails contrast on cream (1.8:1). On light surfaces use `--forest` instead. Sections rendered dark carry `class="on-dark"`, which is what flips the primary button and accents correctly; light sections omit it. So: **if you add a dark section, give it `class="on-dark"`; if you add a light one, don't.** (Green is currently unused — pink is the accent everywhere.)
+**The one rule you must not break:** if you ever use bright `--green` (`#30CF8C`), it **only appears on a dark background** — it fails contrast on cream (1.8:1). On light surfaces use `--forest` instead. Sections rendered dark carry `className="on-dark"`, which is what flips the primary button and accents correctly; light sections omit it. So: **if you add a dark section, give it `className="on-dark"`; if you add a light one, don't.** (Green is currently unused — pink is the accent everywhere.)
 
 **Type:** Fraunces (serif) for all headings/display; Source Sans 3 (sans) for body/UI. Loaded via Google Fonts `<link>` in the head. Headings use `--font-display`, weight 500, tight line-height.
 
@@ -90,10 +94,10 @@ The system is borrowed from the sibling **PUCAR** site ([pucar.netlify.app](http
 
 ## 5. How to make common changes
 
-- **Edit copy:** find the text in `index.html` and change it in place.
-- **Add a light section:** copy an existing `<section class="section">` block; use `--forest` for any accent colour.
-- **Add a dark section:** copy a `<section class="section on-dark">` block; green accents are then allowed and automatic.
-- **Add a nav item:** add an `<a>` inside `<nav class="site-nav">`, pointing to a section `#id`.
+- **Edit copy:** find the text in `src/App.jsx` and change it in place.
+- **Add a light section:** copy an existing `<section className="section">` block; use `--forest` for any accent colour.
+- **Add a dark section:** copy a `<section className="section on-dark">` block; green accents are then allowed and automatic.
+- **Add a nav item:** add an `<a>` inside `<nav className="site-nav">`, pointing to a section `#id`.
 - **Swap the logo:** replace the SVGs in `assets/`. Remember the header needs a *dark* logo (visible on cream) and the footer a *white* one.
 - **Change a colour globally:** edit the token in `:root` — it propagates everywhere.
 
@@ -105,7 +109,7 @@ Keep the "green-on-dark-only" rule intact and prefer the real token names (`--gr
 
 **Host:** Netlify, connected to this GitHub repo ([github.com/rashikaanarain/website](https://github.com/rashikaanarain/website)).
 
-The pipeline is automatic: **push to `main` → Netlify rebuilds and publishes within ~1 minute.** `netlify.toml` sets the publish directory to the repo root, no build command, plus security and caching headers. There is nothing to compile.
+The pipeline is automatic: **push to `main` → Netlify runs `bun run build` and publishes `dist`.** `netlify.toml` also configures security and caching headers.
 
 To deploy the first time (one-off), in the Netlify web UI: **Add new site → Import an existing project → Deploy with GitHub → select the `website` repo → Deploy** (defaults are correct because of `netlify.toml`).
 
@@ -124,7 +128,7 @@ Auth is via the GitHub CLI (`gh auth login`, browser-based) already configured o
 
 ## 7. Current state & next steps
 
-**Done:** homepage (`index.html`) live in the PUCAR design system; design-system and context docs written; Netlify config in place.
+**Done:** React homepage (`src/App.jsx`) live in the PUCAR design system; design-system and context docs written; Bun/Vite and Netlify builds configured.
 
 **Open items (see `context.md` §10 for detail):**
 
@@ -145,7 +149,7 @@ Auth is via the GitHub CLI (`gh auth login`, browser-based) already configured o
 
 ## 8. Conventions for future changes
 
-- Single HTML file, single `<style>` block — don't split into a framework or add a build step without good reason.
+- Keep the React app lightweight: avoid adding a router, state library, or other dependency without a concrete need.
 - Use CSS variables, never raw hex/px for themed values.
 - Never put bright green on a light background.
 - Write copy that is concrete and human (outcomes, real people) per `context.md`'s tone rules.
