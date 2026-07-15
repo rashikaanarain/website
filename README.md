@@ -49,7 +49,7 @@ That's the entire site: one HTML file plus three SVGs. Keep it that way unless t
 The homepage follows the structure of the current live site at [opennyai.org](https://opennyai.org/), re-skinned in the PUCAR design language, with copy updated toward the OpenNyAI 3.0 direction. Sections, in order:
 
 1. **Header** — pill nav (About / Approach / Missions / Participate) + "Join the Mission" CTA, with an ecosystem-switcher caret by the logo.
-2. **Hero** — "How can we 10x access to justice?" + a "bulletin board" panel showing live work (Big Bail Bash, wage recovery, "bring a stuck problem").
+2. **Hero** — "How can we 10x access to justice?" + a "bulletin board" panel showing live work (Big Bail Bash, wage recovery, "bring a stuck problem"). Behind it, a **muted, auto-looping YouTube clip** plays as background (YouTube IFrame API, `#heroPlayer`, script at the bottom of `index.html`), under a dark gradient (`.hero-overlay`) so the light hero text stays legible. Video id + start/end are constants (`HERO_START`/`HERO_END`) in that script. **Rights caveat:** the current clip is third-party (CNA Insider) embedded via YouTube's player; swap it for owned/licensed footage before a public launch.
 3. **About / Why we exist** — the community + AI + public-goods thesis (3 cards).
 4. **Approach** (dark section) — the 3-step model (find the stuck challenge → narrow the scope → solve it for real) + a stat row.
 5. **Missions** (dark) — OpenNyAI's place in the Agami ecosystem (Agami, PUCAR, Praani, ODR).
@@ -124,7 +124,9 @@ Auth is via the GitHub CLI (`gh auth login`, browser-based) already configured o
 
 ## 7. Current state & next steps
 
-**Done:** homepage (`index.html`) live in the PUCAR design system; design-system and context docs written; Netlify config in place.
+**Done:** homepage (`index.html`) live in the PUCAR design system; design-system and context docs written; Netlify config in place; hero background video wired up.
+
+**Version safety:** the approved baseline is the git tag **`v1-liked`** (the 10x hero + bulletin board + pink accent + inline signup). To return to it: `git checkout v1-liked -- .`. When a new version is approved, tag it (`v2-liked`, …). See `CLAUDE.md` for the full workflow.
 
 **Open items (see `context.md` §10 for detail):**
 
