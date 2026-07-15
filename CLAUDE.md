@@ -48,9 +48,9 @@ Netlify is connected to GitHub and auto-deploys: **push to `main` → live in ~1
 
 ## Hero background video
 
-The hero has a muted, auto-looping YouTube clip behind a dark gradient (`.hero-overlay`) with light text on top. Implemented with the YouTube IFrame API — a `<div id="heroPlayer">` inside `.hero-video`, and a `<script>` at the bottom of `index.html`. To change the clip, edit the constants in that script: `videoId`, `HERO_START`, `HERO_END` (seconds). Keep it **muted** (browsers block unmuted autoplay). Never download/rehost the video — embed via the official player only.
+The hero has a muted, auto-looping background video behind a dark gradient (`.hero-overlay`) with light text on top. It's a native `<video autoplay muted loop playsinline>` inside `.hero-video`, `object-fit:cover`. Source is OpenNyAI's own hosted file on its DigitalOcean CDN (`onmain.blr1.cdn.digitaloceanspaces.com/mainsite/main-on-hero-video-720-02.mp4` — the same clip the Framer prototype uses). To change it, edit the `<source src>`. Keep it **muted** (browsers block unmuted autoplay).
 
-**Rights caveat:** the current clip is third-party (CNA Insider). Swap for owned/licensed footage before any public launch.
+**Rights note:** the footage is snippets from a third-party documentary. Confirm licensing before any public launch.
 
 ## Git workflow & version safety
 
