@@ -203,6 +203,40 @@ a{ color:inherit; }
 @media (prefers-reduced-motion:reduce){ .js .reveal{ opacity:1 !important; transform:none !important; transition:none; } }
 .cta-band h2, .cta-band p, .signup input, .signup .btn{ transition:opacity .25s ease; }
 
+/* ---------- approach orchestration diagram ---------- */
+.orchestrate{ display:flex; align-items:stretch; justify-content:center; gap:0; flex-wrap:nowrap; margin:8px 0 26px; }
+.orch-node{
+  flex:0 0 auto; width:clamp(150px,23vw,200px); text-align:center;
+  background:rgba(251,248,242,.06); border:1px solid rgba(251,248,242,.14); border-radius:16px;
+  padding:22px 16px; position:relative; animation:floaty 5s ease-in-out infinite;
+}
+.orch-community{ animation-delay:0s; }
+.orch-problem{ animation-delay:1.4s; }
+.orch-ai{ background:rgba(48,207,140,.12); border-color:rgba(48,207,140,.42); animation-delay:.7s; }
+@keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-7px) } }
+.orch-ic{ width:46px; height:46px; margin:0 auto 12px; display:grid; place-items:center; border-radius:12px; background:rgba(251,248,242,.09); color:var(--paper); }
+.orch-ai .orch-ic{ color:var(--green); background:rgba(48,207,140,.16); }
+.orch-node b{ font-family:var(--font-display); font-weight:500; font-size:1.06rem; color:var(--paper); display:block; }
+.orch-node span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.4; color:rgba(251,248,242,.64); }
+.orch-ring{ position:absolute; inset:-7px; border-radius:19px; border:2px solid var(--green); opacity:.5; pointer-events:none; animation:ringPulse 2.6s ease-out infinite; }
+@keyframes ringPulse{ 0%{ transform:scale(1); opacity:.5 } 70%{ transform:scale(1.14); opacity:0 } 100%{ opacity:0 } }
+/* animated connector: a light travelling toward the AI hub */
+.orch-link{ flex:1 1 32px; min-width:28px; align-self:center; height:3px; border-radius:3px; overflow:hidden; background:rgba(251,248,242,.12); }
+.orch-link span{ display:block; height:100%; background:linear-gradient(90deg, transparent, var(--green), transparent); background-size:220% 100%; animation:flow 2.2s linear infinite; }
+.orch-link.rev span{ animation-direction:reverse; }
+@keyframes flow{ 0%{ background-position:120% 0 } 100%{ background-position:-120% 0 } }
+.orch-caption{ text-align:center; color:rgba(251,248,242,.72); margin:0 auto 40px; max-width:56ch; }
+@media (max-width:720px){
+  .orchestrate{ flex-direction:column; align-items:center; gap:14px; }
+  .orch-node{ width:min(320px,100%); }
+  .orch-link{ width:3px; height:26px; flex:0 0 auto; }
+  .orch-link span{ width:100%; background:linear-gradient(180deg, transparent, var(--green), transparent); background-size:100% 220%; animation:flowV 2.2s linear infinite; }
+}
+@keyframes flowV{ 0%{ background-position:0 120% } 100%{ background-position:0 -120% } }
+@media (prefers-reduced-motion:reduce){
+  .orch-node, .orch-ring, .orch-link span{ animation:none !important; }
+}
+
 /* collaborators / missions strip */
 .mission-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; }
 .mission{
@@ -279,7 +313,6 @@ a{ color:inherit; }
   <nav class="site-nav" aria-label="Primary">
     <a href="#about">About</a>
     <a href="#approach">Approach</a>
-    <a href="#participate">Problems</a>
     <a class="nav-cta" href="#join">Join the Mission</a>
   </nav>
   <button class="nav-burger" type="button" aria-label="Open menu">Menu
@@ -307,7 +340,7 @@ a{ color:inherit; }
     </div>
     <div class="board" aria-label="What we're working on now">
       <p class="board-label"><span class="board-live"></span>Live right now</p>
-      <a class="board-note" href="#participate">
+      <a class="board-note" href="#join">
         <b>Big Bail Bash</b>
         <span>Freeing undertrials already entitled to release under Section 479 BNSS.</span>
       </a>
@@ -315,7 +348,7 @@ a{ color:inherit; }
         <b>Wages recovered</b>
         <span>Helping workers claim unpaid wages the law already owes them.</span>
       </a>
-      <a class="board-note" href="#participate">
+      <a class="board-note" href="#join">
         <b>Safer internet for young girls</b>
         <span>Building AI-supported guidance, safeguards and reporting pathways for online safety.</span>
       </a>
@@ -359,6 +392,39 @@ a{ color:inherit; }
       <h2>We solve long-stuck justice problems — for a defined group of real people.</h2>
       <p>We start with problems that have stayed unresolved for too long. Then we narrow the scope, work with community and AI, and build a time-bound solution. As something real, for people who have been waiting long enough.</p>
     </div>
+
+    <div class="orchestrate reveal" aria-label="AI coordinating community and a stuck problem">
+      <div class="orch-node orch-community">
+        <div class="orch-ic">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M15.5 8.5a3 3 0 1 0-2-5.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16.5 14.2c2.6.4 4.5 2.6 4.5 5.8"/></svg>
+        </div>
+        <b>Community</b>
+        <span>Lawyers, students, paralegals &amp; technologists</span>
+      </div>
+
+      <div class="orch-link"><span></span></div>
+
+      <div class="orch-node orch-ai">
+        <span class="orch-ring"></span>
+        <div class="orch-ic">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <b>AI coordination</b>
+        <span>Discovery · templating · matching · tracking</span>
+      </div>
+
+      <div class="orch-link rev"><span></span></div>
+
+      <div class="orch-node orch-problem">
+        <div class="orch-ic">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <b>Stuck problem</b>
+        <span>A justice gap the law already favours</span>
+      </div>
+    </div>
+    <p class="orch-caption">AI coordinates the community against a stuck problem — and that becomes a repeatable, three-step play.</p>
+
     <div class="steps">
       <div class="step reveal">
         <div class="num">01</div>
@@ -384,38 +450,14 @@ a{ color:inherit; }
   </div>
 </section>
 
-<!-- ===== Problem statements ===== -->
-<section class="section" id="participate">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Problem Statements</span>
-      <h2>Justice problems that can be solved right now</h2>
-    </div>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Bail for the Automatically Eligible</h3>
-        <p>Identify people who are legally eligible for bail but remain stuck in custody because the system has not surfaced, verified or acted on that eligibility in time.</p>
-      </div>
-      <div class="card">
-        <h3>Protection for domestic violence victims</h3>
-        <p>Bring together legal aid groups, prison officials, court actors and technologists so eligibility can be identified, confirmed and converted into timely action.</p>
-      </div>
-      <div class="card">
-        <h3>Making Internet Use Safer for Young Girls</h3>
-        <p>Work with young girls, caregivers, educators and safety experts to understand online risks and build practical AI-supported guidance, safeguards and reporting pathways.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== Join / CTA ===== -->
 <section class="cta-band on-dark" id="join">
   <div class="wrap">
     <h2 id="ctaHeading">Get your hands dirty. You don't need to own a problem to show up for one.</h2>
     <p id="ctaSub">Join a live OpenNyAI sprint — as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.</p>
     <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:28px;">
-      <a class="btn btn-primary" href="mailto:hello@opennyai.org">Volunteer your time</a>
-      <button class="btn btn-ghost" type="button" onclick="setBringMode()">Bring a problem</button>
+      <button id="ctaVolBtn" class="btn btn-primary" type="button" onclick="setVolunteerMode()">Volunteer your time</button>
+      <button id="ctaProbBtn" class="btn btn-ghost" type="button" onclick="setBringMode()">Bring a problem</button>
     </div>
     <form class="signup" onsubmit="return false;">
       <input id="ctaInput" type="email" placeholder="Enter your e-mail ID" aria-label="Email address" />
@@ -435,7 +477,6 @@ a{ color:inherit; }
       <p class="footer-col-title">OpenNyAI</p>
       <a href="#about">About</a>
       <a href="#approach">Our approach</a>
-      <a href="#participate">Problems</a>
       <a href="#join">Join the mission</a>
     </div>
     <div class="footer-col">
@@ -456,11 +497,20 @@ a{ color:inherit; }
     document.getElementById('ctaHeading').textContent = 'Bring to OpenNyAI a long-stuck justice problem you understand.';
     document.getElementById('ctaSub').textContent = 'If you know a justice problem that has resisted change, OpenNyAI can help convene the right people, apply AI thoughtfully and build something useful for the wider ecosystem.';
     var inp = document.getElementById('ctaInput');
-    inp.type = 'text';
-    inp.placeholder = 'Enter your problem statement';
-    inp.setAttribute('aria-label', 'Problem statement');
+    inp.type = 'text'; inp.placeholder = 'Enter your problem statement'; inp.setAttribute('aria-label', 'Problem statement'); inp.value = '';
     document.getElementById('ctaSubmit').textContent = 'Submit';
+    document.getElementById('ctaProbBtn').className = 'btn btn-primary';
+    document.getElementById('ctaVolBtn').className = 'btn btn-ghost';
     setTimeout(function(){ inp.focus(); }, 250);
+  }
+  function setVolunteerMode(){
+    document.getElementById('ctaHeading').textContent = "Get your hands dirty. You don't need to own a problem to show up for one.";
+    document.getElementById('ctaSub').textContent = 'Join a live OpenNyAI sprint — as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.';
+    var inp = document.getElementById('ctaInput');
+    inp.type = 'email'; inp.placeholder = 'Enter your e-mail ID'; inp.setAttribute('aria-label', 'Email address'); inp.value = '';
+    document.getElementById('ctaSubmit').textContent = 'Join';
+    document.getElementById('ctaVolBtn').className = 'btn btn-primary';
+    document.getElementById('ctaProbBtn').className = 'btn btn-ghost';
   }
   // Approach micro-animations — reveal steps/stats as they scroll into view
   (function(){
