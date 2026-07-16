@@ -185,6 +185,23 @@ a{ color:inherit; }
 .step .num{ font-family:var(--font-display); font-size:2.4rem; color:var(--forest); line-height:1; }
 .step h3{ font-size:1.2rem; margin:14px 0 8px; }
 .step p{ color:var(--ink-soft); font-size:.98rem; }
+/* on the dark approach section, brown text/numbers are unreadable — lighten them */
+.on-dark .step .num{ color:var(--pink); }
+.on-dark .step h3{ color:var(--paper); }
+.on-dark .step p{ color:rgba(251,248,242,.75); }
+
+/* ---------- "bring a problem" modal ---------- */
+.modal{ border:0; border-radius:20px; padding:0; max-width:560px; width:calc(100% - 40px); background:var(--paper); color:var(--ink); box-shadow:0 40px 90px rgba(0,0,0,.45); }
+.modal::backdrop{ background:rgba(10,21,26,.55); }
+.modal-panel{ position:relative; padding:34px 30px; text-align:left; }
+.modal-close{ position:absolute; top:12px; right:14px; width:34px; height:34px; border:0; border-radius:50%; background:rgba(36,30,26,.06); color:var(--ink-soft); font-size:1.25rem; line-height:1; cursor:pointer; }
+.modal-close:hover{ background:rgba(36,30,26,.12); }
+.modal-panel h3{ font-size:1.5rem; margin:6px 0 12px; }
+.modal-panel > p{ color:var(--ink-soft); margin-bottom:20px; }
+.modal-crit{ display:flex; flex-direction:column; gap:15px; margin-bottom:24px; }
+.modal-crit .kicker{ font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pink); }
+.modal-crit b{ font-family:var(--font-display); font-weight:500; font-size:1.06rem; display:block; margin:3px 0 3px; }
+.modal-crit span{ font-size:.92rem; color:var(--ink-soft); }
 
 /* collaborators / missions strip */
 .mission-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; }
@@ -262,8 +279,7 @@ a{ color:inherit; }
   <nav class="site-nav" aria-label="Primary">
     <a href="#about">About</a>
     <a href="#approach">Approach</a>
-    <a href="#missions">Missions</a>
-    <a href="#participate">Participate</a>
+    <a href="#participate">Problems</a>
     <a class="nav-cta" href="#join">Join the Mission</a>
   </nav>
   <button class="nav-burger" type="button" aria-label="Open menu">Menu
@@ -368,46 +384,25 @@ a{ color:inherit; }
   </div>
 </section>
 
-<!-- ===== Missions / Collaborators (dark deep) ===== -->
-<section class="section on-dark" id="missions" style="background:var(--forest-deep);">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Part of Agami</span>
-      <h2>An ecosystem making justice, not just seeking it.</h2>
-      <p>OpenNyAI is one of Agami's collaborative missions — a movement of ideas and people reshaping the experience of justice in India.</p>
-    </div>
-    <div class="mission-grid">
-      <a class="mission" href="https://www.agami.in" target="_blank" rel="noopener"><b>Agami</b><span>The movement building the field of justice innovation in India.</span></a>
-      <a class="mission" href="https://pucar.org" target="_blank" rel="noopener"><b>PUCAR</b><span>Building a people-centric dispute-resolution system.</span></a>
-      <a class="mission" href="https://www.agami.in/praani" target="_blank" rel="noopener"><b>Praani</b><span>Bringing ecological wellbeing into our justice systems.</span></a>
-      <a class="mission" href="https://www.agami.in/online-dispute-resolution" target="_blank" rel="noopener"><b>ODR</b><span>Scaling dispute resolution outside the courts.</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Participate ===== -->
+<!-- ===== Problem statements ===== -->
 <section class="section" id="participate">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Participate</span>
-      <h2>Bring us a long-stuck justice problem you understand.</h2>
-      <p>If you know a problem that's been stuck — not because the law is against it, but because the system hasn't caught up — OpenNyAI can help you scope a solvable subset, bring in the right people, and build a solution that works for a real group of people.</p>
+      <span class="eyebrow">Problem Statements</span>
+      <h2>Justice problems that can be solved right now</h2>
     </div>
     <div class="card-grid">
       <div class="card">
-        <p class="kicker">01 / Stuck now</p>
-        <h3>A problem worth unblocking</h3>
-        <p>The law is already on the side of the people affected. We're not here to change it — we're here to make it work.</p>
+        <h3>Bail for the Automatically Eligible</h3>
+        <p>Identify people who are legally eligible for bail but remain stuck in custody because the system has not surfaced, verified or acted on that eligibility in time.</p>
       </div>
       <div class="card">
-        <p class="kicker">02 / The subset</p>
-        <h3>A community ready to act</h3>
-        <p>The gap is friction, missing coordination or information failure — not powerful interests blocking the outcome.</p>
+        <h3>Protection for domestic violence victims</h3>
+        <p>Bring together legal aid groups, prison officials, court actors and technologists so eligibility can be identified, confirmed and converted into timely action.</p>
       </div>
       <div class="card">
-        <p class="kicker">03 / The signal</p>
-        <h3>A public good others can use</h3>
-        <p>You can describe what winning looks like before we start: people released, wages recovered, claims processed.</p>
+        <h3>Making Internet Use Safer for Young Girls</h3>
+        <p>Work with young girls, caregivers, educators and safety experts to understand online risks and build practical AI-supported guidance, safeguards and reporting pathways.</p>
       </div>
     </div>
   </div>
@@ -420,7 +415,7 @@ a{ color:inherit; }
     <p>Join a live OpenNyAI sprint — as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.</p>
     <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:28px;">
       <a class="btn btn-primary" href="mailto:hello@opennyai.org">Volunteer your time</a>
-      <a class="btn btn-ghost" href="#participate">Bring a problem</a>
+      <button class="btn btn-ghost" type="button" onclick="document.getElementById('bringDialog').showModal()">Bring a problem</button>
     </div>
     <form class="signup" onsubmit="return false;">
       <input type="email" placeholder="Enter your e-mail ID" aria-label="Email address" />
@@ -428,6 +423,39 @@ a{ color:inherit; }
     </form>
   </div>
 </section>
+
+<!-- ===== "Bring a problem" modal ===== -->
+<dialog id="bringDialog" class="modal">
+  <div class="modal-panel">
+    <button class="modal-close" type="button" aria-label="Close" onclick="this.closest('dialog').close()">×</button>
+    <span class="eyebrow">Participate</span>
+    <h3>Bring to OpenNyAI a long-stuck justice problem you understand.</h3>
+    <p>If you know a justice problem that has resisted change, OpenNyAI can help convene the right people, apply AI thoughtfully and build something useful for the wider ecosystem.</p>
+    <div class="modal-crit">
+      <div>
+        <p class="kicker">01 / Stuck now</p>
+        <b>A problem worth unblocking</b>
+        <span>Bring problems that have stayed stuck despite clear need, visible harm or repeated attempts to solve them.</span>
+      </div>
+      <div>
+        <p class="kicker">02 / The subset</p>
+        <b>A community ready to act</b>
+        <span>The best opportunities can be narrowed to a group, region or issue type where a focused intervention can work.</span>
+      </div>
+      <div>
+        <p class="kicker">03 / The signal</p>
+        <b>A public good others can use</b>
+        <span>We look for work that can become useful knowledge, tools or infrastructure for the wider justice ecosystem.</span>
+      </div>
+    </div>
+    <a class="btn btn-primary" href="mailto:hello@opennyai.org">Email us your problem</a>
+  </div>
+</dialog>
+<script>
+  // close the modal when clicking the backdrop (outside the panel)
+  var bd = document.getElementById('bringDialog');
+  bd.addEventListener('click', function(e){ if (e.target === bd) bd.close(); });
+</script>
 
 <!-- ===== Footer ===== -->
 <footer class="site-footer">
@@ -440,7 +468,7 @@ a{ color:inherit; }
       <p class="footer-col-title">OpenNyAI</p>
       <a href="#about">About</a>
       <a href="#approach">Our approach</a>
-      <a href="#participate">Participate</a>
+      <a href="#participate">Problems</a>
       <a href="#join">Join the mission</a>
     </div>
     <div class="footer-col">
