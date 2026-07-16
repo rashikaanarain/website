@@ -177,6 +177,14 @@ a{ color:inherit; }
 .card p{ color:var(--ink-soft); font-size:.98rem; }
 .card a.card-link{ display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-weight:600; font-size:.9rem; color:var(--forest); text-decoration:none; }
 .card a.card-link:hover{ gap:10px; }
+/* outputs / impact cards */
+.out-top{ display:flex; align-items:center; justify-content:space-between; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+.out-top .n{ color:var(--muted); }
+.out-top .k{ color:var(--pink); }
+.out-icon{ color:var(--pink); margin:18px 0 4px; }
+.chips{ display:flex; flex-direction:column; align-items:flex-start; gap:9px; margin-top:18px; }
+.chip{ display:inline-flex; align-items:center; gap:6px; font-size:.85rem; font-weight:600; color:var(--forest); text-decoration:none; background:var(--pink-soft); border:1px solid rgba(218,110,170,.3); padding:7px 14px; border-radius:999px; transition:background .18s ease; }
+.chip:hover{ background:#EAB9D3; }
 
 /* steps (approach) */
 .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(24px,3vw,40px); }
@@ -346,34 +354,6 @@ a{ color:inherit; }
   </div>
 </section>
 
-<!-- ===== About / Why we exist ===== -->
-<section class="section" id="about">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Why we exist</span>
-      <h2>The law is often already on people's side. The system just hasn't caught up.</h2>
-      <p>For years the legal world and the technology world in India couldn't talk to each other. OpenNyAI built the bridge by training law students, building open legal-AI tools, and gathering a community of lawyers, technologists, paralegals and researchers who show up for hard problems.</p>
-    </div>
-    <div class="card-grid">
-      <div class="card">
-        <p class="kicker">Community</p>
-        <h3>People who show up</h3>
-        <p>Lawyers, law students, paralegals, technologists, researchers and civil-society organisations. This is the network a lab in San Francisco cannot replicate.</p>
-      </div>
-      <div class="card">
-        <p class="kicker">AI</p>
-        <h3>Coordination at scale</h3>
-        <p>We use AI where it multiplies human effort: templating applications, tracking cases, and finding the people who've been waiting.</p>
-      </div>
-      <div class="card">
-        <p class="kicker">Public goods</p>
-        <h3>Open by default</h3>
-        <p>Tools, datasets, explainers and shared learning others can adapt, improve and build on, free and open source.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== Approach (dark) ===== -->
 <section class="section on-dark" id="approach">
   <div class="wrap">
@@ -416,6 +396,79 @@ a{ color:inherit; }
           <div class="num">03</div>
           <h3>Solve it. For real.</h3>
           <p>Build with affected communities, AI builders and institutions in a limited period creating impact.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Why we exist ===== -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Why we exist</span>
+      <h2>The law is often already on people's side. The system just hasn't caught up.</h2>
+      <p>For years the legal world and the technology world in India couldn't talk to each other. OpenNyAI built the bridge by training law students, building open legal-AI tools, and gathering a community of lawyers, technologists, paralegals and researchers who show up for hard problems.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <p class="kicker">Community</p>
+        <h3>People who show up</h3>
+        <p>Lawyers, law students, paralegals, technologists, researchers and civil-society organisations.</p>
+      </div>
+      <div class="card">
+        <p class="kicker">AI</p>
+        <h3>Coordination at scale</h3>
+        <p>We use AI where it multiplies human effort: templating applications, tracking cases, and finding the people who've been waiting.</p>
+      </div>
+      <div class="card">
+        <p class="kicker">Public goods</p>
+        <h3>Open by default</h3>
+        <p>Tools, datasets, explainers and shared learning others can adapt, improve and build on, free and open source.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Outputs / Impact ===== -->
+<section class="section" id="outputs" style="background:var(--cream-deep);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Impact</span>
+      <h2>Outputs you can use and build on</h2>
+      <p>OpenNyAI's impact lives in practical public goods: models, tools and shared knowledge that justice changemakers can access, adapt and improve.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="out-top"><span class="n">01</span><span class="k">Model</span></div>
+        <svg class="out-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5"/><path d="M14 3v5h5"/><circle cx="16.5" cy="15.5" r="3"/><path d="M21 20l-2.3-2.3"/></svg>
+        <h3>Legal NER model</h3>
+        <p>An open named-entity recognition model for Indian legal documents that identifies people, courts, dates, statutes and other structured signals.</p>
+        <div class="chips">
+          <a class="chip" href="https://huggingface.co/opennyaiorg/en_legal_ner_trf" target="_blank" rel="noopener">Open model ↗</a>
+          <a class="chip" href="https://aclanthology.org/2022.nllp-1.15/" target="_blank" rel="noopener">Read the paper ↗</a>
+          <a class="chip" href="https://github.com/OpenNyAI/Opennyai" target="_blank" rel="noopener">Use in a workflow ↗</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="out-top"><span class="n">02</span><span class="k">Assistant</span></div>
+        <svg class="out-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9.5 15.5h5"/></svg>
+        <h3>Jugalbandi</h3>
+        <p>An open-source conversational AI platform that helps people ask questions and find relevant schemes or services, across languages, on WhatsApp or the web.</p>
+        <div class="chips">
+          <a class="chip" href="https://github.com/OpenNyAI/Jugalbandi-Manager" target="_blank" rel="noopener">Open source ↗</a>
+          <a class="chip" href="https://docs.jugalbandi.opennyai.org/" target="_blank" rel="noopener">Read the docs ↗</a>
+          <a class="chip" href="mailto:hello@opennyai.org?subject=Jugalbandi">Partner on access</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="out-top"><span class="n">03</span><span class="k">Benchmark</span></div>
+        <svg class="out-icon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15l2 2 4-4"/></svg>
+        <h3>MISAAL evaluation standard</h3>
+        <p>A community-built benchmark for what makes a high quality answer to a citizen's socio-legal query: accessible, contextual, sensitive, practical and more.</p>
+        <div class="chips">
+          <a class="chip" href="misaal/">View the standard →</a>
+          <a class="chip" href="mailto:hello@opennyai.org?subject=Contributing%20to%20MISAAL">Contribute feedback</a>
         </div>
       </div>
     </div>
