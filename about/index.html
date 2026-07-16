@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About | OpenNyAI</title>
+<link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
+<meta name="description" content="OpenNyAI brings innovators, institutions, resources and ideas across law and AI together to create irreversible change in how citizens experience justice in India." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;
+  --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;
+  --green:#30CF8C; --green-soft:#CCEBDE;
+  --pink:#DA6EAA; --pink-soft:#F1D0E2; --plum:#4E2740;
+  --forest:#111F26; --forest-deep:#0A151A;
+  --line:rgba(36,30,26,0.12);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.6; }
+h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.05; font-weight:500; }
+p{ margin:0; } a{ color:inherit; }
+.wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,72px); }
+.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em; margin-bottom:18px; color:var(--pink); }
+
+/* buttons */
+.btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:.92rem; text-decoration:none; border:0; cursor:pointer; transition:background .2s ease, transform .2s ease, box-shadow .2s ease; }
+.btn-primary{ background:var(--plum); color:var(--paper); }
+.btn-primary:hover{ background:#5E2F4E; transform:translateY(-1px); box-shadow:0 6px 16px rgba(78,39,64,.32); }
+.btn-ghost{ border:1px solid rgba(36,30,26,.32); color:var(--ink); background:transparent; }
+.btn-ghost:hover{ background:rgba(36,30,26,.06); }
+
+/* header / pill nav */
+.site-header{ position:absolute; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); pointer-events:none; }
+.brand{ display:flex; align-items:center; gap:8px; pointer-events:auto; text-decoration:none; }
+.brand img{ height:26px; width:auto; display:block; }
+.site-nav{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:rgba(251,248,242,.62); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border:1px solid rgba(26,26,26,.07); border-radius:999px; padding:5px; box-shadow:0 12px 32px rgba(17,31,38,.10), inset 0 1px 0 rgba(255,255,255,.55); }
+.site-nav a{ text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.01em; color:var(--ink-soft); padding:8px 15px; border-radius:999px; transition:background .22s ease, color .22s ease; }
+.site-nav a:hover, .site-nav a.active{ background:var(--forest); color:var(--paper); }
+.site-nav a.nav-cta{ background:var(--plum); color:var(--paper); }
+.site-nav a.nav-cta:hover{ background:#5E2F4E; }
+
+/* page hero */
+.page-hero{ background:var(--cream); padding:clamp(120px,18vh,180px) 0 clamp(40px,6vh,66px); }
+.page-hero h1{ font-size:clamp(2.2rem,5vw,3.4rem); }
+.page-hero p{ margin-top:18px; font-size:clamp(1.05rem,1.4vw,1.2rem); color:var(--ink-soft); max-width:52ch; }
+.ph-inner{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,64px); align-items:center; }
+.ph-photo img{ width:100%; border-radius:20px; display:block; box-shadow:0 24px 60px rgba(17,31,38,.16); }
+@media (max-width:820px){ .ph-inner{ grid-template-columns:1fr; } }
+
+/* sections */
+.section{ padding:clamp(50px,8vh,96px) 0; }
+.section.alt{ background:var(--cream-deep); }
+.section-head{ max-width:640px; margin-bottom:40px; }
+.section h2{ font-size:clamp(1.7rem,3.2vw,2.4rem); }
+.section-head p{ margin-top:14px; color:var(--ink-soft); font-size:1.06rem; }
+
+/* timeline (dark, matches the old site) */
+.timeline-section{ background:var(--forest); color:var(--paper); }
+.tl-head{ text-align:center; margin-bottom:52px; }
+.tl-head h2{ color:var(--pink); font-size:clamp(1.9rem,3.6vw,2.8rem); }
+.tl-head p{ margin-top:12px; color:rgba(251,248,242,.6); font-size:1.05rem; }
+.timeline{ position:relative; max-width:900px; margin:0 auto; }
+.timeline::before{ content:""; position:absolute; left:96px; top:10px; bottom:10px; width:2px; background:rgba(251,248,242,.16); }
+.tl-item{ display:grid; grid-template-columns:82px 1fr; column-gap:34px; padding-bottom:52px; position:relative; }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-year{ text-align:right; font-family:var(--font-display); font-size:1.15rem; line-height:1.25; color:rgba(251,248,242,.42); }
+.tl-item::before{ content:""; position:absolute; left:89px; top:5px; width:15px; height:15px; border-radius:50%; background:var(--pink); box-shadow:0 0 0 4px var(--forest); }
+.tl-month{ font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--green); margin-bottom:6px; }
+.tl-body h3{ font-size:1.28rem; color:var(--paper); margin:0 0 8px; }
+.tl-body p{ color:rgba(251,248,242,.7); font-size:.98rem; max-width:60ch; }
+.tl-body a{ color:var(--green); font-weight:600; text-decoration:none; }
+@media (max-width:600px){
+  .timeline{ padding-left:24px; }
+  .timeline::before{ left:5px; }
+  .tl-item{ grid-template-columns:1fr; column-gap:0; }
+  .tl-year{ text-align:left; color:rgba(251,248,242,.55); margin-bottom:2px; }
+  .tl-item::before{ left:-19px; top:2px; }
+}
+
+/* scroll-reveal micro-animation */
+.js .reveal{ opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
+.js .reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .js .reveal{ opacity:1 !important; transform:none !important; transition:none; } }
+
+/* team */
+.team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:20px; }
+.team-card{ text-align:center; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:26px 16px; transition:transform .2s ease, box-shadow .2s ease; }
+.team-card:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(17,31,38,.12); }
+.team-avatar{ width:82px; height:82px; border-radius:50%; margin:0 auto 14px; display:grid; place-items:center; overflow:hidden; background:var(--pink-soft); color:var(--plum); font-family:var(--font-display); font-size:1.5rem; }
+.team-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.team-card b{ font-family:var(--font-display); font-weight:500; font-size:1.08rem; display:block; }
+a.team-card{ display:block; text-decoration:none; color:inherit; }
+.team-grid-2{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+.team-section-head{ text-align:center; margin-left:auto; margin-right:auto; }
+.team-grid-2 .team-card{ width:min(260px,100%); }
+.team-card .role{ display:block; font-size:.85rem; color:var(--muted); margin-top:3px; }
+.team-card .li{ display:block; margin-top:12px; font-size:.8rem; font-weight:600; color:var(--pink); }
+
+/* partner tags */
+.tags{ display:flex; flex-wrap:wrap; gap:10px; }
+.tag-pill{ border:1px solid var(--line); border-radius:999px; padding:9px 18px; font-size:.92rem; color:var(--ink-soft); background:var(--paper); }
+
+/* cta band */
+.cta-band{ background:var(--forest); text-align:center; padding:clamp(56px,9vh,96px) 0; }
+.cta-band h2{ color:var(--paper); font-size:clamp(1.7rem,3.4vw,2.5rem); max-width:22ch; margin:0 auto; }
+.cta-band p{ color:rgba(251,248,242,.72); margin:16px auto 28px; max-width:52ch; }
+.cta-band .btn-primary{ background:var(--pink); color:var(--ink); }
+.cta-band .btn-primary:hover{ background:#E58DBB; }
+
+/* footer */
+.site-footer{ background:#000; color:rgba(251,248,242,.8); padding:60px clamp(20px,5vw,72px) 30px; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:24px clamp(32px,6vw,96px); align-items:start; }
+.footer-top img{ height:24px; margin-bottom:14px; opacity:.95; }
+.footer-top p{ max-width:42ch; font-size:.92rem; color:rgba(251,248,242,.62); }
+.footer-map{ display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); gap:30px clamp(28px,4vw,56px); }
+.footer-col{ display:flex; flex-direction:column; gap:9px; }
+.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--pink); }
+.footer-col a{ text-decoration:none; font-size:.85rem; color:rgba(251,248,242,.72); }
+.footer-col a:hover{ color:var(--paper); }
+.footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
+
+@media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
+@media (max-width:640px){ .site-nav{ display:none; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="../" aria-label="OpenNyAI home"><img src="../assets/opennyai-logo-dark.svg" alt="OpenNyAI" /></a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../about/" class="active">About</a>
+    <a href="../#approach">Approach</a>
+    <a href="../misaal/">MISAAL</a>
+    <a class="nav-cta" href="../#join">Join the Mission</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="ph-inner">
+      <div>
+        <span class="eyebrow">About OpenNyAI</span>
+        <h1>Justice meets AI</h1>
+        <p>We work to bring innovators, institutions, resources and ideas across the legal and AI domain together, to create irreversible change to how citizens experience justice in India.</p>
+      </div>
+      <div class="ph-photo">
+        <img src="https://framerusercontent.com/images/HvPqK9ZUYZunpeu0S1oNDYFv4.jpg" alt="The OpenNyAI community" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section timeline-section">
+  <div class="wrap">
+    <div class="tl-head reveal">
+      <h2>A Brief Timeline</h2>
+      <p>Let's start at the beginning and end at the end</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">April</div><h3>OpenNyAI mission begins</h3><p>OpenNyAI ("Open AI for Justice") began as a collaborative mission between EkStep, NLSIU, ThoughtWorks and Rohini Nilekani Philanthropies, with Agami as anchor partner, to advance access to justice using AI.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">November</div><h3>Legal NLP models launch</h3><p>Three NLP models were released after extensive benchmarking: Named Entity Recognition, Rhetorical Role, and Extractive Summarizer. Trained on roughly 1,000 legal judgments, they reached about 90% average accuracy and were evaluated at SemEval 2022.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">Jul to Sep</div><h3>OpenNyAI Make-a-thon</h3><p>An 8-week online challenge bringing together engineers, technologists, lawyers, designers and business professionals to build applications that use AI to improve legal services and access to justice.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">September</div><h3>KHOJ dataset launch</h3><p>Around 40 student volunteers gathered background on High Court judges across 47 parameters, producing 25,000 data points. Released by the Chief Justice of India, DY Chandrachud, at NLU Odisha, with Civic Data Lab and the Centre for Public Policy, Law and Good Governance.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">December</div><h3>Jugalbandi launch</h3><p>On the heels of ChatGPT, the community built Jugalbandi, an open-source conversational AI stack atop LLMs, Bhashini and WhatsApp to provide critical information and services to Indian citizens. Presented by Satya Nadella in May 2024.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">July</div><h3>1st OpenNyAI Maker Residency</h3><p>Five days of intense building with 45+ entrepreneurs and innovators, 16 mentors, and cohort members prototyping solutions to problems of law and justice.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">August</div><h3>JIVA launch</h3><p>The Judges' Intelligent Virtual Assistant, an AI-powered platform to help judges and practitioners find relevant acts, laws and sections quickly, built as a prototype in collaboration with Parallel.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">February</div><h3>AALAP launch</h3><p>Aalap (Assistant for Legal and Paralegal functions in India), an instruction fine-tuned version of Mistral 7B for specific legal tasks in the Indian context.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">May</div><h3>RAG benchmark exercise begins</h3><p>With no Indian-legal-specific benchmarking datasets for Retrieval Augmented Generation, the community began building a legal dataset spanning different types of legal questions to benchmark retrievers.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">July</div><h3>Jugalbandi Studio release</h3><p>A low/no-code tool to build AI applications using natural language on the Jugalbandi Manager stack, enabling entrepreneurs and citizen developers to construct one-click deployable tools.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">September</div><h3>2nd OpenNyAI Maker Residency</h3><p>Focused on building digital public goods that trigger ecosystem-level change, with deep focus on grievance redressal, scaling paralegal capacity and resolving environmental grievances.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">March</div><h3>3rd OpenNyAI Maker Residency</h3><p>Brought together government actors (DARPG) and 30+ members of the justice ecosystem in Delhi to reimagine public grievance handling systems for the next decade.</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">December</div><h3>M.I.S.A.A.L project begins</h3><p>We begin working with community members, paralegals and citizens to create an AI benchmark that truly represents quality responses where citizen legal queries are concerned. <a href="../misaal/">Read about MISAAL &#8594;</a></p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head team-section-head">
+      <span class="eyebrow">Core team</span>
+      <h2>The people who keep the engines running</h2>
+    </div>
+    <div class="team-grid team-grid-2">
+      <a class="team-card" href="https://www.linkedin.com/in/sachinmalhan/" target="_blank" rel="noopener">
+        <div class="team-avatar"><img src="https://framerusercontent.com/images/J3aaZhai2XPEubEVkjzJJn5eOo.jpg" alt="Sachin Malhan" loading="lazy" /></div>
+        <b>Sachin Malhan</b>
+        <span class="role">Co-founder, Agami</span>
+        <span class="li">LinkedIn &#8599;</span>
+      </a>
+      <a class="team-card" href="https://www.linkedin.com/in/rashika-narain/" target="_blank" rel="noopener">
+        <div class="team-avatar"><img src="../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" /></div>
+        <b>Rashika Narain</b>
+        <span class="role">Curator &amp; Lead, OpenNyAI</span>
+        <span class="li">LinkedIn &#8599;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Collaborative initiative</span>
+      <h2>Anchored by Agami, built by many</h2>
+      <p>OpenNyAI is a collaborative mission anchored by Agami and comprised of over half a dozen organisations across law, technology and philanthropy.</p>
+    </div>
+    <div class="tags">
+      <span class="tag-pill">Agami (anchor)</span>
+      <span class="tag-pill">EkStep</span>
+      <span class="tag-pill">NLSIU</span>
+      <span class="tag-pill">ThoughtWorks</span>
+      <span class="tag-pill">Rohini Nilekani Philanthropies</span>
+      <span class="tag-pill">Civic Data Lab</span>
+      <span class="tag-pill">NLU Odisha</span>
+      <span class="tag-pill">Parallel</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Come make justice with us</h2>
+    <p>Join a live sprint, bring a stuck problem, or help build the public goods that move the field forward.</p>
+    <a class="btn btn-primary" href="../#join">Join the Mission</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
+    <p>Unlocking the power of AI and community to transform how India accesses justice.</p>
+  </div>
+  <div class="footer-map">
+    <div class="footer-col">
+      <p class="footer-col-title">OpenNyAI</p>
+      <a href="../about/">About</a>
+      <a href="../#approach">Approach</a>
+      <a href="../misaal/">MISAAL</a>
+      <a href="../#join">Join the mission</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Ecosystem</p>
+      <a href="https://www.agami.in" target="_blank" rel="noopener">Visit Agami</a>
+      <a href="https://pucar.org" target="_blank" rel="noopener">PUCAR</a>
+      <a href="mailto:hello@opennyai.org">Contact us</a>
+    </div>
+  </div>
+  <div class="footer-copy">Copyright © Vayam Forum for Citizenship (Agami). All Rights Reserved.</div>
+</footer>
+
+<script>
+  // fade timeline items in as they scroll into view
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.15 });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+
+</body>
+</html>

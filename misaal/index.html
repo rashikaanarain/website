@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MISAAL | OpenNyAI</title>
+<link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
+<meta name="description" content="MISAAL: the Multi-dimensional Intelligence Standard for Assessment of socio-Legal AI Interactions. What does a user regard as a high quality AI response to a socio-legal query?" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;
+  --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;
+  --green:#30CF8C; --green-soft:#CCEBDE;
+  --pink:#DA6EAA; --pink-soft:#F1D0E2; --plum:#4E2740;
+  --forest:#111F26; --forest-deep:#0A151A;
+  --line:rgba(36,30,26,0.12);
+  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.6; }
+h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.05; font-weight:500; }
+p{ margin:0; } a{ color:inherit; }
+.wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,72px); }
+.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em; margin-bottom:16px; color:var(--pink); }
+
+.btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:.92rem; text-decoration:none; border:0; cursor:pointer; transition:background .2s ease, transform .2s ease, box-shadow .2s ease; }
+.btn-primary{ background:var(--pink); color:var(--ink); }
+.btn-primary:hover{ background:#E58DBB; transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.3); }
+
+/* header */
+.site-header{ position:absolute; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); pointer-events:none; }
+.brand{ display:flex; align-items:center; gap:8px; pointer-events:auto; text-decoration:none; }
+.brand img{ height:26px; width:auto; display:block; }
+.site-nav{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:rgba(251,248,242,.14); backdrop-filter:blur(16px) saturate(1.4); -webkit-backdrop-filter:blur(16px) saturate(1.4); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:5px; }
+.site-nav a{ text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.01em; color:rgba(251,248,242,.85); padding:8px 15px; border-radius:999px; transition:background .22s ease, color .22s ease; }
+.site-nav a:hover, .site-nav a.active{ background:var(--paper); color:var(--ink); }
+.site-nav a.nav-cta{ background:var(--pink); color:var(--ink); }
+.site-nav a.nav-cta:hover{ background:#E58DBB; }
+
+/* hero with image */
+.misaal-hero{ position:relative; min-height:78vh; display:flex; align-items:center; background:var(--forest-deep); padding:clamp(120px,16vh,170px) 0 clamp(50px,8vh,90px); overflow:hidden; }
+.misaal-hero .bg{ position:absolute; inset:0; z-index:0; }
+.misaal-hero .bg img{ width:100%; height:100%; object-fit:cover; opacity:.45; }
+.misaal-hero .overlay{ position:absolute; inset:0; z-index:1; background:linear-gradient(100deg, rgba(10,21,26,.9) 0%, rgba(10,21,26,.62) 55%, rgba(10,21,26,.4) 100%); }
+.misaal-hero .inner{ position:relative; z-index:2; max-width:760px; margin:0 auto; text-align:center; }
+.misaal-hero .q, .misaal-hero .desc{ margin-left:auto; margin-right:auto; }
+.misaal-hero .eyebrow{ color:var(--pink); }
+.misaal-hero h1{ color:var(--paper); font-size:clamp(2.6rem,7vw,4.4rem); letter-spacing:.04em; }
+.misaal-hero .q{ margin-top:20px; font-family:var(--font-display); font-weight:500; font-size:clamp(1.35rem,2.6vw,2rem); color:var(--paper); line-height:1.15; }
+.misaal-hero .desc{ margin-top:18px; color:rgba(251,248,242,.82); font-size:1.08rem; max-width:62ch; }
+
+/* sections */
+.section{ padding:clamp(52px,8vh,96px) 0; }
+.section.alt{ background:var(--cream-deep); }
+.section.dark{ background:var(--forest); color:var(--paper); }
+.section.dark h2, .section.dark h3{ color:var(--paper); }
+.section-head{ max-width:680px; margin:0 auto 42px; text-align:center; }
+.section h2{ font-size:clamp(1.7rem,3.4vw,2.5rem); }
+.section-head p{ margin-top:14px; color:var(--ink-soft); font-size:1.06rem; }
+.section.dark .section-head p{ color:rgba(251,248,242,.72); }
+
+/* standards cards */
+.std-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:clamp(18px,2.2vw,26px); }
+.std-card{ background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:26px 24px; position:relative; }
+.std-card .pct{ position:absolute; top:22px; right:22px; font-family:var(--font-display); font-size:1.5rem; color:var(--pink); line-height:1; }
+.std-card .kicker{ font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pink); }
+.std-card h3{ font-size:1.2rem; margin:8px 0 8px; padding-right:48px; }
+.std-card p{ color:var(--ink-soft); font-size:.95rem; }
+
+/* animated ratings chart */
+
+/* metrics */
+.metrics{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(24px,4vw,56px); }
+.metric{ text-align:center; }
+.metric b{ font-family:var(--font-display); font-weight:500; font-size:clamp(2.4rem,5vw,3.4rem); display:block; color:var(--pink); line-height:1; }
+.metric span{ display:block; margin-top:10px; color:var(--ink-soft); font-size:1rem; }
+@media (max-width:640px){ .metrics{ grid-template-columns:1fr; gap:26px; } }
+
+/* council grid */
+.council-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(108px,1fr)); gap:14px; margin-top:8px; }
+.council-grid img{ width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:12px; display:block; background:rgba(251,248,242,.06); }
+.council-grid .cc{ position:relative; display:block; text-decoration:none; border-radius:12px; overflow:hidden; transition:transform .2s ease, box-shadow .2s ease; }
+.council-grid .cc:hover{ transform:translateY(-4px); box-shadow:0 12px 24px rgba(17,31,38,.16); }
+.cc-name{ position:absolute; left:0; right:0; bottom:0; padding:24px 6px 9px; font-size:.76rem; font-weight:700; text-align:center; color:#fff; background:linear-gradient(transparent, rgba(10,21,26,.92)); opacity:0; transition:opacity .2s ease; pointer-events:none; }
+.council-grid .cc:hover .cc-name{ opacity:1; }
+
+/* cta */
+.cta-band{ background:var(--forest-deep); text-align:center; padding:clamp(56px,9vh,96px) 0; }
+.cta-band h2{ color:var(--paper); font-size:clamp(1.7rem,3.4vw,2.5rem); max-width:22ch; margin:0 auto; }
+.cta-band p{ color:rgba(251,248,242,.72); margin:16px auto 28px; max-width:52ch; }
+
+/* footer */
+.site-footer{ background:#000; color:rgba(251,248,242,.8); padding:60px clamp(20px,5vw,72px) 30px; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:24px clamp(32px,6vw,96px); align-items:start; }
+.footer-top img{ height:24px; margin-bottom:14px; opacity:.95; }
+.footer-top p{ max-width:42ch; font-size:.92rem; color:rgba(251,248,242,.62); }
+.footer-map{ display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); gap:30px clamp(28px,4vw,56px); }
+.footer-col{ display:flex; flex-direction:column; gap:9px; }
+.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--pink); }
+.footer-col a{ text-decoration:none; font-size:.85rem; color:rgba(251,248,242,.72); }
+.footer-col a:hover{ color:var(--paper); }
+.footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
+
+@media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
+@media (max-width:640px){ .site-nav{ display:none; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="../" aria-label="OpenNyAI home"><img src="../assets/opennyai-logo.svg" alt="OpenNyAI" /></a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../about/">About</a>
+    <a href="../#approach">Approach</a>
+    <a href="../misaal/" class="active">MISAAL</a>
+    <a class="nav-cta" href="#contribute">Join the Mission</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="misaal-hero">
+  <div class="bg"><img src="https://framerusercontent.com/images/ykLhvMXOXdSWDTt6ZzAzPY9Nrg.jpg" alt="The MISAAL community" /></div>
+  <div class="overlay"></div>
+  <div class="wrap">
+    <div class="inner">
+      <span class="eyebrow">A project of OpenNyAI</span>
+      <h1>M.I.S.A.A.L</h1>
+      <p class="q">What does a user regard as a high quality AI response for a socio-legal query?</p>
+      <p class="desc">The Multi-dimensional Intelligence Standard for Assessment of socio-Legal AI Interactions is an effort to take this question to thousands of users inside diverse communities, and surface the elements that truly represent a quality AI response to a query pertaining to law or justice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- The seven standards -->
+<section class="section" id="standards">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The standards</span>
+      <h2>Seven dimensions of a high quality answer</h2>
+      <p>Each dimension carries a community importance score, based on what real users told us matters most.</p>
+    </div>
+    <div class="std-grid">
+      <div class="std-card"><span class="pct">12%</span><p class="kicker">Accessibility</p><h3>Understandable by everyone</h3><p>Accessible when it can be understood and used by people with different literacy levels, languages, abilities and levels of digital familiarity, in clear, simple language.</p></div>
+      <div class="std-card"><span class="pct">9%</span><p class="kicker">Contextuality</p><h3>Fits the user's reality</h3><p>Contextual when it reflects the user's specific situation, location, needs and constraints, seeking relevant details and avoiding generic answers.</p></div>
+      <div class="std-card"><span class="pct">18%</span><p class="kicker">Sensitivity</p><h3>Aware of risk and emotion</h3><p>Sensitive when it recognizes vulnerability, risk and emotional context, communicates respectfully and responds appropriately to the seriousness of the situation.</p></div>
+      <div class="std-card"><span class="pct">25%</span><p class="kicker">Practicality</p><h3>Guidance you can follow</h3><p>Practical when the guidance can be realistically followed in the user's context, offering actionable steps and avoiding advice that is inaccessible or unverifiable.</p></div>
+      <div class="std-card"><span class="pct">20%</span><p class="kicker">Non-judgmentalism</p><h3>Respect without stigma</h3><p>Non-judgmental when it treats users with respect regardless of situation, choices or background, avoiding blame or moral evaluation.</p></div>
+      <div class="std-card"><span class="pct">8%</span><p class="kicker">Transparency</p><h3>Clear about its basis</h3><p>Transparent when it explains its reasoning and limits, makes sources visible, communicates uncertainty and justifies its guidance.</p></div>
+      <div class="std-card"><span class="pct">3%</span><p class="kicker">Care</p><h3>Supportive and dignified</h3><p>Caring when it acknowledges emotional experience and supports the user with patience, reassurance and dignity, helping them feel empowered to act.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Metrics -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The scale of the effort</span>
+      <h2>Built with people who know the ground</h2>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>22</b><span>Domain experts</span></div>
+      <div class="metric"><b>100+</b><span>Paralegals and frontline workers</span></div>
+      <div class="metric"><b>10,000*</b><span>Real user interactions</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Community council -->
+<section class="section" id="council">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Community Council</span>
+      <h2>Guided by leaders close to the ground</h2>
+      <p>MISAAL draws from a community of justice sector leaders with unparalleled access and insight into the ground realities of access to justice.</p>
+    </div>
+    <div class="council-grid">
+      <a class="cc" href="https://www.linkedin.com/in/aishani-rai-154839203" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/Je6gyX891JSVVHsOnlp8DoOKeHw.jpeg" alt="Aishani Rai" loading="lazy" /><span class="cc-name">Aishani Rai</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/anisha-gopi-20451931" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/xmx6h5QGmM1NCDPJUkYJsp2BA.jpeg" alt="Anisha Gopi" loading="lazy" /><span class="cc-name">Anisha Gopi</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/startupwithsyed" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/UYvjt13rP13RmzbRGL1JImLLJ50.jpeg" alt="Council member" loading="lazy" /></a>
+      <a class="cc" href="https://www.linkedin.com/in/a3harva" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/m2LY8US84e2153YK2CbJLkHbmM.jpeg" alt="Council member" loading="lazy" /></a>
+      <div class="cc"><img src="https://framerusercontent.com/images/j2uKrOuGwk95t8UDpbkBaWlAI0.jpeg" alt="Council member" loading="lazy" /></div>
+      <a class="cc" href="https://www.linkedin.com/in/dubeydushyant" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/tAsYDRyy7h54FuHiIY1C3y9jRM.jpg" alt="Dushyant Dubey" loading="lazy" /><span class="cc-name">Dushyant Dubey</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/gupta-himanshu" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/GwEmsfmBAqCx6a9AynovbRlrXA.jpg" alt="Himanshu Gupta" loading="lazy" /><span class="cc-name">Himanshu Gupta</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/lakshmi-nambiar-17436916a" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/aIapSGeaSYZiz9JA4AY8kaohqsk.jpeg" alt="Lakshmi Nambiar" loading="lazy" /><span class="cc-name">Lakshmi Nambiar</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/malaymandal" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/MyKrewCoCvYIUQDrFhTrDywnc.jpeg" alt="Malay Mandal" loading="lazy" /><span class="cc-name">Malay Mandal</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/nitesh-anand" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/Ho2yZHSMYsiXROmh3cA4k6FIrA.jpg" alt="Nitesh Anand" loading="lazy" /><span class="cc-name">Nitesh Anand</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/pravinnikams" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/TzXDv3vHBsuC7QivIaUZznUNNY.jpeg" alt="Pravin Nikam" loading="lazy" /><span class="cc-name">Pravin Nikam</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/vibha-nadig-39a362191" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/HAr0UcalHRFEhelZtcCXGDHyvs.jpeg" alt="Vibha Nadig" loading="lazy" /><span class="cc-name">Vibha Nadig</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/nivedita-krishna-107b989" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/akNh4gzzfCFJlZKgaiFIXP2dUCU.png" alt="Nivedita Krishna" loading="lazy" /><span class="cc-name">Nivedita Krishna</span></a>
+      <div class="cc"><img src="https://framerusercontent.com/images/jK2NKqmbeJlJ3vL3onhOdFJ7dH0.webp" alt="Council member" loading="lazy" /></div>
+      <div class="cc"><img src="https://framerusercontent.com/images/OpdmHx92gQwlHOEsrvWagEF9k.jpeg" alt="Council member" loading="lazy" /></div>
+      <a class="cc" href="https://www.linkedin.com/in/sultan-ahmad-44491125" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/iUZXpquUng7NhUVhUEpk4r1bkc.jpg" alt="Sultan Ahmad" loading="lazy" /><span class="cc-name">Sultan Ahmad</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/sourav-karmakar-41a24612a" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/NRDqVE4c1meenoWiqnAiWrKK3Q.jpeg" alt="Sourav Karmakar" loading="lazy" /><span class="cc-name">Sourav Karmakar</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/yashaswini-basu" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/K2dzsLoOiGVKu3HbgjYoCG9pzs.jpeg" alt="Yashaswini Basu" loading="lazy" /><span class="cc-name">Yashaswini Basu</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/shashank-ravi-shankar-a02560166" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/AgMMDQBZqxmOqwvp41LcaQpQ.jpeg" alt="Shashank Ravi Shankar" loading="lazy" /><span class="cc-name">Shashank Ravi Shankar</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/deesha-warang-92aa57236" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/DGFDB6pNEMrV7bMaStj9QilCUw0.jpeg" alt="Deesha Warang" loading="lazy" /><span class="cc-name">Deesha Warang</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/sachinmalhan" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/F8TFcDeiieUPJpUEI15qZSKQc.webp" alt="Sachin Malhan" loading="lazy" /><span class="cc-name">Sachin Malhan</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/aayana-rai-bhojani-0943301a8" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/gutQKqCIR301FPPPSKU7E40QlU.jpg" alt="Aayana Rai Bhojani" loading="lazy" /><span class="cc-name">Aayana Rai Bhojani</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/smrithi-sundararajan" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/MSMGydrUF8H4BdhYS9AWswQMts.png" alt="Smrithi Sundararajan" loading="lazy" /><span class="cc-name">Smrithi Sundararajan</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/madeeha-majid-0912" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/WKZLmDZrnciwa5XVxCm9r3zsyk.jpeg" alt="Madeeha Majid" loading="lazy" /><span class="cc-name">Madeeha Majid</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/faisalmlalani" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/wCkaZ9ymBllj6gscU1i5HJSnv8.png" alt="Faisal Lalani" loading="lazy" /><span class="cc-name">Faisal Lalani</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/katerina-fiadziuk" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/vOGp6LXKXqhr3lI3dI4232DkRs8.png" alt="Katerina Fiadziuk" loading="lazy" /><span class="cc-name">Katerina Fiadziuk</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contribute">
+  <div class="wrap">
+    <h2>Help build the benchmark</h2>
+    <p>Are you a paralegal, lawyer, community worker or citizen with legal questions worth capturing? Come contribute to MISAAL.</p>
+    <a class="btn btn-primary" href="mailto:hello@opennyai.org?subject=Contributing%20to%20MISAAL">Get involved</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
+    <p>Unlocking the power of AI and community to transform how India accesses justice.</p>
+  </div>
+  <div class="footer-map">
+    <div class="footer-col">
+      <p class="footer-col-title">OpenNyAI</p>
+      <a href="../about/">About</a>
+      <a href="../#approach">Approach</a>
+      <a href="../misaal/">MISAAL</a>
+      <a href="../#join">Join the mission</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">Ecosystem</p>
+      <a href="https://www.agami.in" target="_blank" rel="noopener">Visit Agami</a>
+      <a href="https://pucar.org" target="_blank" rel="noopener">PUCAR</a>
+      <a href="mailto:hello@opennyai.org">Contact us</a>
+    </div>
+  </div>
+  <div class="footer-copy">Copyright © Vayam Forum for Citizenship (Agami). All Rights Reserved.</div>
+</footer>
+
+</body>
+</html>

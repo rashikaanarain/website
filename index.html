@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>OpenNyAI | AI Digital Public Goods for Justice</title>
+<link rel="icon" type="image/svg+xml" href="assets/opennyai-logo-dark.svg" />
 <meta name="description" content="A collective building open-source AI and community power to transform how 1.4 billion Indians experience law and justice." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,7 +12,7 @@
 <script>document.documentElement.classList.add('js');</script>
 <style>
 /* ============================================================
-   OpenNyAI homepage — built on the PUCAR design system
+   OpenNyAI homepage, built on the PUCAR design system
    (warm paper / editorial, Fraunces + Source Sans 3, pill nav,
    green-on-dark-only accent rule). Tokens per DESIGN_SYSTEM.md
    ============================================================ */
@@ -163,10 +164,6 @@ a{ color:inherit; }
 .on-dark .section-head p{ color:rgba(251,248,242,.72); }
 .on-dark h2, .on-dark h3{ color:var(--paper); }
 
-/* stat row */
-.stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(24px,4vw,56px); margin-top:8px; }
-.stat b{ font-family:var(--font-display); font-weight:500; font-size:clamp(2.2rem,4vw,3rem); display:block; color:var(--pink); line-height:1; }
-.stat span{ display:block; margin-top:10px; color:rgba(251,248,242,.72); font-size:.98rem; }
 
 /* card grid */
 .card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:clamp(22px,2.4vw,32px); }
@@ -191,51 +188,44 @@ a{ color:inherit; }
 .on-dark .step h3{ color:var(--paper); }
 .on-dark .step p{ color:rgba(251,248,242,.75); }
 
-/* ---------- approach micro-animations ---------- */
-.step .num{ transition:transform .25s ease; }
-.step:hover .num{ transform:translateY(-3px) scale(1.06); }
-.js .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
-.js .reveal.in{ opacity:1; transform:none; }
-.steps .step:nth-child(2).reveal{ transition-delay:.09s; }
-.steps .step:nth-child(3).reveal{ transition-delay:.18s; }
-.stat-row .stat:nth-child(2).reveal{ transition-delay:.09s; }
-.stat-row .stat:nth-child(3).reveal{ transition-delay:.18s; }
-@media (prefers-reduced-motion:reduce){ .js .reveal{ opacity:1 !important; transform:none !important; transition:none; } }
 .cta-band h2, .cta-band p, .signup input, .signup .btn{ transition:opacity .25s ease; }
 
-/* ---------- approach orchestration diagram ---------- */
-.orchestrate{ display:flex; align-items:stretch; justify-content:center; gap:0; flex-wrap:nowrap; margin:8px 0 26px; }
-.orch-node{
-  flex:0 0 auto; width:clamp(150px,23vw,200px); text-align:center;
-  background:rgba(251,248,242,.06); border:1px solid rgba(251,248,242,.14); border-radius:16px;
-  padding:22px 16px; position:relative; animation:floaty 5s ease-in-out infinite;
+/* ---------- approach: sleek vertical scroll funnel ---------- */
+.approach-flow{ display:grid; grid-template-columns:220px 1fr; gap:clamp(30px,5vw,72px); align-items:start; margin-top:6px; }
+.flow-visual{ position:sticky; top:26vh; height:44vh; display:flex; flex-direction:column; align-items:center; }
+.flow-cap{ font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(251,248,242,.5); }
+.flow-cap.done{ color:var(--green); }
+.flow-cap.top{ margin-bottom:14px; }
+.flow-cap.bottom{ margin-top:14px; }
+.flow-funnel-wrap{ position:relative; flex:1; width:64px; }
+.flow-funnel{ width:100%; height:100%; display:block; overflow:visible; }
+/* the funnel line fills as you progress */
+.flow-fill{ transition:height .55s cubic-bezier(.4,0,.2,1); }
+.flow-dot{ position:absolute; left:50%; top:6%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:var(--paper); box-shadow:0 0 0 5px rgba(218,110,170,.25); transition:top .55s cubic-bezier(.4,0,.2,1); }
+.flow-step{ min-height:34vh; display:flex; flex-direction:column; justify-content:center; }
+.flow-step .num{ font-family:var(--font-display); font-size:2.2rem; color:var(--pink); line-height:1; }
+.flow-step h3{ font-size:clamp(1.25rem,2vw,1.6rem); color:var(--paper); margin:10px 0 8px; }
+.flow-step p{ color:rgba(251,248,242,.78); font-size:1.02rem; max-width:46ch; }
+.js .flow-step{ opacity:.28; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+.js .flow-step.active{ opacity:1; transform:none; }
+@media (max-width:820px){
+  .approach-flow{ grid-template-columns:1fr; }
+  .flow-visual{ display:none; }
+  .flow-step{ min-height:auto; padding-bottom:30px; }
+  .js .flow-step{ opacity:1; transform:none; }
 }
-.orch-community{ animation-delay:0s; }
-.orch-problem{ animation-delay:1.4s; }
-.orch-ai{ background:rgba(48,207,140,.12); border-color:rgba(48,207,140,.42); animation-delay:.7s; }
-@keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-7px) } }
-.orch-ic{ width:46px; height:46px; margin:0 auto 12px; display:grid; place-items:center; border-radius:12px; background:rgba(251,248,242,.09); color:var(--paper); }
-.orch-ai .orch-ic{ color:var(--green); background:rgba(48,207,140,.16); }
-.orch-node b{ font-family:var(--font-display); font-weight:500; font-size:1.06rem; color:var(--paper); display:block; }
-.orch-node span{ display:block; margin-top:6px; font-size:.82rem; line-height:1.4; color:rgba(251,248,242,.64); }
-.orch-ring{ position:absolute; inset:-7px; border-radius:19px; border:2px solid var(--green); opacity:.5; pointer-events:none; animation:ringPulse 2.6s ease-out infinite; }
-@keyframes ringPulse{ 0%{ transform:scale(1); opacity:.5 } 70%{ transform:scale(1.14); opacity:0 } 100%{ opacity:0 } }
-/* animated connector: a light travelling toward the AI hub */
-.orch-link{ flex:1 1 32px; min-width:28px; align-self:center; height:3px; border-radius:3px; overflow:hidden; background:rgba(251,248,242,.12); }
-.orch-link span{ display:block; height:100%; background:linear-gradient(90deg, transparent, var(--green), transparent); background-size:220% 100%; animation:flow 2.2s linear infinite; }
-.orch-link.rev span{ animation-direction:reverse; }
-@keyframes flow{ 0%{ background-position:120% 0 } 100%{ background-position:-120% 0 } }
-.orch-caption{ text-align:center; color:rgba(251,248,242,.72); margin:0 auto 40px; max-width:56ch; }
-@media (max-width:720px){
-  .orchestrate{ flex-direction:column; align-items:center; gap:14px; }
-  .orch-node{ width:min(320px,100%); }
-  .orch-link{ width:3px; height:26px; flex:0 0 auto; }
-  .orch-link span{ width:100%; background:linear-gradient(180deg, transparent, var(--green), transparent); background-size:100% 220%; animation:flowV 2.2s linear infinite; }
-}
-@keyframes flowV{ 0%{ background-position:0 120% } 100%{ background-position:0 -120% } }
-@media (prefers-reduced-motion:reduce){
-  .orch-node, .orch-ring, .orch-link span{ animation:none !important; }
-}
+@media (prefers-reduced-motion:reduce){ .js .flow-step{ opacity:1; transform:none; } .flow-dot{ transition:none; } }
+
+/* ---------- collaborators ticker ---------- */
+.collab-strip{ background:var(--forest-deep); padding:clamp(34px,5vh,56px) 0; overflow:hidden; }
+.collab-strip .eyebrow{ text-align:center; color:rgba(251,248,242,.55); margin-bottom:24px; }
+.ticker{ display:flex; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); }
+.ticker-track{ display:flex; align-items:center; gap:clamp(40px,7vw,96px); padding-left:clamp(40px,7vw,96px); animation:ticker 22s linear infinite; }
+.ticker:hover .ticker-track{ animation-play-state:paused; }
+.ticker-track img{ height:38px; width:auto; flex:none; opacity:.85; transition:opacity .2s ease; }
+.ticker-track img:hover{ opacity:1; }
+@keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce){ .ticker-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
 
 /* collaborators / missions strip */
 .mission-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; }
@@ -283,7 +273,6 @@ a{ color:inherit; }
 @media (max-width:900px){
   .hero-inner{ grid-template-columns:1fr; gap:44px; }
   .board{ rotate:0deg; }
-  .stat-row{ grid-template-columns:1fr; gap:28px; }
   .steps{ grid-template-columns:1fr; }
   .site-footer{ grid-template-columns:1fr; }
 }
@@ -311,8 +300,9 @@ a{ color:inherit; }
     </button>
   </a>
   <nav class="site-nav" aria-label="Primary">
-    <a href="#about">About</a>
+    <a href="about/">About</a>
     <a href="#approach">Approach</a>
+    <a href="misaal/">MISAAL</a>
     <a class="nav-cta" href="#join">Join the Mission</a>
   </nav>
   <button class="nav-burger" type="button" aria-label="Open menu">Menu
@@ -332,10 +322,10 @@ a{ color:inherit; }
     <div class="hero-copy">
       <span class="eyebrow">Justice · AI · Community</span>
       <h1 class="hero-title">How can we <em>10x</em> access to justice?</h1>
-      <p class="hero-lede">OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4&nbsp;billion Indians experience law and justice — solving long-stuck problems for real people.</p>
+      <p class="hero-lede">OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4&nbsp;billion Indians experience law and justice, solving long-stuck problems for real people.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#join">Join the Mission</a>
-        <a class="btn btn-ghost" href="#about">About OpenNyAI <span class="btn-arrow" aria-hidden="true">↓</span></a>
+        <a class="btn btn-ghost" href="about/">About OpenNyAI <span class="btn-arrow" aria-hidden="true">↓</span></a>
       </div>
     </div>
     <div class="board" aria-label="What we're working on now">
@@ -362,23 +352,23 @@ a{ color:inherit; }
     <div class="section-head">
       <span class="eyebrow">Why we exist</span>
       <h2>The law is often already on people's side. The system just hasn't caught up.</h2>
-      <p>For years the legal world and the technology world in India couldn't talk to each other. OpenNyAI built the bridge — training law students, building open legal-AI tools, and gathering a community of lawyers, technologists, paralegals and researchers who show up for hard problems.</p>
+      <p>For years the legal world and the technology world in India couldn't talk to each other. OpenNyAI built the bridge by training law students, building open legal-AI tools, and gathering a community of lawyers, technologists, paralegals and researchers who show up for hard problems.</p>
     </div>
     <div class="card-grid">
       <div class="card">
         <p class="kicker">Community</p>
         <h3>People who show up</h3>
-        <p>Lawyers, law students, paralegals, technologists, researchers and civil-society organisations — the network a lab in San Francisco cannot replicate.</p>
+        <p>Lawyers, law students, paralegals, technologists, researchers and civil-society organisations. This is the network a lab in San Francisco cannot replicate.</p>
       </div>
       <div class="card">
         <p class="kicker">AI</p>
         <h3>Coordination at scale</h3>
-        <p>We use AI where it multiplies human effort — templating applications, tracking cases, and finding the people who've been waiting.</p>
+        <p>We use AI where it multiplies human effort: templating applications, tracking cases, and finding the people who've been waiting.</p>
       </div>
       <div class="card">
         <p class="kicker">Public goods</p>
         <h3>Open by default</h3>
-        <p>Tools, datasets, explainers and shared learning others can adapt, improve and build on — free and open source.</p>
+        <p>Tools, datasets, explainers and shared learning others can adapt, improve and build on, free and open source.</p>
       </div>
     </div>
   </div>
@@ -389,63 +379,45 @@ a{ color:inherit; }
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Our approach</span>
-      <h2>We solve long-stuck justice problems — for a defined group of real people.</h2>
+      <h2>We solve long-stuck justice problems, for a defined group of real people.</h2>
       <p>We start with problems that have stayed unresolved for too long. Then we narrow the scope, work with community and AI, and build a time-bound solution. As something real, for people who have been waiting long enough.</p>
     </div>
 
-    <div class="orchestrate reveal" aria-label="AI coordinating community and a stuck problem">
-      <div class="orch-node orch-community">
-        <div class="orch-ic">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M15.5 8.5a3 3 0 1 0-2-5.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16.5 14.2c2.6.4 4.5 2.6 4.5 5.8"/></svg>
+    <div class="approach-flow">
+      <div class="flow-visual" aria-hidden="true">
+        <div class="flow-cap top">Big stuck problem</div>
+        <div class="flow-funnel-wrap">
+          <svg class="flow-funnel" viewBox="0 0 120 600" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="funnelGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#DA6EAA"/>
+                <stop offset=".5" stop-color="#DA6EAA"/>
+                <stop offset="1" stop-color="#30CF8C"/>
+              </linearGradient>
+            </defs>
+            <path d="M6,6 L114,6 L70,594 L50,594 Z" fill="url(#funnelGrad)"/>
+          </svg>
+          <div class="flow-dot"></div>
         </div>
-        <b>Community</b>
-        <span>Lawyers, students, paralegals &amp; technologists</span>
+        <div class="flow-cap bottom done">Solved</div>
       </div>
-
-      <div class="orch-link"><span></span></div>
-
-      <div class="orch-node orch-ai">
-        <span class="orch-ring"></span>
-        <div class="orch-ic">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="3"/></svg>
+      <div class="flow-steps">
+        <div class="flow-step active" data-stage="0">
+          <div class="num">01</div>
+          <h3>Find the stuck challenge</h3>
+          <p>Start with justice problems that have stayed unresolved across people, processes or institutions for too long.</p>
         </div>
-        <b>AI coordination</b>
-        <span>Discovery · templating · matching · tracking</span>
-      </div>
-
-      <div class="orch-link rev"><span></span></div>
-
-      <div class="orch-node orch-problem">
-        <div class="orch-ic">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <div class="flow-step" data-stage="1">
+          <div class="num">02</div>
+          <h3>Narrow the real-world scope</h3>
+          <p>Define a subset we can act on now: a region, an affected group, an issue type or a limited operating context.</p>
         </div>
-        <b>Stuck problem</b>
-        <span>A justice gap the law already favours</span>
+        <div class="flow-step" data-stage="2">
+          <div class="num">03</div>
+          <h3>Solve it. For real.</h3>
+          <p>Build with affected communities, AI builders and institutions in a limited period creating impact.</p>
+        </div>
       </div>
-    </div>
-    <p class="orch-caption">AI coordinates the community against a stuck problem — and that becomes a repeatable, three-step play.</p>
-
-    <div class="steps">
-      <div class="step reveal">
-        <div class="num">01</div>
-        <h3>Find the stuck challenge</h3>
-        <p>Start with justice problems that have stayed unresolved across people, processes or institutions for too long.</p>
-      </div>
-      <div class="step reveal">
-        <div class="num">02</div>
-        <h3>Narrow the real-world scope</h3>
-        <p>Define a subset we can act on now: a region, an affected group, an issue type or a limited operating context.</p>
-      </div>
-      <div class="step reveal">
-        <div class="num">03</div>
-        <h3>Solve it. For real.</h3>
-        <p>Build with affected communities, AI builders and institutions in a limited period — creating proof, impact and momentum.</p>
-      </div>
-    </div>
-    <div class="stat-row" style="margin-top:56px;">
-      <div class="stat reveal"><b>1,20,000</b><span>Undertrials legally entitled to release, still in jail.</span></div>
-      <div class="stat reveal"><b>7,000+</b><span>People who used OpenNyAI's open legal-AI tools.</span></div>
-      <div class="stat reveal"><b>100+</b><span>Law students trained to build justice datasets.</span></div>
     </div>
   </div>
 </section>
@@ -454,7 +426,7 @@ a{ color:inherit; }
 <section class="cta-band on-dark" id="join">
   <div class="wrap">
     <h2 id="ctaHeading">Get your hands dirty. You don't need to own a problem to show up for one.</h2>
-    <p id="ctaSub">Join a live OpenNyAI sprint — as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.</p>
+    <p id="ctaSub">Join a live OpenNyAI sprint as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.</p>
     <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:28px;">
       <button id="ctaVolBtn" class="btn btn-primary" type="button" onclick="setVolunteerMode()">Volunteer your time</button>
       <button id="ctaProbBtn" class="btn btn-ghost" type="button" onclick="setBringMode()">Bring a problem</button>
@@ -463,6 +435,27 @@ a{ color:inherit; }
       <input id="ctaInput" type="email" placeholder="Enter your e-mail ID" aria-label="Email address" />
       <button id="ctaSubmit" class="btn btn-primary" type="submit">Join</button>
     </form>
+  </div>
+</section>
+
+<!-- ===== Collaborators ticker ===== -->
+<section class="collab-strip" aria-label="Collaborators">
+  <div class="wrap"><span class="eyebrow">Collaborators</span></div>
+  <div class="ticker">
+    <div class="ticker-track">
+      <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
+      <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
+      <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
+      <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
+      <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
+      <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
+      <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
+    </div>
   </div>
 </section>
 
@@ -475,8 +468,9 @@ a{ color:inherit; }
   <div class="footer-map">
     <div class="footer-col">
       <p class="footer-col-title">OpenNyAI</p>
-      <a href="#about">About</a>
+      <a href="about/">About</a>
       <a href="#approach">Our approach</a>
+      <a href="misaal/">MISAAL</a>
       <a href="#join">Join the mission</a>
     </div>
     <div class="footer-col">
@@ -505,21 +499,30 @@ a{ color:inherit; }
   }
   function setVolunteerMode(){
     document.getElementById('ctaHeading').textContent = "Get your hands dirty. You don't need to own a problem to show up for one.";
-    document.getElementById('ctaSub').textContent = 'Join a live OpenNyAI sprint — as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.';
+    document.getElementById('ctaSub').textContent = 'Join a live OpenNyAI sprint as a lawyer, technologist, researcher, or simply someone who wants to do the hard work of solving a real justice problem.';
     var inp = document.getElementById('ctaInput');
     inp.type = 'email'; inp.placeholder = 'Enter your e-mail ID'; inp.setAttribute('aria-label', 'Email address'); inp.value = '';
     document.getElementById('ctaSubmit').textContent = 'Join';
     document.getElementById('ctaVolBtn').className = 'btn btn-primary';
     document.getElementById('ctaProbBtn').className = 'btn btn-ghost';
   }
-  // Approach micro-animations — reveal steps/stats as they scroll into view
+  // Approach: as you scroll each step, light it up and slide the funnel marker
   (function(){
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+    var steps = document.querySelectorAll('.flow-step');
+    var dot = document.querySelector('.flow-dot');
+    var tops = ['8%','50%','92%'];
+    if (!steps.length || !('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.2 });
-    els.forEach(function(e){ io.observe(e); });
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          steps.forEach(function(s){ s.classList.remove('active'); });
+          en.target.classList.add('active');
+          var i = +en.target.getAttribute('data-stage');
+          if (dot) dot.style.top = tops[i] || '8%';
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    steps.forEach(function(s){ io.observe(s); });
   })();
 </script>
 
