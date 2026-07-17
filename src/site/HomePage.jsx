@@ -359,7 +359,7 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
           aria-busy={isSwapping || undefined}
           onClick={handleLanguageClick}
         >
-          <span className="language-switch-label" key={nextLocale}>
+          <span className="language-switch-label">
             {hindi ? "English" : "हिंदी"}
           </span>
         </a>
