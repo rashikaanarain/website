@@ -293,19 +293,26 @@ export function BorderGlow({
 }
 
 /** Accent CTA shell — Assembly Pink field with brand mesh glow. */
-export function GlowAccentButton({ children, className = "", animated = false }) {
+export function GlowAccentButton({
+  children,
+  className = "",
+  animated = false,
+  glowRadius = 20,
+  glowIntensity = 0.7,
+  fillOpacity = 0.28,
+}) {
   return (
     <BorderGlow
       className={`border-glow-btn border-glow-btn-accent${className ? ` ${className}` : ""}`}
       backgroundColor="#da6eaa"
       borderRadius={999}
-      glowRadius={24}
-      glowIntensity={0.9}
+      glowRadius={glowRadius}
+      glowIntensity={glowIntensity}
       edgeSensitivity={28}
       coneSpread={22}
       glowColor="330 58 66"
       colors={["#e58dbb", "#da6eaa", "#f6f1e6"]}
-      fillOpacity={0.35}
+      fillOpacity={fillOpacity}
       animated={animated}
     >
       {children}

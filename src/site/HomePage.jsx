@@ -3,7 +3,6 @@ import agamiLogo from "../../assets/agami-logo.svg";
 import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.png";
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
-import heroPoster from "../../assets/hero/community-hero-poster.png";
 import logoDark from "../../assets/opennyai-logo-dark.svg";
 import logo from "../../assets/opennyai-logo.svg";
 import { useApproachStory } from "../hooks/useApproachStory.js";
@@ -506,7 +505,30 @@ function Approach({ copy, locale }) {
         data-story-mode="scrub"
       >
         <div className="flow-backdrop" aria-hidden="true">
-          <img src={heroPoster} alt="" width="1920" height="1080" decoding="async" loading="lazy" />
+          <Grainient
+            color1="#E58DBB"
+            color2="#1C3540"
+            color3="#0A151A"
+            timeSpeed={0.18}
+            colorBalance={0.08}
+            warpStrength={1.1}
+            warpFrequency={4.5}
+            warpSpeed={1.2}
+            warpAmplitude={56.0}
+            blendAngle={-18.0}
+            blendSoftness={0.06}
+            rotationAmount={420.0}
+            noiseScale={2.1}
+            grainAmount={0.08}
+            grainScale={2.2}
+            grainAnimated={false}
+            contrast={1.45}
+            gamma={1.0}
+            saturation={1.05}
+            centerX={0.0}
+            centerY={0.0}
+            zoom={0.95}
+          />
         </div>
         <div className="flow-visual" aria-hidden="true">
           <div className="problem-map">
@@ -696,7 +718,7 @@ function SignupForm({ locale, copy, selectedProblem }) {
           <textarea name="problemDetails" placeholder={copy.participate.detailsPlaceholder} value={form.problemDetails} onChange={updateField} required maxLength={1600} disabled={status === "submitting"} />
         </label>
       )}
-      <GlowAccentButton>
+      <GlowAccentButton className="problem-signup-submit" glowRadius={16} glowIntensity={0.55} fillOpacity={0.22}>
         <button className="btn btn-accent" type="submit" disabled={status === "submitting"}>
           {status === "submitting" ? copy.participate.submitting : isOther ? copy.participate.submitOther : copy.participate.submit}
         </button>
