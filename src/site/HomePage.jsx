@@ -4,8 +4,10 @@ import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.p
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
 import heroPoster from "../../assets/hero/community-hero-poster.png";
+import logoDark from "../../assets/opennyai-logo-dark.svg";
 import logo from "../../assets/opennyai-logo.svg";
 import { useApproachStory } from "../hooks/useApproachStory.js";
+import { useCollapsedHeader } from "../hooks/useCollapsedHeader.js";
 import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
 import { HeroMedia } from "./HeroMedia.jsx";
@@ -323,10 +325,15 @@ const COPY = {
 
 function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const collapsed = useCollapsedHeader();
   const closeMenu = () => setMenuOpen(false);
   const hindi = locale === "hi";
   const nextLocale = hindi ? "en" : "hi";
   const nextPath = pathForLocale(nextLocale);
+
+  useEffect(() => {
+    if (collapsed) setMenuOpen(false);
+  }, [collapsed]);
 
   function handleLanguageClick(event) {
     // Keep real navigation for modified clicks / open-in-new-tab.
@@ -347,38 +354,43 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   }
 
   return (
-    <header className="site-header">
-      <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
-        <img src={logo} alt="OpenNyAI" />
-      </a>
-      <div className="header-actions">
-        <a
-          className={`language-switch${isSwapping ? " is-swapping" : ""}`}
-          href={nextPath}
-          lang={nextLocale}
-          hrefLang={nextLocale}
-          aria-busy={isSwapping || undefined}
-          onClick={handleLanguageClick}
-        >
-          <span className="language-switch-label">
-            {hindi ? "English" : "हिंदी"}
-          </span>
+    <header
+      className={`site-header${collapsed ? " is-collapsed" : ""}${menuOpen ? " is-menu-open" : ""}`}
+      data-collapsed={collapsed ? "true" : "false"}
+    >
+      <div className="site-header-cluster">
+        <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
+          <img src={collapsed ? logoDark : logo} alt="OpenNyAI" />
         </a>
-        <button
-          className="nav-toggle"
-          type="button"
-          aria-expanded={menuOpen}
-          aria-controls="primary-navigation"
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? copy.nav.close : copy.nav.menu}
-        </button>
-        <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}>
-          <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
-          <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
-          <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
-          <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
-        </nav>
+        <div className="header-actions">
+          <a
+            className={`language-switch${isSwapping ? " is-swapping" : ""}`}
+            href={nextPath}
+            lang={nextLocale}
+            hrefLang={nextLocale}
+            aria-busy={isSwapping || undefined}
+            onClick={handleLanguageClick}
+          >
+            <span className="language-switch-label">
+              {hindi ? "English" : "हिंदी"}
+            </span>
+          </a>
+          <button
+            className="nav-toggle"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? copy.nav.close : copy.nav.menu}
+          </button>
+          <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}>
+            <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
+            <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
+            <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
+            <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
+          </nav>
+        </div>
       </div>
     </header>
   );

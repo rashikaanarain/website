@@ -106,21 +106,65 @@ a {
 }
 
 .site-header {
-  position: absolute;
+  position: fixed;
   z-index: var(--z-nav);
   top: 0;
+  right: 0;
   left: 0;
   display: flex;
+  justify-content: stretch;
+  padding: 16px clamp(20px, 4vw, 48px);
+  pointer-events: none;
+  transition: padding 360ms var(--ease-out);
+}
+
+.site-header-cluster {
+  position: relative;
+  display: flex;
   width: 100%;
+  max-width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 18px clamp(20px, 4vw, 48px);
+  gap: 12px;
+  pointer-events: auto;
+  transition:
+    width 420ms var(--ease-out),
+    max-width 420ms var(--ease-out),
+    padding 360ms var(--ease-out),
+    gap 360ms var(--ease-out),
+    background 320ms ease,
+    box-shadow 320ms ease,
+    border-radius 360ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+
+.site-header.is-collapsed {
+  justify-content: flex-start;
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+
+.site-header.is-collapsed .site-header-cluster {
+  width: fit-content;
+  max-width: min(100%, 720px);
+  gap: 6px;
+  padding: 6px 7px 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: 0 8px 20px rgba(17, 31, 38, 0.12);
+  transform: translateX(0);
 }
 
 .header-actions {
   display: flex;
+  min-width: 0;
   align-items: center;
   gap: 10px;
+  transition: gap 320ms var(--ease-out);
+}
+
+.site-header.is-collapsed .header-actions {
+  gap: 6px;
 }
 
 .language-switch {
@@ -136,7 +180,13 @@ a {
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  transition: color var(--duration-fast) ease, background var(--duration-fast) ease;
+  transition:
+    color var(--duration-fast) ease,
+    background var(--duration-fast) ease,
+    min-height 320ms var(--ease-out),
+    min-width 320ms var(--ease-out),
+    padding 320ms var(--ease-out),
+    border-radius 320ms var(--ease-out);
 }
 
 .language-switch:hover {
@@ -150,6 +200,14 @@ a {
 
 .language-switch-label {
   display: inline-block;
+}
+
+.site-header.is-collapsed .language-switch {
+  min-width: 4.4rem;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--canvas);
 }
 
 /* Height-only locale morph. Content stays fully opaque — no fade, no View Transitions. */
@@ -172,15 +230,21 @@ a {
 
 .brand-home {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
 }
 
 .brand-home img {
   width: auto;
   height: 27px;
+  transition: height 320ms var(--ease-out);
 }
 
-.site-header .brand-home:focus-visible {
+.site-header.is-collapsed .brand-home img {
+  height: 22px;
+}
+
+.site-header:not(.is-collapsed) .brand-home:focus-visible {
   outline-color: var(--surface);
 }
 
@@ -193,6 +257,20 @@ a {
   border-radius: var(--radius-md);
   background: var(--surface);
   box-shadow: 0 8px 20px rgba(17, 31, 38, 0.1);
+  transition:
+    gap 320ms var(--ease-out),
+    padding 320ms var(--ease-out),
+    background 280ms ease,
+    box-shadow 280ms ease,
+    border-radius 320ms var(--ease-out);
+}
+
+.site-header.is-collapsed .site-nav {
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  box-shadow: none;
 }
 
 .site-nav > a:not(.btn) {
@@ -202,7 +280,17 @@ a {
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  transition: color var(--duration-fast) ease, background var(--duration-fast) ease;
+  white-space: nowrap;
+  transition:
+    color var(--duration-fast) ease,
+    background var(--duration-fast) ease,
+    padding 320ms var(--ease-out),
+    font-size 320ms var(--ease-out);
+}
+
+.site-header.is-collapsed .site-nav > a:not(.btn) {
+  padding: 7px 10px;
+  font-size: 0.84rem;
 }
 
 .site-nav > a:not(.btn):hover {
@@ -212,7 +300,19 @@ a {
 
 .site-nav .nav-action {
   margin-left: 4px;
+  min-height: 38px;
   padding: 9px 15px;
+  transition:
+    min-height 320ms var(--ease-out),
+    padding 320ms var(--ease-out),
+    margin 320ms var(--ease-out);
+}
+
+.site-header.is-collapsed .site-nav .nav-action {
+  margin-left: 2px;
+  min-height: 34px;
+  padding: 7px 12px;
+  font-size: 0.84rem;
 }
 
 .nav-toggle {
@@ -225,6 +325,14 @@ a {
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+.site-header.is-collapsed .nav-toggle {
+  min-height: 36px;
+  padding: 7px 11px;
+  border-radius: var(--radius-pill);
+  border-color: transparent;
+  background: var(--canvas);
 }
 
 .btn {
@@ -350,32 +458,50 @@ a {
   display: grid;
   width: min(100%, calc(var(--content) + 2 * var(--gutter)));
   min-height: 100svh;
+  max-height: none;
   margin-inline: auto;
-  padding: clamp(120px, 15vh, 168px) var(--gutter) clamp(56px, 9vh, 96px);
-  grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.85fr);
+  padding: clamp(92px, 11vh, 120px) var(--gutter) clamp(36px, 5vh, 56px);
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.78fr);
   align-items: center;
-  gap: clamp(40px, 6vw, 80px);
+  gap: clamp(28px, 4vw, 48px);
+}
+
+/* Keep the hero composition inside the first viewport when space allows. */
+@supports (height: 100svh) {
+  .hero-inner {
+    min-height: 100svh;
+    max-height: 100svh;
+  }
+
+  .hero-problems {
+    max-height: calc(100svh - 128px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(251, 248, 242, 0.28) transparent;
+  }
 }
 
 .hero-copy {
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 
 .hero-context {
   width: fit-content;
-  margin-bottom: 28px;
-  padding-bottom: 7px;
+  margin-bottom: 18px;
+  padding-bottom: 6px;
   border-bottom: 2px solid var(--accent-hover);
   color: var(--accent-hover);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
 .hero h1 {
-  max-width: 760px;
+  max-width: 14ch;
   color: var(--surface);
-  font-size: clamp(3.15rem, 7vw, 5.75rem);
+  font-size: clamp(2.7rem, 5.6vw, 4.6rem);
   line-height: 0.98;
   letter-spacing: -0.03em;
 }
@@ -387,18 +513,19 @@ a {
 }
 
 .hero-lede {
-  max-width: 51ch;
-  margin-top: 28px;
+  max-width: 42ch;
+  margin-top: 18px;
   color: rgba(251, 248, 242, 0.84);
-  font-size: clamp(1.08rem, 1.5vw, 1.25rem);
-  line-height: 1.7;
+  font-size: clamp(1.02rem, 1.35vw, 1.14rem);
+  line-height: 1.6;
 }
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 24px;
-  margin-top: 36px;
+  gap: 16px 20px;
+  margin-top: 24px;
 }
 
 .hero .text-link {
@@ -411,8 +538,9 @@ a {
 }
 
 .hero-problems {
+  min-width: 0;
   overflow: hidden;
-  scroll-margin-top: 28px;
+  scroll-margin-top: 72px;
   border: 1px solid rgba(251, 248, 242, 0.16);
   border-radius: var(--radius-md);
   color: var(--surface);
@@ -420,16 +548,20 @@ a {
 }
 
 .hero-problems > h2 {
-  padding: 18px 22px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--line-dark);
+  background: rgba(10, 21, 26, 0.96);
   font-family: var(--font-body);
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   font-weight: 700;
   letter-spacing: 0;
 }
 
 .problem-brief {
-  padding: 22px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--line-dark);
 }
 
@@ -439,9 +571,9 @@ a {
 
 .problem-status,
 .proof-label {
-  margin-bottom: 9px;
+  margin-bottom: 6px;
   color: var(--accent);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -450,18 +582,27 @@ a {
 }
 
 .problem-brief h3 {
-  max-width: 31ch;
+  max-width: 28ch;
   color: var(--surface);
-  font-size: clamp(1.2rem, 1.8vw, 1.48rem);
-  line-height: 1.16;
+  font-size: clamp(1.08rem, 1.45vw, 1.28rem);
+  line-height: 1.18;
 }
 
 .problem-brief > p:not(.problem-status) {
-  max-width: 58ch;
-  margin-top: 10px;
+  max-width: 48ch;
+  margin-top: 6px;
   color: rgba(251, 248, 242, 0.72);
-  font-size: 0.93rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.hero .problem-brief a {
+  margin-top: 8px;
+  font-size: 0.86rem;
 }
 
 .problem-brief a {
@@ -2012,21 +2153,29 @@ td a:hover {
 
   .hero-inner {
     min-height: auto;
-    padding-block: clamp(112px, 14vh, 148px) clamp(48px, 7vh, 80px);
-    gap: clamp(40px, 6vw, 56px);
+    max-height: none;
+    padding-block: clamp(100px, 12vh, 132px) clamp(40px, 6vh, 64px);
+    gap: clamp(32px, 5vw, 48px);
   }
 
   .hero-problems {
     width: min(100%, 640px);
+    max-height: none;
+    overflow: hidden;
     justify-self: start;
   }
 
   .hero h1 {
-    font-size: clamp(2.8rem, 8.5vw, 4.4rem);
+    max-width: none;
+    font-size: clamp(2.6rem, 7.5vw, 3.8rem);
   }
 
   .hero-lede {
     max-width: 46ch;
+  }
+
+  .problem-brief > p:not(.problem-status) {
+    -webkit-line-clamp: 3;
   }
 
   .agami-proof {
@@ -2139,7 +2288,13 @@ td a:hover {
 
 @media (max-width: 680px) {
   .site-header {
-    align-items: flex-start;
+    padding-inline: var(--gutter);
+  }
+
+  .site-header.is-collapsed .site-header-cluster {
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius-md);
   }
 
   .header-actions {
@@ -2152,13 +2307,23 @@ td a:hover {
 
   .site-nav {
     position: absolute;
-    top: 68px;
-    right: 20px;
-    left: 20px;
+    top: calc(100% + 10px);
+    right: 0;
+    left: auto;
     display: none;
+    min-width: min(280px, calc(100vw - 2 * var(--gutter)));
     padding: 8px;
     align-items: stretch;
     flex-direction: column;
+    box-shadow: 0 8px 20px rgba(17, 31, 38, 0.14);
+  }
+
+  .site-header.is-collapsed .site-nav {
+    left: 0;
+    right: 0;
+    min-width: 0;
+    background: var(--surface);
+    box-shadow: 0 8px 20px rgba(17, 31, 38, 0.12);
   }
 
   .site-nav.is-open {
@@ -2179,9 +2344,20 @@ td a:hover {
 
   .hero-inner {
     min-height: auto;
-    padding: 104px var(--gutter) 36px;
+    max-height: none;
+    padding: 96px var(--gutter) 32px;
     grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+    gap: 28px;
+  }
+
+  .hero-problems {
+    max-height: none;
+  }
+
+  .problem-brief > p:not(.problem-status) {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
   }
 
   .hero-context {
@@ -2461,6 +2637,16 @@ td a:hover {
 
   .locale-swap-stage[data-locale-swap="morph"] {
     will-change: auto;
+  }
+
+  .site-header,
+  .site-header-cluster,
+  .brand-home img,
+  .language-switch,
+  .site-nav,
+  .site-nav > a:not(.btn),
+  .site-nav .nav-action {
+    transition: none !important;
   }
 
   [data-parallax] {
