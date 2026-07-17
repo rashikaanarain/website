@@ -96,7 +96,7 @@ const COPY = {
       video: "Watch Agami's approach",
     },
     approach: {
-      title: "We solve long-stuck justice problems with changemaker communities + AI.",
+      title: ["We solve ", { highlight: "long-stuck justice problems" }, " with changemaker communities + AI."],
       body: "Communities bring context, trust, and action. AI brings speed, reach, and coordination. Together, they turn rights on paper into outcomes in people's lives.",
       whole: "The whole stuck problem",
       scale: ["Systemic scale", "Years unresolved"],
@@ -105,9 +105,18 @@ const COPY = {
       outcomeLabel: "One clear outcome",
       outcomeTitle: "Rights realised",
       steps: [
-        ["Find the stuck challenge", "Look for a problem where the law already supports people, but process, information, or coordination keeps the outcome out of reach."],
-        ["Narrow the real-world scope", "Define a starting point we can act on now: one place, affected group, issue, or operating context."],
-        ["Solve it. For real.", "Mobilise communities, institutions, practitioners, and AI in a time-bound sprint—and measure the outcome that matters."],
+        {
+          title: "Find the stuck challenge",
+          body: ["Look for a problem where ", { highlight: "the law already supports people" }, ", but process, information, or coordination keeps the outcome out of reach."],
+        },
+        {
+          title: "Narrow the real-world scope",
+          body: ["Define a starting point ", { highlight: "we can act on now" }, ": one place, affected group, issue, or operating context."],
+        },
+        {
+          title: "Solve it. For real.",
+          body: ["Mobilise communities, institutions, practitioners, and AI in a time-bound sprint—and ", { highlight: "measure the outcome that matters" }, "."],
+        },
       ],
     },
     why: {
@@ -195,7 +204,7 @@ const COPY = {
       video: "Agami का तरीका देखें",
     },
     approach: {
-      title: "हम बदलाव लाने वाले समुदायों + AI की शक्ति से वर्षों से अटकी न्याय समस्याएँ हल करते हैं।",
+      title: ["हम बदलाव लाने वाले समुदायों + AI की शक्ति से ", { highlight: "वर्षों से अटकी न्याय समस्याएँ" }, " हल करते हैं।"],
       body: "समुदाय संदर्भ, भरोसा और कार्रवाई लाते हैं। AI गति, पहुँच और समन्वय बढ़ाता है। साथ मिलकर वे काग़ज़ी अधिकारों को लोगों के जीवन के वास्तविक परिणामों में बदलते हैं।",
       whole: "पूरी अटकी हुई समस्या",
       scale: ["व्यवस्था-स्तर का विस्तार", "वर्षों से अनसुलझी"],
@@ -204,9 +213,18 @@ const COPY = {
       outcomeLabel: "एक स्पष्ट परिणाम",
       outcomeTitle: "अधिकार साकार",
       steps: [
-        ["अटकी चुनौती पहचानें", "ऐसी समस्या खोजें जहाँ कानून लोगों के साथ हो, लेकिन प्रक्रिया, जानकारी या समन्वय के कारण परिणाम पहुँच से बाहर हो।"],
-        ["वास्तविक दायरा छोटा करें", "ऐसी शुरुआत तय करें जिस पर अभी काम हो सके: एक जगह, प्रभावित समूह, मुद्दा या कामकाजी परिस्थिति।"],
-        ["इसे सचमुच हल करें", "समुदायों, संस्थाओं, पेशेवरों और AI को समयबद्ध अभियान में साथ लाएँ—और उस परिणाम को मापें जो वास्तव में मायने रखता है।"],
+        {
+          title: "अटकी चुनौती पहचानें",
+          body: ["ऐसी समस्या खोजें जहाँ ", { highlight: "कानून लोगों के साथ हो" }, ", लेकिन प्रक्रिया, जानकारी या समन्वय के कारण परिणाम पहुँच से बाहर हो।"],
+        },
+        {
+          title: "वास्तविक दायरा छोटा करें",
+          body: ["ऐसी शुरुआत तय करें ", { highlight: "जिस पर अभी काम हो सके" }, ": एक जगह, प्रभावित समूह, मुद्दा या कामकाजी परिस्थिति।"],
+        },
+        {
+          title: "इसे सचमुच हल करें",
+          body: ["समुदायों, संस्थाओं, पेशेवरों और AI को समयबद्ध अभियान में साथ लाएँ—और ", { highlight: "उस परिणाम को मापें जो वास्तव में मायने रखता है" }, "।"],
+        },
       ],
     },
     why: {
@@ -362,6 +380,14 @@ function AgamiProof({ copy }) {
   );
 }
 
+function HighlightedText({ segments, className }) {
+  return segments.map((segment, index) => (
+    typeof segment === "string"
+      ? <span key={`text-${index}`}>{segment}</span>
+      : <mark className={className} key={`highlight-${index}`}>{segment.highlight}</mark>
+  ));
+}
+
 function Approach({ copy }) {
   const flowRef = useRef(null);
   const stepRefs = useRef([]);
@@ -442,7 +468,9 @@ function Approach({ copy }) {
   return (
     <section className="section section-dark approach-section" id="approach" aria-labelledby="approach-title">
       <div className="section-intro section-intro-wide">
-        <h2 id="approach-title">{copy.approach.title}</h2>
+        <h2 id="approach-title">
+          <HighlightedText segments={copy.approach.title} className="approach-title-mark" />
+        </h2>
         <p>{copy.approach.body}</p>
       </div>
       <div className="approach-flow" ref={flowRef} data-active-stage={activeStage}>
@@ -471,7 +499,7 @@ function Approach({ copy }) {
           </div>
         </div>
         <ol className="flow-steps">
-          {copy.approach.steps.map(([title, body], index) => (
+          {copy.approach.steps.map(({ title, body }, index) => (
             <li
               className={`flow-step${activeStage === index ? " active" : ""}`}
               data-stage={index}
@@ -481,8 +509,8 @@ function Approach({ copy }) {
             >
               <div className="flow-step-inner">
                 <span className="flow-step-number">{String(index + 1).padStart(2, "0")}</span>
-                <h3>{title}</h3>
-                <p>{body}</p>
+                <h3><span className="flow-step-title-copy">{title}</span></h3>
+                <p><HighlightedText segments={body} className="flow-copy-mark" /></p>
               </div>
             </li>
           ))}
