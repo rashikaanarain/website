@@ -68,11 +68,14 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       if (!steps.length) return;
 
       const viewport = window.innerHeight || 1;
-      const focusLine = viewport * 0.46;
-      // Enter lower in the viewport so scrub has a long, readable run.
-      const scrubStart = viewport * 0.92;
-      const scrubFull = viewport * 0.34;
+      // Compact layout: sticky diagram sits at the top, so chapter focus lives lower.
+      const compact = window.matchMedia("(max-width: 680px)").matches
+        || window.matchMedia("(max-height: 719px)").matches;
+      const focusLine = viewport * (compact ? 0.7 : 0.46);
+      const scrubStart = viewport * (compact ? 1.02 : 0.92);
+      const scrubFull = viewport * (compact ? 0.52 : 0.34);
       const scrubRange = Math.max(1, scrubStart - scrubFull);
+      const parallaxScale = compact ? 0.4 : 1;
 
       let closest = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
@@ -80,7 +83,7 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
 
       steps.forEach((step, index) => {
         const rect = step.getBoundingClientRect();
-        const anchor = rect.top + Math.min(rect.height * 0.38, 140);
+        const anchor = rect.top + Math.min(rect.height * (compact ? 0.28 : 0.38), compact ? 96 : 140);
         const distance = Math.abs(anchor - focusLine);
         if (distance < closestDistance) {
           closestDistance = distance;
@@ -88,7 +91,7 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
         }
 
         const stepProgress = smoothstep((scrubStart - anchor) / scrubRange);
-        const markProgress = remapProgress(stepProgress, 0.18, 0.82);
+        const markProgress = remapProgress(stepProgress, compact ? 0.12 : 0.18, compact ? 0.88 : 0.82);
         progresses[index] = stepProgress;
         step.style.setProperty("--step-progress", stepProgress.toFixed(4));
         step.style.setProperty("--mark-progress", markProgress.toFixed(4));
@@ -109,8 +112,8 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       const flowRect = flow.getBoundingClientRect();
       const travel = Math.max(1, flowRect.height + viewport * 0.35);
       const storyProgress = clamp01((viewport - flowRect.top) / travel);
-      // Keep parallax within the design system 48px ceiling.
-      const offset = (storyProgress - 0.5) * 2;
+      // Keep parallax within the design system 48px ceiling (lighter on mobile).
+      const offset = (storyProgress - 0.5) * 2 * parallaxScale;
       flow.style.setProperty("--story-progress", storyProgress.toFixed(4));
       flow.style.setProperty("--field-shift", `${(offset * -16).toFixed(2)}px`);
       flow.style.setProperty("--scope-shift", `${(offset * 10).toFixed(2)}px`);
@@ -118,6 +121,7 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       flow.style.setProperty("--backdrop-x", `${(offset * 22).toFixed(2)}px`);
       flow.style.setProperty("--backdrop-y", `${(offset * -30).toFixed(2)}px`);
       flow.dataset.storyMode = "scrub";
+      flow.dataset.storyCompact = compact ? "true" : "false";
       flow.dataset.activeStage = String(closest);
     }
 
@@ -178,6 +182,7 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
         "--backdrop-y",
       ].forEach((name) => flow.style.removeProperty(name));
       delete flow.dataset.storyMode;
+      delete flow.dataset.storyCompact;
       delete flow.dataset.activeStage;
     };
   }, [stepCount, resyncKey]);

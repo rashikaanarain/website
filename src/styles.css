@@ -757,7 +757,8 @@ a {
 
 .approach-section {
   position: relative;
-  overflow: clip;
+  /* visible so sticky mobile/desktop diagram can pin to the viewport */
+  overflow: visible;
   isolation: isolate;
 }
 
@@ -2430,84 +2431,88 @@ td a:hover {
     grid-column: auto;
   }
 
+  /* Mobile keeps continuous scrub: compact sticky diagram + tall step runways. */
   .approach-flow {
-    --find: 1;
-    --scope: 1;
-    --solve: 1;
-    --story-phase: 3;
-    --story-progress: 1;
-    --diagram-lock: 1;
     display: block;
   }
 
   .flow-visual {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: 64px;
+    z-index: 2;
     height: auto;
     min-height: 0;
-    margin: 4px 0 28px;
+    margin: 0 0 4px;
+    padding: 10px 0 14px;
+    align-items: flex-start;
+    background:
+      linear-gradient(180deg, rgba(17, 31, 38, 0.98) 0%, rgba(17, 31, 38, 0.94) 78%, rgba(17, 31, 38, 0) 100%);
   }
 
   .problem-map {
-    max-width: 440px;
+    max-width: none;
+    width: 100%;
+  }
+
+  .story-meter {
+    margin-bottom: 12px;
+  }
+
+  .problem-map-head {
+    margin-bottom: 10px;
   }
 
   .problem-field {
-    height: 230px;
+    height: 176px;
+    padding: 14px;
   }
 
-  .problem-field-shell,
-  .scope-frame,
+  .problem-grid {
+    gap: 6px;
+  }
+
+  .flow-transfer {
+    height: 36px;
+    margin-left: 62%;
+  }
+
   .solved-outcome {
-    transform: none;
+    max-width: min(230px, 72vw);
+    margin-left: 28%;
+    padding: 10px 12px;
+    gap: 10px;
   }
 
-  .scope-frame {
-    opacity: 1;
-    border-color: var(--success-on-dark);
-    box-shadow: 0 0 0 500px rgba(10, 21, 26, 0.58);
+  .outcome-mark {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
   }
 
-  .scope-copy {
-    opacity: 0;
-  }
-
-  .solve-copy,
-  .flow-transfer,
-  .solved-outcome,
-  .outcome-mark,
-  .outcome-label,
   .outcome-title {
-    opacity: 1;
-    transform: none;
-  }
-
-  .flow-transfer::before {
-    transform: scaleY(1);
-  }
-
-  .flow-transfer::after {
-    transform: scale(1);
-  }
-
-  .solved-outcome {
-    clip-path: inset(0);
-  }
-
-  .story-meter-seg i {
-    transform: scaleX(1);
+    font-size: 0.92rem;
   }
 
   .flow-step {
-    min-height: auto;
+    min-height: 78vh;
+    align-items: flex-start;
+    padding-top: 12px;
   }
 
   .flow-step-inner {
-    padding: 22px 0 34px;
+    padding: 18px 0 28px;
   }
 
   .flow-step-inner::after {
-    display: none;
+    left: -12px;
+  }
+
+  .flow-step h3 {
+    font-size: clamp(1.28rem, 6.4vw, 1.55rem);
+  }
+
+  .flow-step p {
+    font-size: 1rem;
   }
 
   .section {
@@ -2753,7 +2758,18 @@ td a:hover {
   }
 }
 
-@media (max-width: 680px), (max-height: 719px), (prefers-reduced-motion: reduce) {
+@media (max-width: 680px), (max-height: 719px) {
+  .flow-backdrop img {
+    opacity: 0.14;
+    will-change: auto;
+  }
+
+  .flow-backdrop::after {
+    background: rgba(17, 31, 38, 0.68);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .flow-backdrop img {
     opacity: 0.16;
     filter: brightness(0.5) saturate(0.68);
@@ -2763,5 +2779,24 @@ td a:hover {
 
   .flow-backdrop::after {
     background: rgba(17, 31, 38, 0.64);
+  }
+}
+
+/* Short landscape phones: still scrub, but keep the sticky diagram compact. */
+@media (max-height: 719px) and (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .flow-visual {
+    position: sticky;
+    top: 56px;
+    height: auto;
+    min-height: 0;
+    padding-block: 8px 10px;
+  }
+
+  .problem-field {
+    height: 148px;
+  }
+
+  .flow-step {
+    min-height: 88vh;
   }
 }
