@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import agamiLogo from "../../assets/agami-logo.svg";
+import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.png";
+import tresVistaLogo from "../../assets/collaborators/tresvista.png";
+import trilegalLogo from "../../assets/collaborators/trilegal.png";
+import heroPoster from "../../assets/hero/community-hero-poster.png";
 import logo from "../../assets/opennyai-logo.svg";
-import logoDark from "../../assets/opennyai-logo-dark.svg";
+import { useParallax } from "../hooks/useParallax.js";
+import { HeroMedia } from "./HeroMedia.jsx";
 
 const PROBLEMS = [
   {
@@ -73,6 +78,15 @@ const PROBLEMS = [
     },
   },
 ];
+
+const COLLABORATORS = [
+  { name: "Agami", src: agamiLogo, width: 692, height: 162, variant: "agami" },
+  { name: "Rohini Nilekani Philanthropies", src: rnpLogo, width: 849, height: 389, variant: "rnp" },
+  { name: "Trilegal", src: trilegalLogo, width: 500, height: 99, variant: "trilegal" },
+  { name: "TresVista", src: tresVistaLogo, width: 400, height: 134, variant: "tresvista" },
+];
+
+const FOUNDING_PARTNERS = ["EkStep", "NLSIU", "Thoughtworks"];
 
 const COPY = {
   en: {
@@ -174,9 +188,15 @@ const COPY = {
       error: "We could not save this right now. Please try again or email hello@opennyai.org.",
       privacy: "We will use these details only to follow up about OpenNyAI's work.",
     },
+    collaborators: {
+      title: "Anchored by Agami, built by many",
+      body: "OpenNyAI is a collaborative mission shaped by organisations across law, technology, public infrastructure, and philanthropy.",
+      aria: "OpenNyAI collaborators",
+      founders: "Founding partners",
+    },
     footer: {
       line: "Community and AI, working together to make justice real.",
-      about: "Why now", approach: "Approach", impact: "Track record", problems: "Problems", misaal: "MISAAL", contact: "Contact",
+      about: "Why now", approach: "Approach", impact: "Track record", problems: "Problems", misaal: "MISAAL", agami: "Agami", contact: "Contact",
     },
     meta: {
       title: "OpenNyAI | Making Justice with AI and Community",
@@ -282,9 +302,15 @@ const COPY = {
       error: "अभी इसे सहेजा नहीं जा सका। फिर कोशिश करें या hello@opennyai.org पर ईमेल करें।",
       privacy: "हम इन विवरणों का उपयोग केवल OpenNyAI के काम के बारे में आपसे संपर्क करने के लिए करेंगे।",
     },
+    collaborators: {
+      title: "Agami की नींव पर, अनेक साथियों ने मिलकर बनाया",
+      body: "OpenNyAI एक साझा पहल है, जिसे कानून, तकनीक, सार्वजनिक डिजिटल ढाँचे और परोपकार के क्षेत्र की संस्थाओं ने मिलकर आकार दिया है।",
+      aria: "OpenNyAI के सहयोगी",
+      founders: "संस्थापक सहयोगी",
+    },
     footer: {
       line: "समुदाय और AI—न्याय को वास्तविक बनाने के लिए साथ काम करते हुए।",
-      about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ", misaal: "MISAAL", contact: "संपर्क",
+      about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ", misaal: "MISAAL", agami: "Agami", contact: "संपर्क",
     },
     meta: {
       title: "OpenNyAI | समुदाय और AI के साथ न्याय-निर्माण",
@@ -301,7 +327,7 @@ function Header({ locale, copy }) {
   return (
     <header className="site-header">
       <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
-        <img src={logoDark} alt="OpenNyAI" />
+        <img src={logo} alt="OpenNyAI" />
       </a>
       <div className="header-actions">
         <a className="language-switch" href={hindi ? "/" : "/hi/"} lang={hindi ? "en" : "hi"} hrefLang={hindi ? "en" : "hi"}>
@@ -330,28 +356,32 @@ function Header({ locale, copy }) {
 function Hero({ locale, copy, onChooseProblem }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-copy">
-        <p className="hero-context">{copy.hero.context}</p>
-        <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em> {copy.hero.titleAfter}</h1>
-        <p className="hero-lede">{copy.hero.lede}</p>
-        <div className="hero-actions">
-          <a className="btn btn-primary" href="#problems">{copy.hero.primary}</a>
-          <a className="text-link" href="#approach">{copy.hero.secondary} <span aria-hidden="true">↓</span></a>
+      <HeroMedia />
+      <div className="hero-wash" aria-hidden="true" />
+      <div className="hero-inner">
+        <div className="hero-copy">
+          <p className="hero-context">{copy.hero.context}</p>
+          <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em> {copy.hero.titleAfter}</h1>
+          <p className="hero-lede">{copy.hero.lede}</p>
+          <div className="hero-actions">
+            <a className="btn btn-accent" href="#problems">{copy.hero.primary}</a>
+            <a className="text-link" href="#approach">{copy.hero.secondary} <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
-      </div>
-      <div className="hero-problems" id="problems" aria-labelledby="problems-title">
-        <h2 id="problems-title">{copy.hero.problemsTitle}</h2>
-        {PROBLEMS.slice(0, 3).map((problem) => {
-          const text = problem[locale];
-          return (
-            <article className="problem-brief" key={problem.id}>
-              <p className="problem-status">{text.status}</p>
-              <h3>{text.title}</h3>
-              <p>{text.body}</p>
-              <a href="#participate" onClick={() => onChooseProblem(problem.id)}>{text.action} <span aria-hidden="true">→</span></a>
-            </article>
-          );
-        })}
+        <div className="hero-problems" id="problems" aria-labelledby="problems-title">
+          <h2 id="problems-title">{copy.hero.problemsTitle}</h2>
+          {PROBLEMS.slice(0, 3).map((problem) => {
+            const text = problem[locale];
+            return (
+              <article className="problem-brief" key={problem.id}>
+                <p className="problem-status">{text.status}</p>
+                <h3>{text.title}</h3>
+                <p>{text.body}</p>
+                <a href="#participate" onClick={() => onChooseProblem(problem.id)}>{text.action} <span aria-hidden="true">→</span></a>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -423,6 +453,8 @@ function Approach({ copy }) {
       flow.style.setProperty("--field-shift", `${(offset * -18).toFixed(2)}px`);
       flow.style.setProperty("--scope-shift", `${(offset * 9).toFixed(2)}px`);
       flow.style.setProperty("--outcome-shift", `${(offset * 14).toFixed(2)}px`);
+      flow.style.setProperty("--backdrop-x", `${(offset * 28).toFixed(2)}px`);
+      flow.style.setProperty("--backdrop-y", `${(offset * -36).toFixed(2)}px`);
     }
 
     function requestUpdate() {
@@ -450,6 +482,8 @@ function Approach({ copy }) {
         flow.style.setProperty("--field-shift", "0px");
         flow.style.setProperty("--scope-shift", "0px");
         flow.style.setProperty("--outcome-shift", "0px");
+        flow.style.setProperty("--backdrop-x", "0px");
+        flow.style.setProperty("--backdrop-y", "0px");
         return;
       }
       addMotionListeners();
@@ -462,6 +496,8 @@ function Approach({ copy }) {
       removeMotionListeners();
       reduceMotion.removeEventListener?.("change", applyMotionPreference);
       if (frameId !== null) window.cancelAnimationFrame(frameId);
+      flow.style.removeProperty("--backdrop-x");
+      flow.style.removeProperty("--backdrop-y");
     };
   }, []);
 
@@ -474,6 +510,9 @@ function Approach({ copy }) {
         <p>{copy.approach.body}</p>
       </div>
       <div className="approach-flow" ref={flowRef} data-active-stage={activeStage}>
+        <div className="flow-backdrop" aria-hidden="true">
+          <img src={heroPoster} alt="" width="1920" height="1080" decoding="async" loading="lazy" />
+        </div>
         <div className="flow-visual" aria-hidden="true">
           <div className="problem-map">
             <div className="problem-map-head">
@@ -680,6 +719,7 @@ function Footer({ locale, copy }) {
         <a href="#impact">{copy.footer.impact}</a>
         <a href="#problems">{copy.footer.problems}</a>
         <a href={locale === "hi" ? "/hi/misaal/" : "/misaal/"}>{copy.footer.misaal}</a>
+        <a href="https://www.agami.in" target="_blank" rel="noopener noreferrer">{copy.footer.agami}</a>
         <a href="mailto:hello@opennyai.org">{copy.footer.contact}</a>
       </nav>
       <p className="footer-copy">© Vayam Forum for Citizenship (Agami)</p>
@@ -687,10 +727,44 @@ function Footer({ locale, copy }) {
   );
 }
 
+function CollaboratorsBand({ copy }) {
+  return (
+    <section className="collaborators-band" aria-labelledby="collaborators-title">
+      <div className="collaborators-band-inner">
+        <header className="collaborators-band-header">
+          <h2 id="collaborators-title">{copy.collaborators.title}</h2>
+          <p>{copy.collaborators.body}</p>
+        </header>
+        <ul className="collaborators-logo-rail" aria-label={copy.collaborators.aria}>
+          {COLLABORATORS.map((collaborator) => (
+            <li className={`collaborator-logo collaborator-logo-${collaborator.variant}`} key={collaborator.name}>
+              <img
+                src={collaborator.src}
+                alt={collaborator.name}
+                width={collaborator.width}
+                height={collaborator.height}
+                decoding="async"
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
+        <div className="collaborators-founders">
+          <p>{copy.collaborators.founders}</p>
+          <ul aria-label={copy.collaborators.founders}>
+            {FOUNDING_PARTNERS.map((partner) => <li key={partner}>{partner}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function HomePage({ locale: requestedLocale }) {
   const locale = requestedLocale || (window.location.pathname.startsWith("/hi") ? "hi" : "en");
   const copy = COPY[locale];
   const [selectedProblem, setSelectedProblem] = useState("bail");
+  useParallax();
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -713,6 +787,7 @@ export function HomePage({ locale: requestedLocale }) {
         <WhyNow copy={copy} />
         <TrackRecord locale={locale} copy={copy} />
         <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
+        <CollaboratorsBand copy={copy} />
       </main>
       <Footer locale={locale} copy={copy} />
     </div>
