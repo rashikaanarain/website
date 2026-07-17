@@ -10,6 +10,7 @@ import { useApproachStory } from "../hooks/useApproachStory.js";
 import { useCollapsedHeader } from "../hooks/useCollapsedHeader.js";
 import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
+import { useSectionEntrance } from "../hooks/useSectionEntrance.js";
 import { HeroMedia } from "./HeroMedia.jsx";
 
 const PROBLEMS = [
@@ -358,6 +359,14 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
       className={`site-header${collapsed ? " is-collapsed" : ""}${menuOpen ? " is-menu-open" : ""}`}
       data-collapsed={collapsed ? "true" : "false"}
     >
+      {menuOpen && (
+        <button
+          className="nav-scrim"
+          type="button"
+          aria-label={hindi ? "मेन्यू बंद करें" : "Close menu"}
+          onClick={closeMenu}
+        />
+      )}
       <div className="site-header-cluster">
         <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
           <img src={collapsed ? logoDark : logo} alt="OpenNyAI" />
@@ -384,13 +393,17 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
           >
             {menuOpen ? copy.nav.close : copy.nav.menu}
           </button>
-          <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}>
-            <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
-            <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
-            <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
-            <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
-          </nav>
         </div>
+        <nav
+          id="primary-navigation"
+          className={`site-nav${menuOpen ? " is-open" : ""}`}
+          aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}
+        >
+          <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
+          <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
+          <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
+          <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
+        </nav>
       </div>
     </header>
   );
@@ -432,7 +445,7 @@ function Hero({ locale, copy, onChooseProblem }) {
 
 function AgamiProof({ copy }) {
   return (
-    <section className="agami-proof" id="community" aria-labelledby="agami-proof-title">
+    <section className="agami-proof" id="community" aria-labelledby="agami-proof-title" data-entrance>
       <div className="agami-proof-brand">
         <img src={agamiLogo} alt="Agami" />
         <h2 id="agami-proof-title">{copy.agami.title}</h2>
@@ -485,6 +498,9 @@ function Approach({ copy, locale }) {
         </div>
         <div className="flow-visual" aria-hidden="true">
           <div className="problem-map">
+            <div className="story-phase" aria-hidden="true">
+              <span>{stageLabels[activeStage]}</span>
+            </div>
             <div className="story-meter" aria-hidden="true">
               {stageLabels.map((label, index) => (
                 <span className={`story-meter-seg story-meter-seg-${index}`} data-label={label} key={label}>
@@ -498,10 +514,11 @@ function Approach({ copy, locale }) {
             </div>
             <div className="problem-field-shell">
               <div className="problem-field">
-                <div className="problem-grid">
+                <div className="problem-grid" aria-hidden="true">
                   {Array.from({ length: 30 }, (_, index) => (
                     <span
                       className={`problem-node${[9, 10, 15, 16].includes(index) ? " focus" : ""}`}
+                      data-index={index}
                       key={index}
                     />
                   ))}
@@ -513,6 +530,8 @@ function Approach({ copy, locale }) {
                     <span className="solve-copy">{copy.approach.ready}</span>
                   </span>
                 </div>
+                <div className="story-connector connector-a" aria-hidden="true" />
+                <div className="story-connector connector-b" aria-hidden="true" />
               </div>
             </div>
             <div className="flow-transfer" />
@@ -552,7 +571,7 @@ function Approach({ copy, locale }) {
 
 function WhyNow({ copy }) {
   return (
-    <section className="section" id="about" aria-labelledby="about-title">
+    <section className="section" id="about" aria-labelledby="about-title" data-entrance>
       <div className="section-intro">
         <h2 id="about-title">{copy.why.title}</h2>
         <p>{copy.why.body}</p>
@@ -571,7 +590,7 @@ function WhyNow({ copy }) {
 
 function TrackRecord({ locale, copy }) {
   return (
-    <section className="section track-record-section" id="impact" aria-labelledby="impact-title">
+    <section className="section track-record-section" id="impact" aria-labelledby="impact-title" data-entrance>
       <div className="section-intro section-intro-wide">
         <h2 id="impact-title">{copy.impact.title}</h2>
         <p>{copy.impact.body}</p>
@@ -676,7 +695,7 @@ function SignupForm({ locale, copy, selectedProblem }) {
 
 function Participate({ locale, copy, selectedProblem, onChooseProblem }) {
   return (
-    <section className="participate-section" id="participate" aria-labelledby="participate-title">
+    <section className="participate-section" id="participate" aria-labelledby="participate-title" data-entrance>
       <div className="participate-intro">
         <h2 id="participate-title">{copy.participate.title}</h2>
         <p>{copy.participate.body}</p>
@@ -756,6 +775,7 @@ export function HomePage({ locale: requestedLocale }) {
   const copy = COPY[locale];
   const [selectedProblem, setSelectedProblem] = useState("bail");
   useParallax();
+  useSectionEntrance();
 
   useEffect(() => {
     const absoluteUrl = new URL(pathForLocale(locale), window.location.origin).href;
