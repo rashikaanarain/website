@@ -1,8 +1,8 @@
 # OpenNyAI Website
 
-The public website and small signup admin for **OpenNyAI**, an Agami mission using community and AI to solve long-stuck justice problems in India.
+The public website and small problem-interest admin for **OpenNyAI**, an Agami mission using community and AI to solve long-stuck justice problems in India.
 
-The app uses React and Vite on the frontend, Bun for the web/API server, and SQLite for email signups, admin users, and sessions.
+The app uses React and Vite on the frontend. Local development uses Bun and SQLite; the Sites production adapter uses a Cloudflare Worker and D1.
 
 ## Quick start
 
@@ -33,6 +33,7 @@ The same values can be supplied through `ADMIN_USERNAME` and `ADMIN_PASSWORD`.
 |---|---|
 | `bun run dev` | Start Vite and the Bun API together with file watching. |
 | `bun run build` | Build the React frontend into `dist/`. |
+| `bun run build:sites` | Build the frontend, Worker, D1 migrations, and Sites manifest. |
 | `bun run start` | Serve the built frontend and API from Bun. |
 | `bun run seed:admin` | Create or reset an admin user's password. |
 | `bun test` | Run the SQLite and API tests. |
@@ -46,8 +47,9 @@ bun run start
 
 ## Routes and data
 
-- `POST /api/signups` validates, normalizes, and stores a unique email address.
-- `/admin` provides the login and signup table.
+- `POST /api/signups` stores newsletter-only email consent.
+- `POST /api/problem-interests` stores a person's chosen problem and contribution, deduped by email + problem.
+- `/admin` provides protected problem-interest and mailing-list tables with separate CSV exports.
 - Admin sessions use an HTTP-only, SameSite cookie and expire after seven days.
 - Passwords are hashed with Argon2id through Bun's password API.
 - CSV export happens in the browser from the protected signup response.
@@ -85,6 +87,12 @@ Organisation strategy and copy context remain in [context.md](context.md).
 │   ├── dev.js              Combined API + Vite dev runner
 │   ├── seed-admin.js       Admin seed command
 │   └── *.test.js           Bun tests
+├── worker/index.js          Sites Worker API and asset routing
+├── drizzle/                 Sites D1 migrations
+├── .openai/hosting.json     Sites project and binding manifest
+├── about/, misaal/          English supporting pages
+├── hi/                      Hindi supporting pages
+├── public/og.png            Social-share card
 ├── src/
 │   ├── admin/AdminApp.jsx  Login and signup dashboard
 │   ├── hooks/useParallax.js
@@ -101,13 +109,13 @@ Organisation strategy and copy context remain in [context.md](context.md).
 
 ## Deployment
 
-The complete app must run on a Bun-compatible host with a persistent volume for the SQLite file. Build with `bun run build`, start with `bun run start`, and point `DATABASE_PATH` at that volume.
+The production site is configured for OpenAI Sites in `.openai/hosting.json`. `bun run build:sites` creates the deployable Worker bundle, static assets, D1 migration, and Sites manifest. The Sites project must define `ADMIN_USERNAME` and a strong secret `ADMIN_PASSWORD` as runtime environment variables.
 
-`netlify.toml` still supports a static frontend deployment, but Netlify's static runtime cannot persist this SQLite database or run the Bun API. On Netlify, the page renders but signup and admin functionality are unavailable. Use a persistent Bun host for the complete application.
+The Bun/SQLite path remains available for local development or a separately managed persistent Bun host. `netlify.toml` is frontend-only: it cannot persist SQLite or run the Bun API.
 
-Before a public deployment:
+Before a Sites deployment:
 
-1. Mount persistent storage and set `DATABASE_PATH`.
-2. Seed a unique admin username and password.
-3. Serve the app over HTTPS so the admin session cookie is secure.
-4. Back up the SQLite file on a regular schedule.
+1. Run `bun install`, `bun test`, and `bun run build:sites`.
+2. Configure `ADMIN_USERNAME` and secret `ADMIN_PASSWORD` in Sites.
+3. Package the validated build through the Sites helper and deploy the exact pushed commit.
+4. Add platform rate limiting for `/api/admin/login` before broad public promotion.

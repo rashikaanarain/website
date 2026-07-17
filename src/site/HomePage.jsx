@@ -1,187 +1,567 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import agamiLogo from "../../assets/agami-logo.svg";
 import logo from "../../assets/opennyai-logo.svg";
 import logoDark from "../../assets/opennyai-logo-dark.svg";
-import { useParallax } from "../hooks/useParallax.js";
 
-const communityStrengths = [
+const PROBLEMS = [
   {
-    title: "A community that shows up",
-    body: "Lawyers, law students, paralegals, technologists, researchers, and civil-society organisations working as one practical network.",
+    id: "bail",
+    en: {
+      status: "Live project · Big Bail Bash",
+      title: "The law says they can go home. The system has not let them.",
+      body: "We are starting with 50 eligible undertrials in one state—finding families, preparing applications, and coordinating lawyers.",
+      action: "Help turn eligibility into freedom",
+      short: "Turn eligibility into freedom",
+      selector: "Undertrials eligible for release",
+    },
+    hi: {
+      status: "सक्रिय पहल · बिग बेल बैश",
+      title: "कानून कहता है कि वे घर जा सकते हैं। व्यवस्था ने अभी तक जाने नहीं दिया।",
+      body: "हम एक राज्य में 50 पात्र विचाराधीन कैदियों से शुरुआत कर रहे हैं—परिवारों तक पहुँचना, आवेदन तैयार करना और वकीलों के काम का समन्वय करना।",
+      action: "कानूनी पात्रता को आज़ादी में बदलने में मदद करें",
+      short: "पात्रता को आज़ादी में बदलें",
+      selector: "रिहाई के पात्र विचाराधीन कैदी",
+    },
   },
   {
-    title: "AI that multiplies effort",
-    body: "Useful where it removes friction: finding people, preparing applications, coordinating work, and learning from outcomes.",
+    id: "wages",
+    en: {
+      status: "In discovery · Wage recovery",
+      title: "The work is done. The wages are still unpaid.",
+      body: "Workers have valid claims. The barrier is a maze of information, filings, and follow-through before earned money reaches them.",
+      action: "Help make wage recovery work",
+      short: "Recover unpaid wages",
+      selector: "Workers waiting for earned wages",
+    },
+    hi: {
+      status: "खोज के चरण में · मज़दूरी वापसी",
+      title: "काम पूरा हो चुका है। मज़दूरी अब भी बकाया है।",
+      body: "मज़दूरों के दावे वैध हैं। उनकी कमाई उन तक पहुँचने से पहले जानकारी, आवेदन और निरंतर कार्रवाई की जटिल प्रक्रिया रास्ता रोकती है।",
+      action: "मज़दूरी की वापसी को कारगर बनाने में मदद करें",
+      short: "बकाया मज़दूरी वापस दिलाएँ",
+      selector: "अपनी कमाई का इंतज़ार कर रहे मज़दूर",
+    },
   },
   {
-    title: "Public goods that travel",
-    body: "Open tools, datasets, explainers, and operating knowledge that others can adapt without asking permission.",
+    id: "online-safety",
+    en: {
+      status: "Problem in focus · Online safety",
+      title: "When a girl faces online harm, help should be easier to find than the abuse.",
+      body: "We are shaping trusted guidance, safeguards, and reporting pathways that work at the moment they are needed.",
+      action: "Help shape this problem",
+      short: "Make online help safer",
+      selector: "Safer online pathways for girls",
+    },
+    hi: {
+      status: "केंद्रित समस्या · ऑनलाइन सुरक्षा",
+      title: "ऑनलाइन नुकसान झेल रही किसी लड़की के लिए मदद, उत्पीड़न से अधिक कठिन नहीं होनी चाहिए।",
+      body: "हम भरोसेमंद मार्गदर्शन, सुरक्षा उपाय और शिकायत के ऐसे रास्ते गढ़ रहे हैं जो ज़रूरत के समय सचमुच काम करें।",
+      action: "इस समस्या को आकार देने में मदद करें",
+      short: "ऑनलाइन मदद को सुरक्षित बनाएँ",
+      selector: "लड़कियों के लिए सुरक्षित ऑनलाइन रास्ते",
+    },
+  },
+  {
+    id: "other",
+    en: {
+      short: "Bring another stuck problem",
+      selector: "A different justice problem",
+    },
+    hi: {
+      short: "कोई दूसरी अटकी समस्या लाएँ",
+      selector: "न्याय की कोई अन्य समस्या",
+    },
   },
 ];
 
-const approachSteps = [
-  ["Find the stuck challenge", "Start where the law already supports people, but process, information, or coordination has failed them."],
-  ["Choose a solvable group", "Define a place, issue, or affected community small enough to act with and large enough to learn from."],
-  ["Solve it for real", "Work with affected communities, practitioners, institutions, and AI builders toward a measurable outcome."],
-];
+const COPY = {
+  en: {
+    nav: { about: "Why now", approach: "Approach", impact: "Track record", problems: "Explore the problems", menu: "Menu", close: "Close" },
+    hero: {
+      context: "Justice, made together",
+      titleBefore: "How can we",
+      titleAccent: "10×",
+      titleAfter: "access to justice?",
+      lede: "OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4 billion Indians experience law and justice.",
+      primary: "Explore the problems",
+      secondary: "See how we solve them",
+      problemsTitle: "Problems in motion",
+    },
+    agami: {
+      title: "An Agami mission, backed by a field built over years.",
+      statA: "4,000+ changemakers",
+      statB: "2,000+ organisations",
+      body: "OpenNyAI brings Agami's network, trust, and field-building experience into every problem it takes on.",
+      community: "Meet the Agami community",
+      video: "Watch Agami's approach",
+    },
+    approach: {
+      title: "We solve long-stuck justice problems with changemaker communities + AI.",
+      body: "Communities bring context, trust, and action. AI brings speed, reach, and coordination. Together, they turn rights on paper into outcomes in people's lives.",
+      whole: "The whole stuck problem",
+      scale: ["Systemic scale", "Years unresolved"],
+      subset: "Defined subset",
+      ready: "Ready to solve",
+      outcomeLabel: "One clear outcome",
+      outcomeTitle: "Rights realised",
+      steps: [
+        ["Find the stuck challenge", "Look for a problem where the law already supports people, but process, information, or coordination keeps the outcome out of reach."],
+        ["Narrow the real-world scope", "Define a starting point we can act on now: one place, affected group, issue, or operating context."],
+        ["Solve it. For real.", "Mobilise communities, institutions, practitioners, and AI in a time-bound sprint—and measure the outcome that matters."],
+      ],
+    },
+    why: {
+      title: "The opportunities to transform justice are everywhere. So are the people ready to act.",
+      body: "Across India, justicemakers are already proving what is possible. Communities hold knowledge, trust, and practical experience. AI can multiply their reach and coordination. OpenNyAI brings these abundant assets together around problems ready to move.",
+      strengths: [
+        ["People who show up", "Lawyers, law students, paralegals, technologists, researchers, and civil-society organisations working as one practical network."],
+        ["AI that multiplies effort", "Useful where it removes friction: finding people, preparing applications, coordinating work, and learning from outcomes."],
+        ["Public goods that travel", "Open tools, datasets, explainers, and operating knowledge that others can adapt without asking permission."],
+      ],
+    },
+    impact: {
+      title: "What this community has already made possible",
+      body: "OpenNyAI helped pioneer open legal AI in India. These public goods and field stories show what becomes possible when legal knowledge, community insight, and technology are built together.",
+      nerLabel: "Legal NER",
+      nerTitle: "Indian judgments became machine-readable.",
+      nerBody: "A first-of-its-kind open corpus and model taught machines to recognise the people, courts, laws, dates, and legal provisions inside Indian judgments.",
+      nerStats: [["46,545", "annotated legal entities"], ["14", "Indian-legal entity types"], ["91.1", "reported F1 score"]],
+      model: "Open the model",
+      paper: "Read the research",
+      jugalLabel: "Jugalbandi · Biwan, 2023",
+      jugalTitle: "A scholarship answer, in the language Vandna speaks.",
+      jugalBody: "An 18-year-old student asked Jugalbandi about scholarships in Hindi. It helped her find a scheme, understand eligibility and documents, and submit an application.",
+      jugalStats: [["10", "Indian languages in the early pilot"], ["171", "government programmes covered"]],
+      story: "Read Vandna's story",
+      useCases: "Explore Jugalbandi use cases",
+      now: "Now building",
+      misaalTitle: "MISAAL: a community standard for high-quality socio-legal AI answers.",
+      misaalAction: "See the standard",
+    },
+    participate: {
+      title: "Start with the problem that won't let you look away.",
+      body: "Choose one. Tell us what you can bring. We will connect you to the people already working on it.",
+      choose: "Choose a problem",
+      formTitle: "How can you help move it?",
+      name: "Your name",
+      namePlaceholder: "Name",
+      email: "Email address",
+      emailPlaceholder: "you@example.org",
+      organisation: "Organisation (optional)",
+      organisationPlaceholder: "Organisation or community",
+      contribution: "What can you bring?",
+      contributionPlaceholder: "Choose one",
+      contributions: [
+        ["legal", "Legal work"], ["technology", "Technology and AI"], ["research", "Research and evidence"],
+        ["community", "Community knowledge"], ["institutional", "Institutional support"], ["funding", "Funding or resources"], ["other", "Something else"],
+      ],
+      details: "Tell us about the problem",
+      detailsPlaceholder: "Who is affected, why is it stuck, and what would a clear win look like?",
+      submit: "Help solve this problem",
+      submitOther: "Share this problem",
+      submitting: "Sending…",
+      success: "Thank you. We will connect your interest to the right problem team.",
+      existing: "We updated your problem interest with these latest details.",
+      error: "We could not save this right now. Please try again or email hello@opennyai.org.",
+      privacy: "We will use these details only to follow up about OpenNyAI's work.",
+    },
+    footer: {
+      line: "Community and AI, working together to make justice real.",
+      about: "Why now", approach: "Approach", impact: "Track record", problems: "Problems", misaal: "MISAAL", contact: "Contact",
+    },
+    meta: {
+      title: "OpenNyAI | Making Justice with AI and Community",
+      description: "An Agami mission bringing changemaker communities and AI together to solve long-stuck justice problems in India.",
+    },
+  },
+  hi: {
+    nav: { about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ देखें", menu: "मेन्यू", close: "बंद करें" },
+    hero: {
+      context: "न्याय, मिलकर बनाया गया",
+      titleBefore: "न्याय तक पहुँच को",
+      titleAccent: "10 गुना",
+      titleAfter: "कैसे बढ़ाएँ?",
+      lede: "OpenNyAI एक सामूहिक पहल है, जो AI और समुदाय की शक्ति से 1.4 अरब भारतीयों के कानून और न्याय के अनुभव को बदल रही है।",
+      primary: "समस्याएँ देखें",
+      secondary: "जानें कि हम इन्हें कैसे हल करते हैं",
+      problemsTitle: "आगे बढ़ती समस्याएँ",
+    },
+    agami: {
+      title: "Agami की एक पहल, वर्षों में तैयार हुए क्षेत्र की ताक़त के साथ।",
+      statA: "4,000+ बदलावकर्मी",
+      statB: "2,000+ संस्थाएँ",
+      body: "OpenNyAI हर समस्या में Agami के नेटवर्क, भरोसे और क्षेत्र-निर्माण के अनुभव को साथ लाता है।",
+      community: "Agami समुदाय से मिलें",
+      video: "Agami का तरीका देखें",
+    },
+    approach: {
+      title: "हम बदलाव लाने वाले समुदायों + AI की शक्ति से वर्षों से अटकी न्याय समस्याएँ हल करते हैं।",
+      body: "समुदाय संदर्भ, भरोसा और कार्रवाई लाते हैं। AI गति, पहुँच और समन्वय बढ़ाता है। साथ मिलकर वे काग़ज़ी अधिकारों को लोगों के जीवन के वास्तविक परिणामों में बदलते हैं।",
+      whole: "पूरी अटकी हुई समस्या",
+      scale: ["व्यवस्था-स्तर का विस्तार", "वर्षों से अनसुलझी"],
+      subset: "परिभाषित दायरा",
+      ready: "हल करने को तैयार",
+      outcomeLabel: "एक स्पष्ट परिणाम",
+      outcomeTitle: "अधिकार साकार",
+      steps: [
+        ["अटकी चुनौती पहचानें", "ऐसी समस्या खोजें जहाँ कानून लोगों के साथ हो, लेकिन प्रक्रिया, जानकारी या समन्वय के कारण परिणाम पहुँच से बाहर हो।"],
+        ["वास्तविक दायरा छोटा करें", "ऐसी शुरुआत तय करें जिस पर अभी काम हो सके: एक जगह, प्रभावित समूह, मुद्दा या कामकाजी परिस्थिति।"],
+        ["इसे सचमुच हल करें", "समुदायों, संस्थाओं, पेशेवरों और AI को समयबद्ध अभियान में साथ लाएँ—और उस परिणाम को मापें जो वास्तव में मायने रखता है।"],
+      ],
+    },
+    why: {
+      title: "न्याय को बदलने के अवसर हर ओर हैं। और काम के लिए तैयार लोग भी।",
+      body: "भारत भर में न्याय-निर्माता दिखा रहे हैं कि क्या संभव है। समुदायों के पास ज्ञान, भरोसा और व्यावहारिक अनुभव है। AI उनकी पहुँच और समन्वय कई गुना बढ़ा सकता है। OpenNyAI इन प्रचुर शक्तियों को उन समस्याओं के आसपास जोड़ता है जो आगे बढ़ने को तैयार हैं।",
+      strengths: [
+        ["काम के लिए सामने आने वाले लोग", "वकील, कानून के विद्यार्थी, पैरालीगल, तकनीक विशेषज्ञ, शोधकर्ता और नागरिक-सामाजिक संस्थाएँ—एक व्यावहारिक नेटवर्क के रूप में।"],
+        ["मानवीय प्रयास को बढ़ाने वाला AI", "जहाँ यह अड़चन कम करे: लोगों को खोजना, आवेदन तैयार करना, काम का समन्वय करना और परिणामों से सीखना।"],
+        ["दूर तक जाने वाली सार्वजनिक संपदा", "खुले औज़ार, डेटा, सरल व्याख्याएँ और कामकाजी ज्ञान, जिन्हें दूसरे बिना अनुमति माँगे अपना और बेहतर बना सकें।"],
+      ],
+    },
+    impact: {
+      title: "इस समुदाय ने पहले ही क्या संभव बनाया है",
+      body: "OpenNyAI ने भारत में खुले कानूनी AI की शुरुआती दिशा बनाने में मदद की। ये सार्वजनिक संपदाएँ और ज़मीनी कहानियाँ दिखाती हैं कि कानूनी ज्ञान, सामुदायिक समझ और तकनीक साथ बनें तो क्या संभव है।",
+      nerLabel: "कानूनी NER",
+      nerTitle: "भारतीय फ़ैसले मशीनों के लिए पढ़ने योग्य बने।",
+      nerBody: "एक अनूठे खुले कॉर्पस और मॉडल ने मशीनों को भारतीय फ़ैसलों में लोगों, अदालतों, कानूनों, तारीख़ों और कानूनी प्रावधानों को पहचानना सिखाया।",
+      nerStats: [["46,545", "चिह्नित कानूनी इकाइयाँ"], ["14", "भारतीय कानून से जुड़ी इकाई श्रेणियाँ"], ["91.1", "रिपोर्ट किया गया F1 स्कोर"]],
+      model: "मॉडल खोलें",
+      paper: "शोध पढ़ें",
+      jugalLabel: "Jugalbandi · बिवान, 2023",
+      jugalTitle: "वंदना को छात्रवृत्ति का जवाब, उसकी अपनी भाषा में मिला।",
+      jugalBody: "18 वर्षीय छात्रा ने Jugalbandi से हिंदी में छात्रवृत्ति के बारे में पूछा। उसे योजना, पात्रता और ज़रूरी दस्तावेज़ समझने और आवेदन करने में मदद मिली।",
+      jugalStats: [["10", "शुरुआती पायलट में भारतीय भाषाएँ"], ["171", "सरकारी योजनाओं की जानकारी"]],
+      story: "वंदना की कहानी पढ़ें",
+      useCases: "Jugalbandi के उपयोग देखें",
+      now: "अब बन रहा है",
+      misaalTitle: "MISAAL: सामाजिक-कानूनी AI उत्तरों की गुणवत्ता के लिए समुदाय-निर्मित मानक।",
+      misaalAction: "मानक देखें",
+    },
+    participate: {
+      title: "उस समस्या से शुरू करें जिसे आप अनदेखा नहीं कर सकते।",
+      body: "एक समस्या चुनें। बताएँ कि आप क्या योगदान दे सकते हैं। हम आपको उस पर काम कर रहे लोगों से जोड़ेंगे।",
+      choose: "एक समस्या चुनें",
+      formTitle: "आप इसे आगे बढ़ाने में कैसे मदद कर सकते हैं?",
+      name: "आपका नाम",
+      namePlaceholder: "नाम",
+      email: "ईमेल पता",
+      emailPlaceholder: "you@example.org",
+      organisation: "संस्था (वैकल्पिक)",
+      organisationPlaceholder: "संस्था या समुदाय",
+      contribution: "आप क्या योगदान दे सकते हैं?",
+      contributionPlaceholder: "एक विकल्प चुनें",
+      contributions: [
+        ["legal", "कानूनी काम"], ["technology", "तकनीक और AI"], ["research", "शोध और प्रमाण"],
+        ["community", "सामुदायिक ज्ञान"], ["institutional", "संस्थागत सहयोग"], ["funding", "वित्तीय या अन्य संसाधन"], ["other", "कुछ और"],
+      ],
+      details: "समस्या के बारे में बताएँ",
+      detailsPlaceholder: "कौन प्रभावित है, समस्या क्यों अटकी है, और स्पष्ट सफलता कैसी दिखेगी?",
+      submit: "इस समस्या को हल करने में मदद करें",
+      submitOther: "यह समस्या साझा करें",
+      submitting: "भेज रहे हैं…",
+      success: "धन्यवाद। हम आपकी रुचि को सही समस्या-समूह से जोड़ेंगे।",
+      existing: "हमने इस समस्या में आपकी रुचि को नई जानकारी के साथ अपडेट कर दिया है।",
+      error: "अभी इसे सहेजा नहीं जा सका। फिर कोशिश करें या hello@opennyai.org पर ईमेल करें।",
+      privacy: "हम इन विवरणों का उपयोग केवल OpenNyAI के काम के बारे में आपसे संपर्क करने के लिए करेंगे।",
+    },
+    footer: {
+      line: "समुदाय और AI—न्याय को वास्तविक बनाने के लिए साथ काम करते हुए।",
+      about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ", misaal: "MISAAL", contact: "संपर्क",
+    },
+    meta: {
+      title: "OpenNyAI | समुदाय और AI के साथ न्याय-निर्माण",
+      description: "Agami की एक पहल, जो भारत में वर्षों से अटकी न्याय समस्याओं को हल करने के लिए बदलावकर्मी समुदायों और AI को साथ लाती है।",
+    },
+  },
+};
 
-const participationCriteria = [
-  ["The law is already on people's side", "The work is about making an existing right function, not waiting for a new law."],
-  ["The gap is practical", "Friction, missing information, or coordination is holding the outcome back—not immovable opposition."],
-  ["Winning can be named", "People released, wages recovered, or claims processed. We agree on the outcome before work begins."],
-];
-
-const missions = [
-  ["Agami", "The movement building the field of justice innovation in India.", "https://www.agami.in"],
-  ["PUCAR", "Building a people-centric dispute-resolution system.", "https://pucar.org"],
-  ["Praani", "Bringing ecological wellbeing into our justice systems.", "https://www.agami.in/praani"],
-  ["ODR", "Scaling dispute resolution outside the courts.", "https://www.agami.in/online-dispute-resolution"],
-];
-
-function Header() {
+function Header({ locale, copy }) {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const closeMenu = () => setMenuOpen(false);
+  const hindi = locale === "hi";
 
   return (
     <header className="site-header">
-      <a className="brand-home" href="#top" aria-label="OpenNyAI home">
+      <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
         <img src={logoDark} alt="OpenNyAI" />
       </a>
-      <button
-        className="nav-toggle"
-        type="button"
-        aria-expanded={menuOpen}
-        aria-controls="primary-navigation"
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        {menuOpen ? "Close" : "Menu"}
-      </button>
-      <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label="Primary">
-        <a href="#about" onClick={closeMenu}>About</a>
-        <a href="#approach" onClick={closeMenu}>Approach</a>
-        <a href="#missions" onClick={closeMenu}>Community</a>
-        <a href="#participate" onClick={closeMenu}>Participate</a>
-        <a className="btn btn-primary nav-action" href="#join" onClick={closeMenu}>Join the mission</a>
-      </nav>
+      <div className="header-actions">
+        <a className="language-switch" href={hindi ? "/" : "/hi/"} lang={hindi ? "en" : "hi"} hrefLang={hindi ? "en" : "hi"}>
+          {hindi ? "English" : "हिंदी"}
+        </a>
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? copy.nav.close : copy.nav.menu}
+        </button>
+        <nav id="primary-navigation" className={`site-nav${menuOpen ? " is-open" : ""}`} aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}>
+          <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
+          <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
+          <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
+          <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
+        </nav>
+      </div>
     </header>
   );
 }
 
-function Hero() {
+function Hero({ locale, copy, onChooseProblem }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero-copy">
-        <p className="hero-context">Justice, made together</p>
-        <h1 id="hero-title">How can we <em>10×</em> access to justice?</h1>
-        <p className="hero-lede">OpenNyAI brings community and AI together to solve long-stuck justice problems for real people.</p>
+        <p className="hero-context">{copy.hero.context}</p>
+        <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em> {copy.hero.titleAfter}</h1>
+        <p className="hero-lede">{copy.hero.lede}</p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href="#join">Join the mission</a>
-          <a className="text-link" href="#about">See how it works <span aria-hidden="true">↓</span></a>
+          <a className="btn btn-primary" href="#problems">{copy.hero.primary}</a>
+          <a className="text-link" href="#approach">{copy.hero.secondary} <span aria-hidden="true">↓</span></a>
         </div>
       </div>
-      <div className="hero-outcomes" data-parallax="0.075" aria-label="Examples of outcomes OpenNyAI works toward">
-        <p>Rights already exist.</p>
-        <p>People are still waiting.</p>
-        <p className="hero-outcome-emphasis">We close the gap.</p>
-        <div className="hero-case">
-          <strong>First mission</strong>
-          <span>Help undertrials who are already legally entitled to release come home.</span>
-        </div>
+      <div className="hero-problems" id="problems" aria-labelledby="problems-title">
+        <h2 id="problems-title">{copy.hero.problemsTitle}</h2>
+        {PROBLEMS.slice(0, 3).map((problem) => {
+          const text = problem[locale];
+          return (
+            <article className="problem-brief" key={problem.id}>
+              <p className="problem-status">{text.status}</p>
+              <h3>{text.title}</h3>
+              <p>{text.body}</p>
+              <a href="#participate" onClick={() => onChooseProblem(problem.id)}>{text.action} <span aria-hidden="true">→</span></a>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
 }
 
-function About() {
+function AgamiProof({ copy }) {
+  return (
+    <section className="agami-proof" id="community" aria-labelledby="agami-proof-title">
+      <div className="agami-proof-brand">
+        <img src={agamiLogo} alt="Agami" />
+        <h2 id="agami-proof-title">{copy.agami.title}</h2>
+      </div>
+      <div className="agami-proof-stats" aria-label={`${copy.agami.statA}; ${copy.agami.statB}`}>
+        <strong>{copy.agami.statA}</strong>
+        <span aria-hidden="true">×</span>
+        <strong>{copy.agami.statB}</strong>
+      </div>
+      <div className="agami-proof-copy">
+        <p>{copy.agami.body}</p>
+        <p className="agami-links">
+          <a href="https://www.agami.in" target="_blank" rel="noreferrer">{copy.agami.community} ↗</a>
+          <a href="https://youtu.be/urqgxbqYUWU" target="_blank" rel="noreferrer">{copy.agami.video} ↗</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Approach({ copy }) {
+  const flowRef = useRef(null);
+  const stepRefs = useRef([]);
+  const [activeStage, setActiveStage] = useState(0);
+
+  useEffect(() => {
+    const flow = flowRef.current;
+    const steps = stepRefs.current.filter(Boolean);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frameId = null;
+    if (!flow || !steps.length) return undefined;
+
+    function updateFlow() {
+      frameId = null;
+      const focusLine = window.innerHeight * 0.52;
+      let closest = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      steps.forEach((step, index) => {
+        const rect = step.getBoundingClientRect();
+        const distance = Math.abs((rect.top + rect.height / 2) - focusLine);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closest = index;
+        }
+      });
+
+      setActiveStage((current) => current === closest ? current : closest);
+      const flowRect = flow.getBoundingClientRect();
+      const travel = flowRect.height + window.innerHeight;
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - flowRect.top) / travel));
+      const offset = progress - 0.5;
+      flow.style.setProperty("--field-shift", `${(offset * -18).toFixed(2)}px`);
+      flow.style.setProperty("--scope-shift", `${(offset * 9).toFixed(2)}px`);
+      flow.style.setProperty("--outcome-shift", `${(offset * 14).toFixed(2)}px`);
+    }
+
+    function requestUpdate() {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateFlow);
+      }
+    }
+
+    function addMotionListeners() {
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+    }
+
+    function removeMotionListeners() {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    }
+
+    function applyMotionPreference() {
+      removeMotionListeners();
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+      frameId = null;
+      if (reduceMotion.matches) {
+        setActiveStage(2);
+        flow.style.setProperty("--field-shift", "0px");
+        flow.style.setProperty("--scope-shift", "0px");
+        flow.style.setProperty("--outcome-shift", "0px");
+        return;
+      }
+      addMotionListeners();
+      requestUpdate();
+    }
+
+    applyMotionPreference();
+    reduceMotion.addEventListener?.("change", applyMotionPreference);
+    return () => {
+      removeMotionListeners();
+      reduceMotion.removeEventListener?.("change", applyMotionPreference);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
+  return (
+    <section className="section section-dark approach-section" id="approach" aria-labelledby="approach-title">
+      <div className="section-intro section-intro-wide">
+        <h2 id="approach-title">{copy.approach.title}</h2>
+        <p>{copy.approach.body}</p>
+      </div>
+      <div className="approach-flow" ref={flowRef} data-active-stage={activeStage}>
+        <div className="flow-visual" aria-hidden="true">
+          <div className="problem-map">
+            <div className="problem-map-head">
+              <span>{copy.approach.whole}</span>
+              <span>{copy.approach.scale[0]}<br />{copy.approach.scale[1]}</span>
+            </div>
+            <div className="problem-field-shell">
+              <div className="problem-field">
+                <div className="problem-grid">
+                  {Array.from({ length: 30 }, (_, index) => <span className={`problem-node${[9, 10, 15, 16].includes(index) ? " focus" : ""}`} key={index} />)}
+                </div>
+                <div className="scope-frame">
+                  <span className="scope-corner tl" /><span className="scope-corner tr" /><span className="scope-corner bl" /><span className="scope-corner br" />
+                  <span className="scope-label"><span className="scope-copy">{copy.approach.subset}</span><span className="solve-copy">{copy.approach.ready}</span></span>
+                </div>
+              </div>
+            </div>
+            <div className="flow-transfer" />
+            <div className="solved-outcome">
+              <span className="outcome-mark">✓</span>
+              <span><span className="outcome-label">{copy.approach.outcomeLabel}</span><span className="outcome-title">{copy.approach.outcomeTitle}</span></span>
+            </div>
+          </div>
+        </div>
+        <ol className="flow-steps">
+          {copy.approach.steps.map(([title, body], index) => (
+            <li
+              className={`flow-step${activeStage === index ? " active" : ""}`}
+              data-stage={index}
+              aria-current={activeStage === index ? "step" : undefined}
+              ref={(node) => { stepRefs.current[index] = node; }}
+              key={title}
+            >
+              <div className="flow-step-inner">
+                <span className="flow-step-number">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function WhyNow({ copy }) {
   return (
     <section className="section" id="about" aria-labelledby="about-title">
       <div className="section-intro">
-        <h2 id="about-title">The system has not caught up with the law.</h2>
-        <p>OpenNyAI built the bridge between India's legal and technology communities. Today, that community is the advantage: people with the trust, context, and determination to make rights work in practice.</p>
+        <h2 id="about-title">{copy.why.title}</h2>
+        <p>{copy.why.body}</p>
       </div>
       <div className="principle-list">
-        {communityStrengths.map((item) => (
-          <article className="principle" key={item.title}>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Approach() {
-  return (
-    <section className="section section-dark" id="approach" aria-labelledby="approach-title">
-      <div className="section-intro section-intro-wide">
-        <h2 id="approach-title">Make one part of a hard problem move.</h2>
-        <p>We choose a defined group, a measurable outcome, and a limited period. Then the community does the practical work of getting there.</p>
-      </div>
-      <ol className="process-list">
-        {approachSteps.map(([title, body], index) => (
-          <li key={title}>
-            <span className="process-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-            <div>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <div className="impact-strip" data-parallax="0.035">
-        <p><strong>1,20,000</strong><span>undertrials estimated to be legally entitled to release</span></p>
-        <p><strong>7,000+</strong><span>people used OpenNyAI's legal-AI tools</span></p>
-        <p><strong>100+</strong><span>law students trained to build justice datasets</span></p>
-      </div>
-    </section>
-  );
-}
-
-function Missions() {
-  return (
-    <section className="section missions-section" id="missions" aria-labelledby="missions-title">
-      <div className="section-intro">
-        <h2 id="missions-title">Part of a wider movement making justice.</h2>
-        <p>OpenNyAI is an Agami mission. We share a belief that people can move from seeking justice to actively making it.</p>
-      </div>
-      <div className="mission-list">
-        {missions.map(([name, description, href]) => (
-          <a href={href} target="_blank" rel="noreferrer" key={name}>
-            <strong>{name}</strong>
-            <span>{description}</span>
-            <span className="mission-arrow" aria-hidden="true">↗</span>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function Participate() {
-  return (
-    <section className="section" id="participate" aria-labelledby="participate-title">
-      <div className="section-intro section-intro-wide">
-        <h2 id="participate-title">Bring us a justice problem you understand.</h2>
-        <p>If a problem is stuck because the system has not caught up, we can help define a solvable group, bring in the right people, and build toward a real outcome.</p>
-      </div>
-      <div className="criteria-list">
-        {participationCriteria.map(([title, body]) => (
-          <article key={title}>
+        {copy.why.strengths.map(([title, body]) => (
+          <article className="principle" key={title}>
             <h3>{title}</h3>
             <p>{body}</p>
           </article>
         ))}
       </div>
-      <a className="text-link participate-link" href="mailto:hello@opennyai.org?subject=A justice problem for OpenNyAI">Tell us about the problem <span aria-hidden="true">→</span></a>
     </section>
   );
 }
 
-function SignupForm() {
-  const [email, setEmail] = useState("");
+function TrackRecord({ locale, copy }) {
+  return (
+    <section className="section track-record-section" id="impact" aria-labelledby="impact-title">
+      <div className="section-intro section-intro-wide">
+        <h2 id="impact-title">{copy.impact.title}</h2>
+        <p>{copy.impact.body}</p>
+      </div>
+      <div className="track-record-layout">
+        <article className="ner-proof">
+          <p className="proof-label">{copy.impact.nerLabel}</p>
+          <h3>{copy.impact.nerTitle}</h3>
+          <p>{copy.impact.nerBody}</p>
+          <dl className="proof-stats">
+            {copy.impact.nerStats.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}
+          </dl>
+          <p className="proof-links">
+            <a href="https://huggingface.co/opennyaiorg/en_legal_ner_trf" target="_blank" rel="noreferrer">{copy.impact.model} ↗</a>
+            <a href="https://aclanthology.org/2022.nllp-1.15/" target="_blank" rel="noreferrer">{copy.impact.paper} ↗</a>
+          </p>
+        </article>
+        <article className="jugalbandi-proof">
+          <p className="proof-label">{copy.impact.jugalLabel}</p>
+          <h3>{copy.impact.jugalTitle}</h3>
+          <p>{copy.impact.jugalBody}</p>
+          <dl className="jugalbandi-stats">
+            {copy.impact.jugalStats.map(([value, label]) => <div key={label}><dt>{value}</dt><dd>{label}</dd></div>)}
+          </dl>
+          <p className="proof-links">
+            <a href="https://news.microsoft.com/source/asia/features/with-help-from-next-generation-ai-indian-villagers-gain-easier-access-to-government-services/" target="_blank" rel="noreferrer">{copy.impact.story} ↗</a>
+            <a href="https://docs.jugalbandi.opennyai.org/use-cases-of-jugalbandi" target="_blank" rel="noreferrer">{copy.impact.useCases} ↗</a>
+          </p>
+        </article>
+      </div>
+      <div className="misaal-now">
+        <span>{copy.impact.now}</span>
+        <strong>{copy.impact.misaalTitle}</strong>
+        <a href={locale === "hi" ? "/hi/misaal/" : "/misaal/"}>{copy.impact.misaalAction} →</a>
+      </div>
+    </section>
+  );
+}
+
+function SignupForm({ locale, copy, selectedProblem }) {
+  const [form, setForm] = useState({ name: "", email: "", organisation: "", contribution: "", problemDetails: "" });
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
+  const isOther = selectedProblem === "other";
+
+  function updateField(event) {
+    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -189,101 +569,124 @@ function SignupForm() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/signups", {
+      const response = await fetch("/api/problem-interests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ ...form, problem: selectedProblem, locale }),
       });
       const isJson = response.headers.get("content-type")?.includes("application/json");
-      if (!isJson) throw new Error("Signups are temporarily unavailable.");
+      if (!isJson) throw new Error("unavailable");
       const result = await response.json();
-
-      if (!response.ok) throw new Error(result.error || "We couldn't save your email.");
+      if (!response.ok) throw new Error(result.error || "unavailable");
 
       setStatus("success");
-      setMessage(result.alreadySubscribed ? "You're already on the list." : "You're on the list. We'll be in touch.");
-      setEmail("");
-    } catch (error) {
+      setMessage(result.alreadySubscribed ? copy.participate.existing : copy.participate.success);
+      setForm({ name: "", email: "", organisation: "", contribution: "", problemDetails: "" });
+    } catch {
       setStatus("error");
-      setMessage(error.message);
+      setMessage(copy.participate.error);
     }
   }
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit}>
-      <label htmlFor="signup-email">Email address</label>
-      <div className="signup-row">
-        <input
-          id="signup-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="you@example.org"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-          disabled={status === "submitting"}
-          aria-describedby={message ? "signup-message" : undefined}
-        />
-        <button className="btn btn-accent" type="submit" disabled={status === "submitting"}>
-          {status === "submitting" ? "Joining…" : "Join the list"}
-        </button>
+    <form className="problem-signup" onSubmit={handleSubmit}>
+      <h3>{copy.participate.formTitle}</h3>
+      <div className="form-grid">
+        <label>{copy.participate.name}<input name="name" autoComplete="name" placeholder={copy.participate.namePlaceholder} value={form.name} onChange={updateField} required maxLength={120} disabled={status === "submitting"} /></label>
+        <label>{copy.participate.email}<input name="email" type="email" autoComplete="email" placeholder={copy.participate.emailPlaceholder} value={form.email} onChange={updateField} required maxLength={254} disabled={status === "submitting"} /></label>
+        <label>{copy.participate.organisation}<input name="organisation" autoComplete="organization" placeholder={copy.participate.organisationPlaceholder} value={form.organisation} onChange={updateField} maxLength={160} disabled={status === "submitting"} /></label>
+        <label>{copy.participate.contribution}
+          <select name="contribution" value={form.contribution} onChange={updateField} required disabled={status === "submitting"}>
+            <option value="">{copy.participate.contributionPlaceholder}</option>
+            {copy.participate.contributions.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+          </select>
+        </label>
       </div>
-      {message && <p id="signup-message" className={`form-message ${status}`} role={status === "error" ? "alert" : "status"}>{message}</p>}
+      {isOther && (
+        <label className="problem-details">{copy.participate.details}
+          <textarea name="problemDetails" placeholder={copy.participate.detailsPlaceholder} value={form.problemDetails} onChange={updateField} required maxLength={1600} disabled={status === "submitting"} />
+        </label>
+      )}
+      <button className="btn btn-accent" type="submit" disabled={status === "submitting"}>
+        {status === "submitting" ? copy.participate.submitting : isOther ? copy.participate.submitOther : copy.participate.submit}
+      </button>
+      <p className="form-privacy">{copy.participate.privacy}</p>
+      {message && <p className={`form-message ${status}`} role={status === "error" ? "alert" : "status"}>{message}</p>}
     </form>
   );
 }
 
-function Join() {
+function Participate({ locale, copy, selectedProblem, onChooseProblem }) {
   return (
-    <section className="join-section" id="join" aria-labelledby="join-title">
-      <div className="join-copy">
-        <h2 id="join-title">You do not need to own the problem to show up for it.</h2>
-        <p>Join a sprint as a lawyer, technologist, researcher, or someone prepared to do the practical work.</p>
-        <a className="text-link text-link-light" href="mailto:hello@opennyai.org?subject=I want to volunteer">Volunteer your time <span aria-hidden="true">→</span></a>
+    <section className="participate-section" id="participate" aria-labelledby="participate-title">
+      <div className="participate-intro">
+        <h2 id="participate-title">{copy.participate.title}</h2>
+        <p>{copy.participate.body}</p>
       </div>
-      <SignupForm />
+      <div className="participate-workspace">
+        <fieldset className="problem-selector">
+          <legend>{copy.participate.choose}</legend>
+          {PROBLEMS.map((problem) => (
+            <label className={selectedProblem === problem.id ? "selected" : ""} key={problem.id}>
+              <input type="radio" name="problem-choice" value={problem.id} checked={selectedProblem === problem.id} onChange={() => onChooseProblem(problem.id)} />
+              <span><strong>{problem[locale].short}</strong><small>{problem[locale].selector}</small></span>
+            </label>
+          ))}
+        </fieldset>
+        <SignupForm locale={locale} copy={copy} selectedProblem={selectedProblem} />
+      </div>
     </section>
   );
 }
 
-function Footer() {
+function Footer({ locale, copy }) {
   return (
     <footer className="site-footer">
       <div className="footer-brand">
         <img src={logo} alt="OpenNyAI" />
-        <p>Community and AI, working together to make justice real.</p>
+        <p>{copy.footer.line}</p>
       </div>
-      <nav aria-label="Footer">
-        <a href="#about">About</a>
-        <a href="#approach">Approach</a>
-        <a href="#participate">Participate</a>
-        <a href="https://www.agami.in" target="_blank" rel="noreferrer">Agami</a>
-        <a href="mailto:hello@opennyai.org">Contact</a>
+      <nav aria-label={locale === "hi" ? "पादलेख नेविगेशन" : "Footer"}>
+        <a href="#about">{copy.footer.about}</a>
+        <a href="#approach">{copy.footer.approach}</a>
+        <a href="#impact">{copy.footer.impact}</a>
+        <a href="#problems">{copy.footer.problems}</a>
+        <a href={locale === "hi" ? "/hi/misaal/" : "/misaal/"}>{copy.footer.misaal}</a>
+        <a href="mailto:hello@opennyai.org">{copy.footer.contact}</a>
       </nav>
       <p className="footer-copy">© Vayam Forum for Citizenship (Agami)</p>
     </footer>
   );
 }
 
-export function HomePage() {
-  useParallax();
+export function HomePage({ locale: requestedLocale }) {
+  const locale = requestedLocale || (window.location.pathname.startsWith("/hi") ? "hi" : "en");
+  const copy = COPY[locale];
+  const [selectedProblem, setSelectedProblem] = useState("bail");
+
   useEffect(() => {
-    document.title = "OpenNyAI | Making Justice with AI and Community";
-  }, []);
+    document.documentElement.lang = locale;
+    document.documentElement.dataset.locale = locale;
+    document.title = copy.meta.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", copy.meta.description);
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", copy.meta.title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", copy.meta.description);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", copy.meta.title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", copy.meta.description);
+  }, [copy, locale]);
 
   return (
     <div className="site-shell" id="top">
-      <Header />
+      <Header locale={locale} copy={copy} />
       <main>
-        <Hero />
-        <About />
-        <Approach />
-        <Missions />
-        <Participate />
-        <Join />
+        <Hero locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
+        <AgamiProof copy={copy} />
+        <Approach copy={copy} />
+        <WhyNow copy={copy} />
+        <TrackRecord locale={locale} copy={copy} />
+        <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
       </main>
-      <Footer />
+      <Footer locale={locale} copy={copy} />
     </div>
   );
 }

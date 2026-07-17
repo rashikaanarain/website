@@ -1,6 +1,8 @@
 const SESSION_COOKIE = "opennyai_admin_session";
 const SESSION_DURATION_SECONDS = 60 * 60 * 24 * 7;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PROBLEM_SLUGS = new Set(["bail", "wages", "online-safety", "other"]);
+const CONTRIBUTION_TYPES = new Set(["legal", "technology", "research", "community", "institutional", "funding", "other"]);
 
 function json(data, status = 200, headers = {}) {
   return Response.json(data, { status, headers });
@@ -78,6 +80,50 @@ export function createApiHandler(database, { secureCookies = process.env.NODE_EN
       return json({ signup: result.signup, alreadySubscribed: result.alreadySubscribed }, result.alreadySubscribed ? 200 : 201);
     }
 
+    if (request.method === "POST" && url.pathname === "/api/problem-interests") {
+      const body = await readJson(request);
+      const name = body?.name?.trim();
+      const email = body?.email?.trim().toLowerCase();
+      const organisation = body?.organisation?.trim() || null;
+      const problem = body?.problem?.trim();
+      const contribution = body?.contribution?.trim();
+      const problemDetails = body?.problemDetails?.trim() || null;
+      const locale = body?.locale === "hi" ? "hi" : "en";
+
+      if (!name || name.length > 120) {
+        return json({ error: "Enter your name." }, 400);
+      }
+      if (!email || email.length > 254 || !EMAIL_PATTERN.test(email)) {
+        return json({ error: "Enter a valid email address." }, 400);
+      }
+      if (organisation?.length > 160) {
+        return json({ error: "Keep the organisation name under 160 characters." }, 400);
+      }
+      if (!PROBLEM_SLUGS.has(problem)) {
+        return json({ error: "Choose a valid problem." }, 400);
+      }
+      if (!CONTRIBUTION_TYPES.has(contribution)) {
+        return json({ error: "Choose how you can contribute." }, 400);
+      }
+      if (problemDetails?.length > 1600) {
+        return json({ error: "Keep the problem note under 1,600 characters." }, 400);
+      }
+      if (problem === "other" && !problemDetails) {
+        return json({ error: "Tell us about the problem you want to bring." }, 400);
+      }
+
+      const result = database.addProblemInterest({
+        name,
+        email,
+        organisation,
+        problem,
+        contribution,
+        problemDetails,
+        locale,
+      });
+      return json({ interest: result.interest, alreadySubscribed: result.alreadySubscribed }, result.alreadySubscribed ? 200 : 201);
+    }
+
     if (request.method === "POST" && url.pathname === "/api/admin/login") {
       const body = await readJson(request);
       const username = body?.username?.trim();
@@ -107,7 +153,7 @@ export function createApiHandler(database, { secureCookies = process.env.NODE_EN
     if (request.method === "GET" && url.pathname === "/api/admin/signups") {
       const admin = await authenticate(request, database);
       if (!admin) return json({ error: "Sign in required." }, 401);
-      return json({ signups: database.listSignups() });
+      return json({ signups: database.listSignups(), interests: database.listProblemInterests() });
     }
 
     if (request.method === "POST" && url.pathname === "/api/admin/logout") {

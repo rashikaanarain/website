@@ -21,6 +21,29 @@ describe("database", () => {
     expect(database.listSignups()).toHaveLength(1);
   });
 
+  test("stores one interest per email and problem, while allowing multiple problems", () => {
+    database = createDatabase(":memory:");
+    const base = {
+      name: "Asha Rao",
+      email: "asha@example.org",
+      organisation: "Justice Lab",
+      contribution: "legal",
+      problemDetails: null,
+      locale: "en",
+    };
+
+    const first = database.addProblemInterest({ ...base, problem: "bail" });
+    const updated = database.addProblemInterest({ ...base, problem: "bail", contribution: "research" });
+    const secondProblem = database.addProblemInterest({ ...base, problem: "wages" });
+
+    expect(first.alreadySubscribed).toBe(false);
+    expect(updated.alreadySubscribed).toBe(true);
+    expect(updated.interest.id).toBe(first.interest.id);
+    expect(updated.interest.contribution).toBe("research");
+    expect(secondProblem.alreadySubscribed).toBe(false);
+    expect(database.listProblemInterests()).toHaveLength(2);
+  });
+
   test("upserts an administrator", async () => {
     database = createDatabase(":memory:");
     const firstHash = await Bun.password.hash("first-password");

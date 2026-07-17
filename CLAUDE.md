@@ -1,71 +1,57 @@
 # CLAUDE.md
 
-Guidance for Claude Code (and any AI agent) working in this repository. Read this first, then the deeper docs it points to.
+Guidance for coding agents working in this repository.
 
 ## What this is
 
-The **OpenNyAI** marketing homepage — a single, hand-written static site (no framework, no build step) deployed on Netlify. OpenNyAI is an Agami mission using AI + a community of justicemakers to solve long-stuck justice problems in India.
+The OpenNyAI public site and protected problem-interest admin. The frontend is React + Vite. Local API development uses Bun + SQLite; production on OpenAI Sites uses a Cloudflare Worker + D1.
 
-## Read these before making changes
+## Read first
 
-- **`README.md`** — full handoff: how to run, repo structure, section-by-section content, deployment.
-- **`DESIGN_SYSTEM.md`** — colour tokens, type, buttons, nav, spacing. The visual contract.
-- **`context.md`** — org strategy, the "3.0" pivot, flagship project (Big Bail Bash), and the authoritative messaging/tone. Read before touching copy.
+- `README.md` — commands, routes, repository map, and deployment model.
+- `DESIGN.md` — normative visual and interaction system.
+- `PRODUCT.md` — audiences, product purpose, voice, and anti-references.
+- `context.md` — organisation and messaging source material; some historical proposals are not current runtime copy.
 
-## Repo layout
+## Key paths
 
-```
-index.html          # The ENTIRE site: all markup + all CSS (one <style> in <head>) + the hero-video <script> at the bottom.
-assets/             # opennyai-logo.svg (white, for dark bgs), opennyai-logo-dark.svg (ink, for light bgs), agami-logo.svg
-netlify.toml        # Netlify: publish root, no build, security/cache headers
-README.md, DESIGN_SYSTEM.md, context.md, CLAUDE.md
-```
+- `src/site/HomePage.jsx` — bilingual English/Hindi React homepage and problem-led form.
+- `src/styles.css` — shared public/admin design system and pinned approach story.
+- `src/admin/AdminApp.jsx` — problem-interest and mailing-list admin.
+- `server/` — local Bun/SQLite API and tests.
+- `worker/index.js`, `drizzle/` — Sites Worker/D1 production API.
+- `about/`, `misaal/`, `hi/` — supporting English and Hindi pages.
+- `.openai/hosting.json` — Sites project ID and binding names; never put secrets here.
 
-There is no `package.json`, no node_modules, no bundler. Do not add tooling or split files without an explicit request — the single-file simplicity is intentional.
-
-## Run / preview
-
-No build. Open `index.html` in a browser, or:
+## Commands
 
 ```bash
-python3 -m http.server 8000   # then open http://localhost:8000
+bun install
+bun run dev
+bun test
+bun run build
+bun run build:sites
 ```
 
-## Deploy
+The local admin defaults are development-only. Production `ADMIN_USERNAME` and secret `ADMIN_PASSWORD` belong in Sites runtime environment variables.
 
-Netlify is connected to GitHub and auto-deploys: **push to `main` → live in ~1 min.** Nothing to compile. So keep `main` shippable.
+## Product and design invariants
 
-## Design rules (do not break)
+- Lead people to concrete justice problems, not a generic mission or mailing list.
+- Keep problem status meaningful and static; do not add decorative live dots or fake telemetry.
+- Frame AI as a multiplier of community knowledge, trust, reach, and coordination.
+- Use the Agami credibility proof and keep sourced track-record claims linked to their evidence.
+- Preserve complete English and Hindi journeys, including language switches and metadata.
+- Keep the pinned approach story reversible, readable without animation, and final-state under reduced motion.
+- Follow `DESIGN.md`: one restrained accent, 12px maximum content radius, serif storytelling, sans-serif product controls, and no generic AI/SaaS visual clichés.
 
-- **Token-driven.** All themed values are CSS custom properties in `:root`. Use `var(--…)`; never hardcode hex/px for colours or fonts.
-- **Accent = pink (`--pink` `#DA6EAA`).** Used for eyebrows, the hero "10x", stat figures, the live dot, footer titles, and primary buttons on dark sections. Pink works on light or dark.
-- **Green-on-dark only.** `--green` (`#30CF8C`) must never sit on a light background (fails contrast). It's currently unused; on light use `--forest`.
-- **`.on-dark`** on a section flips eyebrows/buttons/accents correctly. Dark section → add the class; light section → omit it.
-- **Type:** Fraunces (`--font-display`) for all headings; Source Sans 3 (`--font-body`) for everything else. Loaded via one Google Fonts `<link>`.
-- **Pills everywhere** (`border-radius:999px`) for buttons/nav. Cards ~18px radius, lift on hover.
-- **Respect `prefers-reduced-motion`** (already gated at the end of the stylesheet) for any new animation.
-- **Copy tone:** concrete, human, outcome-first (people released, wages recovered). Avoid hedge words like "demonstration"/"prototype". See `context.md`.
+## Data boundaries
 
-## Hero background video
+- `/api/signups` is newsletter consent only.
+- `/api/problem-interests` is a separate record, unique by email + problem, so one person may choose multiple problems.
+- Keep Bun/SQLite and Worker/D1 validation and response shapes in sync.
+- Never commit local SQLite files, Sites credentials, or runtime secrets.
 
-The hero has a muted, auto-looping background video behind a dark gradient (`.hero-overlay`) with light text on top. It's a native `<video autoplay muted loop playsinline>` inside `.hero-video`, `object-fit:cover`. Source is OpenNyAI's own hosted file on its DigitalOcean CDN (`onmain.blr1.cdn.digitaloceanspaces.com/mainsite/main-on-hero-video-720-02.mp4` — the same clip the Framer prototype uses). To change it, edit the `<source src>`. Keep it **muted** (browsers block unmuted autoplay).
+## Git and deployment
 
-**Rights note:** the footage is snippets from a third-party documentary. Confirm licensing before any public launch.
-
-## Git workflow & version safety
-
-The owner is non-technical — be explicit and cautious with git.
-
-- Commit in small, described steps. After a change the owner approves, commit + push (or hand them the exact commands).
-- **`v1-liked`** is a git tag marking the approved baseline (10x hero, bulletin board, pink accent, inline signup). Restore with `git checkout v1-liked -- .`.
-- When a new version is approved, **tag it** (`v2-liked`, …) so there's a trail of known-good checkpoints.
-- If a change is disliked and not yet committed, discard it (`git checkout -- <files>`) to fall back to the last commit.
-- Remote: `github.com/rashikaanarain/website`. Auth is via `gh` (browser login) on the owner's machine; GitHub does not accept passwords for push.
-
-## Standing request from the owner
-
-At the **end of every task**, commit the work and either push or provide copy-paste push commands (`git add -A && git commit -m "…" && git push`).
-
-## Known placeholders / next steps
-
-See `README.md` §7 and `context.md` §10 — e.g. verify placeholder stats, decide on the legacy-tools section, optional custom domain, and swapping the hero video.
+Preserve unrelated working-tree changes. Keep `main` shippable. At the end of a completed task, commit the intended files and publish the exact committed source state. Sites deployments must be built, packaged, saved, and deployed through the Sites workflow; do not treat the static Netlify path as a complete production deployment.

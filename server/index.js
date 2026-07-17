@@ -29,6 +29,9 @@ async function serveStatic(pathname) {
   const file = Bun.file(requestedPath);
   if (await file.exists()) return new Response(file);
 
+  const directoryIndex = Bun.file(resolve(requestedPath, "index.html"));
+  if (await directoryIndex.exists()) return new Response(directoryIndex, { headers: { "Content-Type": "text/html; charset=utf-8" } });
+
   const fallback = Bun.file(resolve(distDirectory, "index.html"));
   if (await fallback.exists()) return new Response(fallback, { headers: { "Content-Type": "text/html; charset=utf-8" } });
 

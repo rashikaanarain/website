@@ -6,9 +6,13 @@
 <title>About | OpenNyAI</title>
 <link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
 <meta name="description" content="OpenNyAI brings innovators, institutions, resources and ideas across law and AI together to create irreversible change in how citizens experience justice in India." />
+<link rel="canonical" href="https://opennyai.org/about/" />
+<link rel="alternate" hreflang="en" href="https://opennyai.org/about/" />
+<link rel="alternate" hreflang="hi" href="https://opennyai.org/hi/about/" />
+<link rel="alternate" hreflang="x-default" href="https://opennyai.org/about/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 <script>document.documentElement.classList.add('js');</script>
 <style>
 :root{
@@ -40,11 +44,15 @@ p{ margin:0; } a{ color:inherit; }
 .site-header{ position:absolute; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); pointer-events:none; }
 .brand{ display:flex; align-items:center; gap:8px; pointer-events:auto; text-decoration:none; }
 .brand img{ height:26px; width:auto; display:block; }
+.header-actions{ display:flex; align-items:center; gap:8px; margin-left:auto; pointer-events:auto; }
 .site-nav{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:rgba(251,248,242,.62); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border:1px solid rgba(26,26,26,.07); border-radius:999px; padding:5px; box-shadow:0 12px 32px rgba(17,31,38,.10), inset 0 1px 0 rgba(255,255,255,.55); }
 .site-nav a{ text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.01em; color:var(--ink-soft); padding:8px 15px; border-radius:999px; transition:background .22s ease, color .22s ease; }
 .site-nav a:hover, .site-nav a.active{ background:var(--forest); color:var(--paper); }
 .site-nav a.nav-cta{ background:var(--plum); color:var(--paper); }
 .site-nav a.nav-cta:hover{ background:#5E2F4E; }
+.lang-switch{ display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 14px; border:1px solid rgba(36,30,26,.16); border-radius:999px; background:rgba(251,248,242,.82); color:var(--ink-soft); font-size:.86rem; font-weight:700; text-decoration:none; white-space:nowrap; box-shadow:0 8px 22px rgba(17,31,38,.08); transition:background .2s ease, color .2s ease, border-color .2s ease; }
+.lang-switch:hover{ background:var(--forest); border-color:var(--forest); color:var(--paper); }
+.brand:focus-visible,.site-nav a:focus-visible,.lang-switch:focus-visible,.btn:focus-visible{ outline:3px solid var(--pink); outline-offset:3px; }
 
 /* page hero */
 .page-hero{ background:var(--cream); padding:clamp(120px,18vh,180px) 0 clamp(40px,6vh,66px); }
@@ -112,6 +120,9 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
 .collab-ticker img:hover{ opacity:1; }
 @keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 @media (prefers-reduced-motion:reduce){ .collab-ticker .ticker-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
+.agami-link{ display:inline-flex; align-items:center; margin-top:22px; padding:13px 18px; border-radius:12px; background:var(--forest-deep); transition:transform .2s ease, box-shadow .2s ease; }
+.agami-link:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(17,31,38,.16); }
+.agami-link img{ display:block; width:auto; height:34px; }
 
 /* cta band */
 .cta-band{ background:var(--forest); text-align:center; padding:clamp(56px,9vh,96px) 0; }
@@ -132,19 +143,22 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
 .footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
 
 @media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
-@media (max-width:640px){ .site-nav{ display:none; } }
+@media (max-width:640px){ .site-nav{ display:none; } .site-header{ gap:12px; } .lang-switch{ min-height:40px; padding:7px 13px; } }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <a class="brand" href="../" aria-label="OpenNyAI home"><img src="../assets/opennyai-logo-dark.svg" alt="OpenNyAI" /></a>
-  <nav class="site-nav" aria-label="Primary">
-    <a href="../about/" class="active">About</a>
-    <a href="../#approach">Approach</a>
-    <a href="../misaal/">MISAAL</a>
-    <a class="nav-cta" href="../#join">Join the Mission</a>
-  </nav>
+  <div class="header-actions">
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../about/" class="active" aria-current="page">About</a>
+      <a href="../#approach">Approach</a>
+      <a href="../misaal/">MISAAL</a>
+      <a class="nav-cta" href="../#problems">Explore the problems</a>
+    </nav>
+    <a class="lang-switch" href="/hi/about/" lang="hi" hreflang="hi" aria-label="Read this page in Hindi">हिंदी</a>
+  </div>
 </header>
 
 <section class="page-hero">
@@ -214,7 +228,8 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
     <div class="section-head">
       <span class="eyebrow">Collaborative initiative</span>
       <h2>Anchored by Agami, built by many</h2>
-      <p>OpenNyAI is a collaborative mission anchored by Agami and comprised of over half a dozen organisations across law, technology and philanthropy.</p>
+      <p>OpenNyAI is Agami’s collaborative AI-for-justice mission. It draws on a network of 4,000+ changemakers from 2,000+ organisations, alongside partnerships across law, technology, philanthropy and government.</p>
+      <a class="agami-link" href="https://www.agami.in" target="_blank" rel="noopener" aria-label="Visit Agami"><img src="../assets/agami-logo.svg" alt="Agami" /></a>
     </div>
     <div class="collab-ticker" aria-label="Collaborators">
       <div class="ticker">
@@ -239,9 +254,9 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
 
 <section class="cta-band">
   <div class="wrap">
-    <h2>Come make justice with us</h2>
-    <p>Join a live sprint, bring a stuck problem, or help build the public goods that move the field forward.</p>
-    <a class="btn btn-primary" href="../#join">Join the Mission</a>
+    <h2>Which problem will you help move?</h2>
+    <p>Explore the problems OpenNyAI is working on, see what each one needs, and choose where your time, expertise or network can matter.</p>
+    <a class="btn btn-primary" href="../#problems">Explore the problems</a>
   </div>
 </section>
 
@@ -256,7 +271,7 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
       <a href="../about/">About</a>
       <a href="../#approach">Approach</a>
       <a href="../misaal/">MISAAL</a>
-      <a href="../#join">Join the mission</a>
+      <a href="../#problems">Explore the problems</a>
     </div>
     <div class="footer-col">
       <p class="footer-col-title">Ecosystem</p>

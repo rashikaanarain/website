@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>हमारे बारे में | OpenNyAI</title>
+<link rel="icon" type="image/svg+xml" href="../../assets/opennyai-logo-dark.svg" />
+<meta name="description" content="OpenNyAI कानून और एआई के क्षेत्र में नवप्रवर्तकों, संस्थाओं, संसाधनों और विचारों को साथ लाकर भारत में नागरिकों के न्याय अनुभव में स्थायी बदलाव लाता है।" />
+<link rel="canonical" href="https://opennyai.org/hi/about/" />
+<link rel="alternate" hreflang="en" href="https://opennyai.org/about/" />
+<link rel="alternate" hreflang="hi" href="https://opennyai.org/hi/about/" />
+<link rel="alternate" hreflang="x-default" href="https://opennyai.org/about/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;family=Noto+Serif+Devanagari:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;
+  --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;
+  --green:#30CF8C; --green-soft:#CCEBDE;
+  --pink:#DA6EAA; --pink-soft:#F1D0E2; --plum:#4E2740;
+  --forest:#111F26; --forest-deep:#0A151A;
+  --line:rgba(36,30,26,0.12);
+  --font-display:'Noto Serif Devanagari', 'Noto Serif', serif;
+  --font-body:'Noto Sans Devanagari', 'Noto Sans', sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.6; }
+h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.25; font-weight:500; }
+p{ margin:0; } a{ color:inherit; }
+.wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,72px); }
+.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:none; letter-spacing:.035em; line-height:1.5; margin-bottom:18px; color:var(--pink); }
+
+/* buttons */
+.btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:.92rem; text-decoration:none; border:0; cursor:pointer; transition:background .2s ease, transform .2s ease, box-shadow .2s ease; }
+.btn-primary{ background:var(--plum); color:var(--paper); }
+.btn-primary:hover{ background:#5E2F4E; transform:translateY(-1px); box-shadow:0 6px 16px rgba(78,39,64,.32); }
+.btn-ghost{ border:1px solid rgba(36,30,26,.32); color:var(--ink); background:transparent; }
+.btn-ghost:hover{ background:rgba(36,30,26,.06); }
+
+/* header / pill nav */
+.site-header{ position:absolute; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); pointer-events:none; }
+.brand{ display:flex; align-items:center; gap:8px; pointer-events:auto; text-decoration:none; }
+.brand img{ height:26px; width:auto; display:block; }
+.header-actions{ display:flex; align-items:center; gap:8px; margin-left:auto; pointer-events:auto; }
+.site-nav{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:rgba(251,248,242,.62); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border:1px solid rgba(26,26,26,.07); border-radius:999px; padding:5px; box-shadow:0 12px 32px rgba(17,31,38,.10), inset 0 1px 0 rgba(255,255,255,.55); }
+.site-nav a{ text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.01em; color:var(--ink-soft); padding:8px 15px; border-radius:999px; transition:background .22s ease, color .22s ease; }
+.site-nav a:hover, .site-nav a.active{ background:var(--forest); color:var(--paper); }
+.site-nav a.nav-cta{ background:var(--plum); color:var(--paper); }
+.site-nav a.nav-cta:hover{ background:#5E2F4E; }
+.lang-switch{ display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 14px; border:1px solid rgba(36,30,26,.16); border-radius:999px; background:rgba(251,248,242,.82); color:var(--ink-soft); font-size:.86rem; font-weight:700; text-decoration:none; white-space:nowrap; box-shadow:0 8px 22px rgba(17,31,38,.08); transition:background .2s ease, color .2s ease, border-color .2s ease; }
+.lang-switch:hover{ background:var(--forest); border-color:var(--forest); color:var(--paper); }
+.brand:focus-visible,.site-nav a:focus-visible,.lang-switch:focus-visible,.btn:focus-visible{ outline:3px solid var(--pink); outline-offset:3px; }
+
+/* page hero */
+.page-hero{ background:var(--cream); padding:clamp(120px,18vh,180px) 0 clamp(40px,6vh,66px); }
+.page-hero h1{ font-size:clamp(2.2rem,5vw,3.4rem); }
+.page-hero p{ margin-top:18px; font-size:clamp(1.05rem,1.4vw,1.2rem); color:var(--ink-soft); max-width:52ch; }
+.ph-inner{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,64px); align-items:center; }
+.ph-photo img{ width:100%; border-radius:20px; display:block; box-shadow:0 24px 60px rgba(17,31,38,.16); }
+@media (max-width:820px){ .ph-inner{ grid-template-columns:1fr; } }
+
+/* sections */
+.section{ padding:clamp(50px,8vh,96px) 0; }
+.section.alt{ background:var(--cream-deep); }
+.section-head{ max-width:640px; margin-bottom:40px; }
+.section h2{ font-size:clamp(1.7rem,3.2vw,2.4rem); }
+.section-head p{ margin-top:14px; color:var(--ink-soft); font-size:1.06rem; }
+
+/* timeline (dark, matches the old site) */
+.timeline-section{ background:var(--forest); color:var(--paper); }
+.tl-head{ text-align:center; margin-bottom:52px; }
+.tl-head h2{ color:var(--pink); font-size:clamp(1.9rem,3.6vw,2.8rem); }
+.tl-head p{ margin-top:12px; color:rgba(251,248,242,.6); font-size:1.05rem; }
+.timeline{ position:relative; max-width:900px; margin:0 auto; }
+.timeline::before{ content:""; position:absolute; left:96px; top:10px; bottom:10px; width:2px; background:rgba(251,248,242,.16); }
+.tl-item{ display:grid; grid-template-columns:82px 1fr; column-gap:34px; padding-bottom:52px; position:relative; }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-year{ text-align:right; font-family:var(--font-display); font-size:1.15rem; line-height:1.25; color:rgba(251,248,242,.42); }
+.tl-item::before{ content:""; position:absolute; left:89px; top:5px; width:15px; height:15px; border-radius:50%; background:var(--pink); box-shadow:0 0 0 4px var(--forest); }
+.tl-month{ font-size:.72rem; font-weight:700; letter-spacing:.035em; text-transform:none; line-height:1.5; color:var(--green); margin-bottom:6px; }
+.tl-body h3{ font-size:1.28rem; color:var(--paper); margin:0 0 8px; }
+.tl-body p{ color:rgba(251,248,242,.7); font-size:.98rem; max-width:60ch; }
+.tl-body a{ color:var(--green); font-weight:600; text-decoration:none; }
+@media (max-width:600px){
+  .timeline{ padding-left:24px; }
+  .timeline::before{ left:5px; }
+  .tl-item{ grid-template-columns:1fr; column-gap:0; }
+  .tl-year{ text-align:left; color:rgba(251,248,242,.55); margin-bottom:2px; }
+  .tl-item::before{ left:-19px; top:2px; }
+}
+
+/* scroll-reveal micro-animation */
+.js .reveal{ opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
+.js .reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .js .reveal{ opacity:1 !important; transform:none !important; transition:none; } }
+
+/* team */
+.team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:20px; }
+.team-card{ text-align:center; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:26px 16px; transition:transform .2s ease, box-shadow .2s ease; }
+.team-card:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(17,31,38,.12); }
+.team-avatar{ width:82px; height:82px; border-radius:50%; margin:0 auto 14px; display:grid; place-items:center; overflow:hidden; background:var(--pink-soft); color:var(--plum); font-family:var(--font-display); font-size:1.5rem; }
+.team-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.team-card b{ font-family:var(--font-display); font-weight:500; font-size:1.08rem; display:block; }
+a.team-card{ display:block; text-decoration:none; color:inherit; }
+.team-grid-2{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+.team-section-head{ text-align:center; margin-left:auto; margin-right:auto; }
+.team-grid-2 .team-card{ width:min(260px,100%); }
+.team-card .role{ display:block; font-size:.85rem; color:var(--muted); margin-top:3px; }
+.team-card .li{ display:block; margin-top:12px; font-size:.8rem; font-weight:600; color:var(--pink); }
+
+/* collaborators ticker */
+.collab-ticker{ margin-top:6px; background:var(--forest-deep); border-radius:20px; padding:28px 0; overflow:hidden; }
+.collab-ticker .ticker{ display:flex; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+.collab-ticker .ticker-track{ display:flex; align-items:center; gap:clamp(44px,7vw,96px); padding-left:clamp(44px,7vw,96px); animation:ticker 22s linear infinite; }
+.collab-ticker .ticker:hover .ticker-track{ animation-play-state:paused; }
+.collab-ticker img{ height:38px; width:auto; flex:none; opacity:.85; transition:opacity .2s ease; }
+.collab-ticker img:hover{ opacity:1; }
+@keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce){ .collab-ticker .ticker-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
+.agami-link{ display:inline-flex; align-items:center; margin-top:22px; padding:13px 18px; border-radius:12px; background:var(--forest-deep); transition:transform .2s ease, box-shadow .2s ease; }
+.agami-link:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(17,31,38,.16); }
+.agami-link img{ display:block; width:auto; height:34px; }
+
+/* cta band */
+.cta-band{ background:var(--forest); text-align:center; padding:clamp(56px,9vh,96px) 0; }
+.cta-band h2{ color:var(--paper); font-size:clamp(1.7rem,3.4vw,2.5rem); max-width:22ch; margin:0 auto; }
+.cta-band p{ color:rgba(251,248,242,.72); margin:16px auto 28px; max-width:52ch; }
+.cta-band .btn-primary{ background:var(--pink); color:var(--ink); }
+.cta-band .btn-primary:hover{ background:#E58DBB; }
+
+/* footer */
+.site-footer{ background:#000; color:rgba(251,248,242,.8); padding:60px clamp(20px,5vw,72px) 30px; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:24px clamp(32px,6vw,96px); align-items:start; }
+.footer-top img{ height:24px; margin-bottom:14px; opacity:.95; }
+.footer-top p{ max-width:42ch; font-size:.92rem; color:rgba(251,248,242,.62); }
+.footer-map{ display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); gap:30px clamp(28px,4vw,56px); }
+.footer-col{ display:flex; flex-direction:column; gap:9px; }
+.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.035em; text-transform:none; line-height:1.5; color:var(--pink); }
+.footer-col a{ text-decoration:none; font-size:.85rem; color:rgba(251,248,242,.72); }
+.footer-col a:hover{ color:var(--paper); }
+.footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
+
+@media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
+@media (max-width:640px){ .site-nav{ display:none; } .site-header{ gap:12px; } .lang-switch{ min-height:40px; padding:7px 13px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="/hi/" aria-label="OpenNyAI का मुखपृष्ठ"><img src="../../assets/opennyai-logo-dark.svg" alt="OpenNyAI" /></a>
+  <div class="header-actions">
+    <nav class="site-nav" aria-label="मुख्य नेविगेशन">
+      <a href="/hi/about/" class="active" aria-current="page">हमारे बारे में</a>
+      <a href="/hi/#approach">हमारा तरीका</a>
+      <a href="/hi/misaal/">MISAAL</a>
+      <a class="nav-cta" href="/hi/#problems">समस्याएँ देखें</a>
+    </nav>
+    <a class="lang-switch" href="/about/" lang="en" hreflang="en" aria-label="यह पृष्ठ अंग्रेज़ी में पढ़ें">English</a>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="ph-inner">
+      <div>
+        <span class="eyebrow">OpenNyAI के बारे में</span>
+        <h1>न्याय और एआई का संगम</h1>
+        <p>हम कानून और एआई के क्षेत्र के नवप्रवर्तकों, संस्थाओं, संसाधनों और विचारों को साथ लाते हैं, ताकि भारत में नागरिकों के न्याय अनुभव में स्थायी बदलाव आ सके।</p>
+      </div>
+      <div class="ph-photo">
+        <img src="https://framerusercontent.com/images/HvPqK9ZUYZunpeu0S1oNDYFv4.jpg" alt="OpenNyAI समुदाय" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section timeline-section">
+  <div class="wrap">
+    <div class="tl-head reveal">
+      <h2>हमारी संक्षिप्त यात्रा</h2>
+      <p>शुरुआत से आज तक का सफ़र</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">अप्रैल</div><h3>OpenNyAI मिशन की शुरुआत</h3><p>OpenNyAI (“न्याय के लिए खुला एआई”) की शुरुआत EkStep, NLSIU, ThoughtWorks और Rohini Nilekani Philanthropies के साझा मिशन के रूप में हुई। Agami ने प्रमुख साझेदार की भूमिका निभाई और लक्ष्य था एआई की मदद से न्याय तक पहुँच को आगे बढ़ाना।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">नवंबर</div><h3>कानूनी NLP मॉडल जारी</h3><p>व्यापक बेंचमार्किंग के बाद तीन NLP मॉडल जारी किए गए: Named Entity Recognition, Rhetorical Role और Extractive Summarizer। लगभग 1,000 कानूनी निर्णयों पर प्रशिक्षित इन मॉडलों ने करीब 90% औसत सटीकता हासिल की और SemEval 2022 में इनका मूल्यांकन हुआ।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">जुलाई से सितंबर</div><h3>OpenNyAI मेक-अ-थॉन</h3><p>आठ सप्ताह की इस ऑनलाइन चुनौती में इंजीनियर, टेक्नोलॉजिस्ट, वकील, डिज़ाइनर और व्यावसायिक पेशेवर साथ आए। उन्होंने ऐसे एप्लिकेशन बनाए जो एआई के इस्तेमाल से कानूनी सेवाओं और न्याय तक पहुँच को बेहतर कर सकें।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">सितंबर</div><h3>KHOJ डेटासेट जारी</h3><p>करीब 40 छात्र स्वयंसेवकों ने 47 मानकों पर उच्च न्यायालय के न्यायाधीशों से जुड़ी पृष्ठभूमि की जानकारी जुटाई और 25,000 डेटा बिंदु तैयार किए। Civic Data Lab तथा Centre for Public Policy, Law and Good Governance के साथ बने इस डेटासेट को भारत के मुख्य न्यायाधीश डी. वाई. चंद्रचूड़ ने NLU Odisha में जारी किया।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">दिसंबर</div><h3>Jugalbandi लॉन्च</h3><p>ChatGPT के आने के तुरंत बाद समुदाय ने Jugalbandi बनाया—LLM, Bhashini और WhatsApp पर आधारित एक ओपन-सोर्स संवादात्मक एआई स्टैक, जो भारतीय नागरिकों तक ज़रूरी जानकारी और सेवाएँ पहुँचाता है। मई 2024 में Satya Nadella ने इसे प्रस्तुत किया।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">जुलाई</div><h3>पहली OpenNyAI मेकर रेज़िडेंसी</h3><p>पाँच दिनों तक 45 से अधिक उद्यमियों और नवप्रवर्तकों, 16 मेंटर्स और समूह के सदस्यों ने गहन रूप से साथ काम किया और कानून व न्याय की समस्याओं के समाधान के प्रोटोटाइप बनाए।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">अगस्त</div><h3>JIVA लॉन्च</h3><p>Judges’ Intelligent Virtual Assistant—न्यायाधीशों और कानूनी पेशेवरों को संबंधित अधिनियम, कानून और धाराएँ जल्दी खोजने में मदद करने वाला एआई-संचालित प्लेटफ़ॉर्म—Parallel के सहयोग से एक प्रोटोटाइप के रूप में बनाया गया।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">फ़रवरी</div><h3>AALAP लॉन्च</h3><p>AALAP (Assistant for Legal and Paralegal functions in India), Mistral 7B का निर्देशों के आधार पर फ़ाइन-ट्यून किया गया संस्करण है, जिसे भारतीय संदर्भ के विशिष्ट कानूनी कार्यों के लिए बनाया गया।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">मई</div><h3>RAG बेंचमार्क पर काम शुरू</h3><p>Retrieval Augmented Generation के लिए भारतीय कानून-विशिष्ट बेंचमार्क डेटासेट उपलब्ध न होने पर समुदाय ने अलग-अलग प्रकार के कानूनी सवालों वाला डेटासेट बनाना शुरू किया, ताकि रिट्रीवल प्रणालियों का मूल्यांकन किया जा सके।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">जुलाई</div><h3>Jugalbandi Studio जारी</h3><p>Jugalbandi Manager स्टैक पर प्राकृतिक भाषा से एआई एप्लिकेशन बनाने वाला लो/नो-कोड टूल, जिससे उद्यमी और नागरिक डेवलपर एक क्लिक में तैनात किए जा सकने वाले टूल बना सकें।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">सितंबर</div><h3>दूसरी OpenNyAI मेकर रेज़िडेंसी</h3><p>इकोसिस्टम-स्तर का बदलाव शुरू करने वाले डिजिटल सार्वजनिक साधनों के निर्माण पर केंद्रित यह रेज़िडेंसी शिकायत निवारण, पैरालीगल क्षमता के विस्तार और पर्यावरणीय शिकायतों के समाधान पर गहराई से काम करती रही।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">मार्च</div><h3>तीसरी OpenNyAI मेकर रेज़िडेंसी</h3><p>दिल्ली में DARPG के सरकारी प्रतिनिधियों और न्याय इकोसिस्टम के 30 से अधिक सदस्यों को साथ लाकर अगले दशक के लिए सार्वजनिक शिकायत निवारण प्रणालियों की नए सिरे से कल्पना की गई।</p></div></div>
+      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">दिसंबर</div><h3>M.I.S.A.A.L परियोजना शुरू</h3><p>समुदाय के सदस्यों, पैरालीगल और नागरिकों के साथ मिलकर ऐसा एआई बेंचमार्क बनाने का काम शुरू हुआ, जो नागरिकों के कानूनी सवालों के लिए सचमुच गुणवत्तापूर्ण उत्तर को परिभाषित करे। <a href="/hi/misaal/">MISAAL के बारे में पढ़ें &#8594;</a></p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-head team-section-head">
+      <span class="eyebrow">मुख्य टीम</span>
+      <h2>वे लोग जो इस प्रयास को आगे बढ़ाते हैं</h2>
+    </div>
+    <div class="team-grid team-grid-2">
+      <a class="team-card" href="https://www.linkedin.com/in/sachinmalhan/" target="_blank" rel="noopener">
+        <div class="team-avatar"><img src="https://framerusercontent.com/images/J3aaZhai2XPEubEVkjzJJn5eOo.jpg" alt="Sachin Malhan" loading="lazy" /></div>
+        <b>Sachin Malhan</b>
+        <span class="role">सह-संस्थापक, Agami</span>
+        <span class="li">LinkedIn &#8599;</span>
+      </a>
+      <a class="team-card" href="https://www.linkedin.com/in/rashika-narain/" target="_blank" rel="noopener">
+        <div class="team-avatar"><img src="../../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" /></div>
+        <b>Rashika Narain</b>
+        <span class="role">क्यूरेटर और लीड, OpenNyAI</span>
+        <span class="li">LinkedIn &#8599;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">साझा पहल</span>
+      <h2>Agami की नींव पर, अनेक साथियों के सहयोग से</h2>
+      <p>OpenNyAI, न्याय के लिए एआई पर केंद्रित Agami का साझा मिशन है। यह कानून, तकनीक, परोपकार और सरकार के साझेदारों के साथ-साथ 2,000 से अधिक संस्थाओं से जुड़े, बदलाव लाने वाले 4,000 से अधिक लोगों के नेटवर्क की शक्ति से आगे बढ़ता है।</p>
+      <a class="agami-link" href="https://www.agami.in" target="_blank" rel="noopener" aria-label="Agami की वेबसाइट पर जाएँ"><img src="../../assets/agami-logo.svg" alt="Agami" /></a>
+    </div>
+    <div class="collab-ticker" aria-label="सहयोगी संस्थाएँ">
+      <div class="ticker">
+        <div class="ticker-track">
+          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="सहयोगी संस्था" />
+          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="सहयोगी संस्था" aria-hidden="true" />
+          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="सहयोगी संस्था" aria-hidden="true" />
+          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="सहयोगी संस्था" aria-hidden="true" />
+          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="सहयोगी संस्था" aria-hidden="true" />
+          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="सहयोगी संस्था" aria-hidden="true" />
+          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="सहयोगी संस्था" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>आप किस समस्या को आगे बढ़ाने में मदद करेंगे?</h2>
+    <p>OpenNyAI जिन समस्याओं पर काम कर रहा है, उन्हें देखें; समझें कि हर समस्या को किस तरह की मदद चाहिए; और तय करें कि आपका समय, विशेषज्ञता या नेटवर्क कहाँ वास्तविक फर्क ला सकता है।</p>
+    <a class="btn btn-primary" href="/hi/#problems">समस्याएँ देखें</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <img src="../../assets/opennyai-logo.svg" alt="OpenNyAI" />
+    <p>एआई और समुदाय की शक्ति से भारत में न्याय तक पहुँच को बदलना।</p>
+  </div>
+  <div class="footer-map">
+    <div class="footer-col">
+      <p class="footer-col-title">OpenNyAI</p>
+      <a href="/hi/about/">हमारे बारे में</a>
+      <a href="/hi/#approach">हमारा तरीका</a>
+      <a href="/hi/misaal/">MISAAL</a>
+      <a href="/hi/#problems">समस्याएँ देखें</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-title">इकोसिस्टम</p>
+      <a href="https://www.agami.in" target="_blank" rel="noopener">Agami पर जाएँ</a>
+      <a href="https://pucar.org" target="_blank" rel="noopener">PUCAR</a>
+      <a href="mailto:hello@opennyai.org">संपर्क करें</a>
+    </div>
+  </div>
+  <div class="footer-copy">कॉपीराइट © Vayam Forum for Citizenship (Agami)। सर्वाधिकार सुरक्षित।</div>
+</footer>
+
+<script>
+  // fade timeline items in as they scroll into view
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.15 });
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+
+</body>
+</html>
