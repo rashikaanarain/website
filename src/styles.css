@@ -164,11 +164,10 @@ a {
 }
 
 .locale-swap-stage[data-locale-swap="morph"] {
+  /* Expand/collapse reveals from the bottom; top of the page stays put. */
+  overflow: clip;
   will-change: height;
-}
-
-.locale-swap-stage[data-locale-swap="morph"] .locale-swap-layer {
-  backface-visibility: hidden;
+  overflow-anchor: none;
 }
 
 .brand-home {
