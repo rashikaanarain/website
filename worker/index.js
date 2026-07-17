@@ -421,7 +421,7 @@ export async function handleRequest(request, env) {
   let response = await env.ASSETS.fetch(request);
   const lastSegment = url.pathname.split("/").pop() || "";
   if (response.status === 404 && !lastSegment.includes(".")) {
-    response = await env.ASSETS.fetch(new Request(new URL("/index.html", request.url), request));
+    response = await env.ASSETS.fetch(new Request(new URL("/", request.url), request));
   }
   return rewriteDocumentMetadata(response, request.url);
 }
