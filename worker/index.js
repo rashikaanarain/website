@@ -418,7 +418,12 @@ export async function handleRequest(request, env) {
   if (!env.ASSETS || typeof env.ASSETS.fetch !== "function") {
     return new Response("Static assets are unavailable.", { status: 503 });
   }
-  return rewriteDocumentMetadata(await env.ASSETS.fetch(request), request.url);
+  let response = await env.ASSETS.fetch(request);
+  const lastSegment = url.pathname.split("/").pop() || "";
+  if (response.status === 404 && !lastSegment.includes(".")) {
+    response = await env.ASSETS.fetch(new Request(new URL("/index.html", request.url), request));
+  }
+  return rewriteDocumentMetadata(response, request.url);
 }
 
 export default {

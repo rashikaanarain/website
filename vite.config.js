@@ -20,7 +20,7 @@ const workerConfig = {
   assets: {
     binding: "ASSETS",
     not_found_handling: "single-page-application",
-    run_worker_first: ["/api/*"],
+    run_worker_first: true,
   },
 };
 
