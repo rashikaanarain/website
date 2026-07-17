@@ -5,6 +5,7 @@ import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
 import heroPoster from "../../assets/hero/community-hero-poster.png";
 import logo from "../../assets/opennyai-logo.svg";
+import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
 import { HeroMedia } from "./HeroMedia.jsx";
 
@@ -319,10 +320,30 @@ const COPY = {
   },
 };
 
-function Header({ locale, copy }) {
+function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
   const hindi = locale === "hi";
+  const nextLocale = hindi ? "en" : "hi";
+  const nextPath = pathForLocale(nextLocale);
+
+  function handleLanguageClick(event) {
+    // Keep real navigation for modified clicks / open-in-new-tab.
+    if (
+      event.defaultPrevented
+      || event.button !== 0
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    closeMenu();
+    onSwitchLocale(nextLocale);
+  }
 
   return (
     <header className="site-header">
@@ -330,8 +351,17 @@ function Header({ locale, copy }) {
         <img src={logo} alt="OpenNyAI" />
       </a>
       <div className="header-actions">
-        <a className="language-switch" href={hindi ? "/" : "/hi/"} lang={hindi ? "en" : "hi"} hrefLang={hindi ? "en" : "hi"}>
-          {hindi ? "English" : "हिंदी"}
+        <a
+          className={`language-switch${isSwapping ? " is-swapping" : ""}`}
+          href={nextPath}
+          lang={nextLocale}
+          hrefLang={nextLocale}
+          aria-busy={isSwapping || undefined}
+          onClick={handleLanguageClick}
+        >
+          <span className="language-switch-label" key={nextLocale}>
+            {hindi ? "English" : "हिंदी"}
+          </span>
         </a>
         <button
           className="nav-toggle"
@@ -795,35 +825,47 @@ function CollaboratorsBand({ copy }) {
 }
 
 export function HomePage({ locale: requestedLocale }) {
-  const locale = requestedLocale || (window.location.pathname.startsWith("/hi") ? "hi" : "en");
+  const { locale, isSwapping, stageRef, switchLocale } = useLocaleSwap(requestedLocale);
   const copy = COPY[locale];
   const [selectedProblem, setSelectedProblem] = useState("bail");
   useParallax();
 
   useEffect(() => {
+    const absoluteUrl = new URL(pathForLocale(locale), window.location.origin).href;
     document.documentElement.lang = locale;
     document.documentElement.dataset.locale = locale;
     document.title = copy.meta.title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", copy.meta.description);
     document.querySelector('meta[property="og:title"]')?.setAttribute("content", copy.meta.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute("content", copy.meta.description);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", absoluteUrl);
     document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", copy.meta.title);
     document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", copy.meta.description);
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", absoluteUrl);
   }, [copy, locale]);
 
   return (
-    <div className="site-shell" id="top">
-      <Header locale={locale} copy={copy} />
-      <main>
-        <Hero locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
-        <AgamiProof copy={copy} />
-        <Approach copy={copy} />
-        <WhyNow copy={copy} />
-        <TrackRecord locale={locale} copy={copy} />
-        <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
-        <CollaboratorsBand copy={copy} />
-      </main>
-      <Footer locale={locale} copy={copy} />
+    <div className="site-shell" id="top" data-swapping={isSwapping ? "true" : undefined}>
+      <Header
+        locale={locale}
+        copy={copy}
+        isSwapping={isSwapping}
+        onSwitchLocale={switchLocale}
+      />
+      <div className="locale-swap-stage" ref={stageRef}>
+        <div className="locale-swap-layer" lang={locale}>
+          <main>
+            <Hero locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
+            <AgamiProof copy={copy} />
+            <Approach copy={copy} />
+            <WhyNow copy={copy} />
+            <TrackRecord locale={locale} copy={copy} />
+            <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
+            <CollaboratorsBand copy={copy} />
+          </main>
+          <Footer locale={locale} copy={copy} />
+        </div>
+      </div>
     </div>
   );
 }
