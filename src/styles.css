@@ -122,7 +122,10 @@ a {
 .site-header-cluster {
   position: relative;
   display: flex;
-  width: 100%;
+  /* Keep the intrinsic width in both states; min-width can interpolate without
+     the discrete 100% -> fit-content snap that caused the first stutter. */
+  width: fit-content;
+  min-width: 100%;
   max-width: 100%;
   align-items: center;
   justify-content: space-between;
@@ -130,8 +133,7 @@ a {
   overflow: visible;
   pointer-events: auto;
   transition:
-    width 420ms var(--ease-out),
-    max-width 420ms var(--ease-out),
+    min-width 420ms var(--ease-out),
     padding 360ms var(--ease-out),
     gap 360ms var(--ease-out),
     background 320ms ease,
@@ -146,7 +148,7 @@ a {
 }
 
 .site-header.is-collapsed .site-header-cluster {
-  width: fit-content;
+  min-width: 0;
   max-width: min(100%, 720px);
   gap: 6px;
   padding: 6px 7px 6px 14px;
@@ -167,7 +169,6 @@ a {
 
 .site-header.is-collapsed .header-actions {
   gap: 6px;
-  margin-left: 0;
 }
 
 .language-switch {
