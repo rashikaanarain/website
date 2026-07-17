@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import agamiLogo from "../../assets/agami-logo.svg";
 import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.png";
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
@@ -332,8 +332,14 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   const nextLocale = hindi ? "en" : "hi";
   const nextPath = pathForLocale(nextLocale);
 
+  // Close the drawer only while transitioning into the collapsed bar,
+  // not whenever collapsed is already true (that blocked re-opening after scroll).
+  const wasCollapsedRef = useRef(false);
   useEffect(() => {
-    if (collapsed) setMenuOpen(false);
+    if (collapsed && !wasCollapsedRef.current) {
+      setMenuOpen(false);
+    }
+    wasCollapsedRef.current = collapsed;
   }, [collapsed]);
 
   function handleLanguageClick(event) {
