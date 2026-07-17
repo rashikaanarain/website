@@ -418,6 +418,15 @@ function HighlightedText({ segments, className }) {
   ));
 }
 
+function clamp01(value) {
+  return Math.min(1, Math.max(0, value));
+}
+
+function smoothstep(value) {
+  const t = clamp01(value);
+  return t * t * (3 - 2 * t);
+}
+
 function Approach({ copy }) {
   const flowRef = useRef(null);
   const stepRefs = useRef([]);
@@ -430,26 +439,44 @@ function Approach({ copy }) {
     let frameId = null;
     if (!flow || !steps.length) return undefined;
 
+    function setStepProgress(value) {
+      steps.forEach((step) => {
+        if (value === null) step.style.removeProperty("--step-progress");
+        else step.style.setProperty("--step-progress", value);
+      });
+    }
+
     function updateFlow() {
       frameId = null;
-      const focusLine = window.innerHeight * 0.52;
+      const viewport = window.innerHeight;
+      const focusLine = viewport * 0.48;
+      const scrubStart = viewport * 0.78;
+      const scrubPeak = viewport * 0.36;
       let closest = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
 
       steps.forEach((step, index) => {
         const rect = step.getBoundingClientRect();
-        const distance = Math.abs((rect.top + rect.height / 2) - focusLine);
+        const center = rect.top + rect.height * 0.42;
+        const distance = Math.abs(center - focusLine);
         if (distance < closestDistance) {
           closestDistance = distance;
           closest = index;
         }
+
+        // Continuous 0→1 scrub as each step rises through the focus band.
+        // Reverses cleanly on scroll-up because it is pure geometry.
+        const raw = (scrubStart - center) / Math.max(1, scrubStart - scrubPeak);
+        const progress = smoothstep(raw);
+        step.style.setProperty("--step-progress", progress.toFixed(4));
       });
 
-      setActiveStage((current) => current === closest ? current : closest);
+      setActiveStage((current) => (current === closest ? current : closest));
       const flowRect = flow.getBoundingClientRect();
-      const travel = flowRect.height + window.innerHeight;
-      const progress = Math.max(0, Math.min(1, (window.innerHeight - flowRect.top) / travel));
+      const travel = flowRect.height + viewport;
+      const progress = clamp01((viewport - flowRect.top) / travel);
       const offset = progress - 0.5;
+      flow.style.setProperty("--story-progress", progress.toFixed(4));
       flow.style.setProperty("--field-shift", `${(offset * -18).toFixed(2)}px`);
       flow.style.setProperty("--scope-shift", `${(offset * 9).toFixed(2)}px`);
       flow.style.setProperty("--outcome-shift", `${(offset * 14).toFixed(2)}px`);
@@ -479,6 +506,8 @@ function Approach({ copy }) {
       frameId = null;
       if (reduceMotion.matches) {
         setActiveStage(2);
+        setStepProgress("1");
+        flow.style.setProperty("--story-progress", "1");
         flow.style.setProperty("--field-shift", "0px");
         flow.style.setProperty("--scope-shift", "0px");
         flow.style.setProperty("--outcome-shift", "0px");
@@ -496,6 +525,11 @@ function Approach({ copy }) {
       removeMotionListeners();
       reduceMotion.removeEventListener?.("change", applyMotionPreference);
       if (frameId !== null) window.cancelAnimationFrame(frameId);
+      setStepProgress(null);
+      flow.style.removeProperty("--story-progress");
+      flow.style.removeProperty("--field-shift");
+      flow.style.removeProperty("--scope-shift");
+      flow.style.removeProperty("--outcome-shift");
       flow.style.removeProperty("--backdrop-x");
       flow.style.removeProperty("--backdrop-y");
     };

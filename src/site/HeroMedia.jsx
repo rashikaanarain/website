@@ -4,6 +4,18 @@ import heroPoster from "../../assets/hero/community-hero-poster.png";
 const HERO_VIDEO_URL =
   "https://onmain.blr1.cdn.digitaloceanspaces.com/mainsite/main-on-hero-video-720-02.mp4";
 
+export function shouldLoadHeroVideo({
+  effectiveType,
+  prefersReducedMotion,
+  saveData,
+}) {
+  return !(
+    prefersReducedMotion ||
+    saveData ||
+    ["slow-2g", "2g"].includes(effectiveType)
+  );
+}
+
 export function HeroMedia() {
   const videoRef = useRef(null);
 
@@ -12,7 +24,6 @@ export function HeroMedia() {
     if (!video) return undefined;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compactQuery = window.matchMedia("(max-width: 720px)");
     const connection = navigator.connection;
     let inView = false;
     let observer;
@@ -27,12 +38,11 @@ export function HeroMedia() {
       else query.removeListener?.(configureMedia);
     };
 
-    const shouldUsePoster = () => (
-      motionQuery.matches ||
-      compactQuery.matches ||
-      connection?.saveData ||
-      ["slow-2g", "2g"].includes(connection?.effectiveType)
-    );
+    const shouldUsePoster = () => !shouldLoadHeroVideo({
+      effectiveType: connection?.effectiveType,
+      prefersReducedMotion: motionQuery.matches,
+      saveData: connection?.saveData,
+    });
 
     const syncPlayback = () => {
       if (inView && !document.hidden && !shouldUsePoster()) {
@@ -85,7 +95,6 @@ export function HeroMedia() {
     document.addEventListener("visibilitychange", onVisibilityChange);
     video.addEventListener("error", onVideoError);
     addQueryListener(motionQuery);
-    addQueryListener(compactQuery);
     connection?.addEventListener?.("change", configureMedia);
 
     return () => {
@@ -93,7 +102,6 @@ export function HeroMedia() {
       unloadVideo();
       document.removeEventListener("visibilitychange", onVisibilityChange);
       removeQueryListener(motionQuery);
-      removeQueryListener(compactQuery);
       connection?.removeEventListener?.("change", configureMedia);
     };
   }, []);
@@ -118,6 +126,7 @@ export function HeroMedia() {
         muted
         loop
         playsInline
+        disablePictureInPicture
         tabIndex={-1}
       />
     </div>

@@ -322,10 +322,10 @@ a {
   width: min(100%, calc(var(--content) + 2 * var(--gutter)));
   min-height: 100svh;
   margin-inline: auto;
-  padding: clamp(132px, 17vh, 180px) var(--gutter) clamp(72px, 10vh, 112px);
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.85fr);
+  padding: clamp(120px, 15vh, 168px) var(--gutter) clamp(56px, 9vh, 96px);
+  grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.85fr);
   align-items: center;
-  gap: clamp(52px, 7vw, 96px);
+  gap: clamp(40px, 6vw, 80px);
 }
 
 .hero-copy {
@@ -594,7 +594,7 @@ a {
 .approach-title-mark {
   color: inherit;
   background: transparent;
-  text-decoration-color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 72%, transparent);
   text-decoration-line: underline;
   text-decoration-skip-ink: auto;
   text-decoration-thickness: 0.085em;
@@ -602,6 +602,7 @@ a {
 }
 
 .approach-flow {
+  --story-progress: 0;
   --field-shift: 0px;
   --scope-shift: 0px;
   --outcome-shift: 0px;
@@ -970,6 +971,7 @@ a {
 }
 
 .flow-step {
+  --step-progress: 0;
   --story-accent: var(--accent);
   --story-mark: rgba(218, 110, 170, 0.34);
   display: flex;
@@ -987,8 +989,7 @@ a {
   width: 100%;
   max-width: 540px;
   padding: 26px 0 28px;
-  border-top: 1px solid rgba(251, 248, 242, 0.14);
-  transition: border-color 550ms ease;
+  border-top: 1px solid rgba(251, 248, 242, calc(0.12 + var(--step-progress) * 0.22));
 }
 
 .flow-step-inner::before {
@@ -998,64 +999,56 @@ a {
   width: 74px;
   height: 1px;
   background: var(--story-accent);
-  transform: scaleX(0.16);
+  transform: scaleX(calc(0.12 + var(--step-progress) * 0.88));
   transform-origin: left;
-  transition: transform 720ms var(--ease-out), background 500ms ease;
   content: "";
 }
 
-.flow-step.active .flow-step-inner {
-  border-color: rgba(251, 248, 242, 0.3);
-}
-
-.flow-step.active .flow-step-inner::before { transform: scaleX(1); }
-
 .flow-step-number {
   display: inline-block;
-  opacity: 0.9;
+  opacity: calc(0.42 + var(--step-progress) * 0.58);
   color: var(--story-accent);
   font-size: 0.78rem;
   font-weight: 700;
-  transform: translateY(7px);
-  transition: opacity 360ms ease, transform 480ms var(--ease-out);
+  transform: translateY(calc((1 - var(--step-progress)) * 8px));
 }
 
 .flow-step h3 {
   margin: 13px 0 9px;
-  opacity: 0.67;
+  opacity: calc(0.5 + var(--step-progress) * 0.5);
   color: var(--surface);
   font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  transform: translateY(9px);
-  transition: opacity 420ms ease, transform 560ms var(--ease-out);
+  transform: translateY(calc((1 - var(--step-progress)) * 10px));
 }
 
 .flow-step-title-copy {
   position: relative;
-  display: inline-block;
+  display: inline;
   max-width: 100%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .flow-step-title-copy::after {
   position: absolute;
   right: 0;
-  bottom: -0.17em;
+  bottom: -0.14em;
   left: 0;
-  height: 3px;
+  height: 0.11em;
+  min-height: 2px;
   background: var(--story-accent);
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: opacity 240ms ease, transform 620ms var(--ease-out);
+  opacity: calc(0.18 + var(--step-progress) * 0.82);
+  transform: scaleX(var(--step-progress));
+  transform-origin: left center;
   content: "";
 }
 
 .flow-step p {
   max-width: 50ch;
-  opacity: 0.7;
-  color: rgba(251, 248, 242, 0.74);
+  opacity: calc(0.52 + var(--step-progress) * 0.48);
+  color: rgba(251, 248, 242, calc(0.58 + var(--step-progress) * 0.28));
   font-size: 1.04rem;
-  transform: translateY(10px);
-  transition: color 360ms ease, opacity 460ms ease, transform 620ms var(--ease-out);
+  transform: translateY(calc((1 - var(--step-progress)) * 11px));
 }
 
 .flow-copy-mark {
@@ -1063,44 +1056,12 @@ a {
   color: inherit;
   background-color: transparent;
   background-image: linear-gradient(var(--story-mark), var(--story-mark));
-  background-position: 0 90%;
+  background-position: 0 88%;
   background-repeat: no-repeat;
-  background-size: 10% 0.52em;
+  background-size: calc(var(--step-progress) * 100%) 0.55em;
   font-weight: 600;
-  transition: background-size 680ms var(--ease-out);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-
-.flow-step.active .flow-step-number,
-.flow-step.active h3,
-.flow-step.active p {
-  opacity: 1;
-  transform: none;
-}
-
-.flow-step.active .flow-step-number {
-  transition-delay: 30ms;
-}
-
-.flow-step.active h3 {
-  transition-delay: 90ms;
-}
-
-.flow-step.active p {
-  color: rgba(251, 248, 242, 0.84);
-  transition-delay: 170ms;
-}
-
-.flow-step.active .flow-step-title-copy::after {
-  opacity: 1;
-  transform: scaleX(1);
-  transition-delay: 150ms;
-}
-
-.flow-step.active .flow-copy-mark {
-  background-size: 100% 0.52em;
-  transition-delay: 300ms;
 }
 
 .track-record-section {
@@ -2005,12 +1966,22 @@ td a:hover {
   }
 
   .hero-inner {
-    gap: 72px;
+    min-height: auto;
+    padding-block: clamp(112px, 14vh, 148px) clamp(48px, 7vh, 80px);
+    gap: clamp(40px, 6vw, 56px);
   }
 
   .hero-problems {
-    width: min(100%, 720px);
-    justify-self: end;
+    width: min(100%, 640px);
+    justify-self: start;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 8.5vw, 4.4rem);
+  }
+
+  .hero-lede {
+    max-width: 46ch;
   }
 
   .agami-proof {
@@ -2163,12 +2134,60 @@ td a:hover {
 
   .hero-inner {
     min-height: auto;
-    padding-top: 130px;
+    padding: 104px var(--gutter) 36px;
     grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .hero-context {
+    margin-bottom: 16px;
+    font-size: 0.94rem;
   }
 
   .hero h1 {
-    font-size: clamp(3rem, 15vw, 4.75rem);
+    font-size: clamp(2.55rem, 11.5vw, 3.55rem);
+    letter-spacing: -0.028em;
+  }
+
+  .hero-lede {
+    margin-top: 16px;
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    margin-top: 22px;
+    gap: 14px;
+  }
+
+  .hero-problems > h2 {
+    padding: 14px 16px;
+    font-size: 0.86rem;
+  }
+
+  .problem-brief {
+    padding: 15px 16px;
+  }
+
+  .problem-brief h3 {
+    font-size: 1.12rem;
+    max-width: none;
+  }
+
+  .problem-brief > p:not(.problem-status) {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .problem-brief a {
+    margin-top: 10px;
+  }
+
+  .problem-status,
+  .proof-label {
+    margin-bottom: 6px;
+    font-size: 0.78rem;
   }
 
   .hero-actions,
@@ -2199,7 +2218,7 @@ td a:hover {
     top: auto;
     height: auto;
     min-height: 0;
-    margin: 8px 0 48px;
+    margin: 4px 0 36px;
   }
 
   .problem-map {
@@ -2207,7 +2226,7 @@ td a:hover {
   }
 
   .problem-field {
-    height: 260px;
+    height: 230px;
   }
 
   .scope-frame {
@@ -2238,31 +2257,7 @@ td a:hover {
   }
 
   .flow-step-inner {
-    padding: 28px 0 42px;
-  }
-
-  .flow-step-inner::before {
-    transform: scaleX(1);
-  }
-
-  .flow-step-number,
-  .flow-step h3,
-  .flow-step p {
-    opacity: 1;
-    transform: none;
-  }
-
-  .flow-step p {
-    color: rgba(251, 248, 242, 0.84);
-  }
-
-  .flow-step-title-copy::after {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-
-  .flow-copy-mark {
-    background-size: 100% 0.52em;
+    padding: 22px 0 34px;
   }
 
   .outcome-mark,
@@ -2270,6 +2265,15 @@ td a:hover {
   .outcome-title {
     opacity: 1;
     transform: none;
+  }
+
+  .section {
+    padding-block: clamp(56px, 12vw, 96px);
+  }
+
+  .section-intro h2,
+  .join-copy h2 {
+    font-size: clamp(2rem, 9vw, 2.85rem);
   }
 
   .proof-stats,
@@ -2439,6 +2443,7 @@ td a:hover {
   }
 
   .flow-step {
+    --step-progress: 1;
     min-height: auto;
   }
 
@@ -2462,7 +2467,11 @@ td a:hover {
   }
 
   .flow-copy-mark {
-    background-size: 100% 0.52em;
+    background-size: 100% 0.55em;
+  }
+
+  .approach-flow {
+    --story-progress: 1;
   }
 }
 
