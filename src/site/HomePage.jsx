@@ -11,6 +11,8 @@ import { useCollapsedHeader } from "../hooks/useCollapsedHeader.js";
 import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
 import { useSectionEntrance } from "../hooks/useSectionEntrance.js";
+import { GlowAccentButton, GlowPrimaryButton } from "./BorderGlow.jsx";
+import Grainient from "./Grainient.jsx";
 import { HeroMedia } from "./HeroMedia.jsx";
 
 const PROBLEMS = [
@@ -408,7 +410,9 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
           <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
           <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
           <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
-          <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
+          <GlowPrimaryButton className="nav-action-glow">
+            <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
+          </GlowPrimaryButton>
         </nav>
       </div>
     </header>
@@ -426,7 +430,9 @@ function Hero({ locale, copy, onChooseProblem }) {
           <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em> {copy.hero.titleAfter}</h1>
           <p className="hero-lede">{copy.hero.lede}</p>
           <div className="hero-actions">
-            <a className="btn btn-accent" href="#problems">{copy.hero.primary}</a>
+            <GlowAccentButton animated>
+              <a className="btn btn-accent" href="#problems">{copy.hero.primary}</a>
+            </GlowAccentButton>
             <a className="text-link" href="#approach">{copy.hero.secondary} <span aria-hidden="true">↓</span></a>
           </div>
         </div>
@@ -690,9 +696,11 @@ function SignupForm({ locale, copy, selectedProblem }) {
           <textarea name="problemDetails" placeholder={copy.participate.detailsPlaceholder} value={form.problemDetails} onChange={updateField} required maxLength={1600} disabled={status === "submitting"} />
         </label>
       )}
-      <button className="btn btn-accent" type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? copy.participate.submitting : isOther ? copy.participate.submitOther : copy.participate.submit}
-      </button>
+      <GlowAccentButton>
+        <button className="btn btn-accent" type="submit" disabled={status === "submitting"}>
+          {status === "submitting" ? copy.participate.submitting : isOther ? copy.participate.submitOther : copy.participate.submit}
+        </button>
+      </GlowAccentButton>
       <p className="form-privacy">{copy.participate.privacy}</p>
       {message && <p className={`form-message ${status}`} role={status === "error" ? "alert" : "status"}>{message}</p>}
     </form>

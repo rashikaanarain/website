@@ -313,7 +313,7 @@ a {
 }
 
 .site-nav .nav-action {
-  margin-left: 4px;
+  margin-left: 0;
   min-height: 38px;
   padding: 9px 15px;
   transition:
@@ -322,11 +322,20 @@ a {
     margin 320ms var(--ease-out);
 }
 
+.site-nav .nav-action-glow {
+  margin-left: 4px;
+  flex: 0 0 auto;
+}
+
 .site-header.is-collapsed .site-nav .nav-action {
-  margin-left: 2px;
+  margin-left: 0;
   min-height: 34px;
   padding: 7px 12px;
   font-size: 0.84rem;
+}
+
+.site-header.is-collapsed .site-nav .nav-action-glow {
+  margin-left: 2px;
 }
 
 .nav-toggle {
@@ -396,6 +405,103 @@ a {
 
 .btn-accent:hover:not(:disabled) {
   background: var(--accent-hover);
+}
+
+/* React Bits BorderGlow — brand-tuned, no Tailwind. */
+.border-glow {
+  position: relative;
+  display: inline-grid;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transform: translate3d(0, 0, 0.01px);
+}
+
+.border-glow-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid transparent;
+  pointer-events: none;
+}
+
+.border-glow-mesh-fill {
+  mix-blend-mode: soft-light;
+}
+
+.border-glow-outer {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: plus-lighter;
+}
+
+.border-glow-outer-core {
+  position: absolute;
+}
+
+.border-glow-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.border-glow-btn {
+  vertical-align: middle;
+}
+
+.border-glow-btn .btn {
+  width: 100%;
+  border-radius: inherit;
+  background: transparent;
+  box-shadow: none;
+}
+
+.border-glow-btn .btn:hover:not(:disabled) {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.border-glow-btn .btn:active:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+.border-glow-btn-accent {
+  border-color: rgba(36, 30, 26, 0.08);
+}
+
+.border-glow-btn-primary {
+  border-color: rgba(251, 248, 242, 0.16);
+}
+
+.border-glow-btn-primary .btn {
+  color: var(--surface);
+}
+
+.hero-actions .border-glow-btn,
+.problem-signup .border-glow-btn {
+  width: fit-content;
+  max-width: 100%;
+}
+
+@media (max-width: 680px) {
+  .hero-actions .border-glow-btn,
+  .hero-actions .border-glow-btn .btn,
+  .problem-signup .border-glow-btn,
+  .problem-signup .border-glow-btn .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .border-glow-mesh,
+  .border-glow-outer {
+    opacity: 0 !important;
+    transition: none !important;
+  }
 }
 
 .btn-secondary {
@@ -2682,22 +2788,20 @@ td a:hover {
     grid-column: auto;
   }
 
-  /* Mobile keeps continuous scrub: compact sticky diagram + tall step runways. */
+  /* Mobile: minimal sticky progress header, static inline diagram, generous steps. */
   .approach-flow {
     display: block;
   }
 
   .flow-visual {
-    position: sticky;
-    top: 64px;
-    z-index: 2;
+    position: relative;
+    top: auto;
+    z-index: 1;
     height: auto;
     min-height: 0;
-    margin: 0 0 4px;
-    padding: 10px 0 14px;
+    margin: 0 0 32px;
+    padding: 0;
     align-items: flex-start;
-    background:
-      linear-gradient(180deg, rgba(17, 31, 38, 0.98) 0%, rgba(17, 31, 38, 0.94) 78%, rgba(17, 31, 38, 0) 100%);
   }
 
   .problem-map {
@@ -2705,53 +2809,65 @@ td a:hover {
     width: 100%;
   }
 
-  .story-meter {
+  .story-phase {
+    justify-content: flex-start;
     margin-bottom: 12px;
   }
 
-  .problem-map-head {
-    margin-bottom: 10px;
+  .story-meter {
+    margin-bottom: 20px;
   }
 
-  .problem-field {
-    height: 176px;
-    padding: 14px;
-  }
-
-  .problem-grid {
-    gap: 6px;
-  }
-
+  .problem-map-head,
+  .problem-field-shell,
   .flow-transfer {
-    height: 36px;
-    margin-left: 62%;
+    display: none;
   }
 
   .solved-outcome {
-    max-width: min(230px, 72vw);
-    margin-left: 28%;
-    padding: 10px 12px;
-    gap: 10px;
+    position: relative;
+    max-width: none;
+    margin: 24px 0 0;
+    padding: 16px;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
   }
 
   .outcome-mark {
-    width: 26px;
-    height: 26px;
-    font-size: 0.85rem;
+    width: 28px;
+    height: 28px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .outcome-label,
+  .outcome-title {
+    opacity: 1;
+    transform: none;
   }
 
   .outcome-title {
-    font-size: 0.92rem;
+    font-size: 1rem;
+  }
+
+  .flow-steps {
+    margin-top: 8px;
   }
 
   .flow-step {
-    min-height: 78vh;
+    min-height: auto;
     align-items: flex-start;
-    padding-top: 12px;
+    padding-top: 0;
+    margin-bottom: 40px;
+  }
+
+  .flow-step:last-child {
+    margin-bottom: 0;
   }
 
   .flow-step-inner {
-    padding: 18px 0 28px;
+    padding: 20px 0 28px;
   }
 
   .flow-step-inner::after {
@@ -2759,11 +2875,12 @@ td a:hover {
   }
 
   .flow-step h3 {
-    font-size: clamp(1.28rem, 6.4vw, 1.55rem);
+    font-size: clamp(1.32rem, 6.4vw, 1.6rem);
   }
 
   .flow-step p {
-    font-size: 1rem;
+    font-size: 1.02rem;
+    max-width: none;
   }
 
   .section {
@@ -3055,21 +3172,13 @@ td a:hover {
   }
 }
 
-/* Short landscape phones: still scrub, but keep the sticky diagram compact. */
+/* Short landscape phones: same minimal mobile flow, tighter steps. */
 @media (max-height: 719px) and (max-width: 900px) and (prefers-reduced-motion: no-preference) {
-  .flow-visual {
-    position: sticky;
-    top: 56px;
-    height: auto;
-    min-height: 0;
-    padding-block: 8px 10px;
-  }
-
-  .problem-field {
-    height: 148px;
-  }
-
   .flow-step {
-    min-height: 88vh;
+    margin-bottom: 24px;
+  }
+
+  .flow-step-inner {
+    padding: 16px 0 20px;
   }
 }
