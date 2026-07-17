@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import agamiLogo from "../../assets/agami-logo.svg";
 import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.png";
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
 import heroPoster from "../../assets/hero/community-hero-poster.png";
 import logo from "../../assets/opennyai-logo.svg";
+import { useApproachStory } from "../hooks/useApproachStory.js";
 import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
 import { HeroMedia } from "./HeroMedia.jsx";
@@ -448,122 +449,9 @@ function HighlightedText({ segments, className }) {
   ));
 }
 
-function clamp01(value) {
-  return Math.min(1, Math.max(0, value));
-}
-
-function smoothstep(value) {
-  const t = clamp01(value);
-  return t * t * (3 - 2 * t);
-}
-
 function Approach({ copy }) {
-  const flowRef = useRef(null);
-  const stepRefs = useRef([]);
-  const [activeStage, setActiveStage] = useState(0);
-
-  useEffect(() => {
-    const flow = flowRef.current;
-    const steps = stepRefs.current.filter(Boolean);
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let frameId = null;
-    if (!flow || !steps.length) return undefined;
-
-    function setStepProgress(value) {
-      steps.forEach((step) => {
-        if (value === null) step.style.removeProperty("--step-progress");
-        else step.style.setProperty("--step-progress", value);
-      });
-    }
-
-    function updateFlow() {
-      frameId = null;
-      const viewport = window.innerHeight;
-      const focusLine = viewport * 0.48;
-      const scrubStart = viewport * 0.78;
-      const scrubPeak = viewport * 0.36;
-      let closest = 0;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      steps.forEach((step, index) => {
-        const rect = step.getBoundingClientRect();
-        const center = rect.top + rect.height * 0.42;
-        const distance = Math.abs(center - focusLine);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closest = index;
-        }
-
-        // Continuous 0→1 scrub as each step rises through the focus band.
-        // Reverses cleanly on scroll-up because it is pure geometry.
-        const raw = (scrubStart - center) / Math.max(1, scrubStart - scrubPeak);
-        const progress = smoothstep(raw);
-        step.style.setProperty("--step-progress", progress.toFixed(4));
-      });
-
-      setActiveStage((current) => (current === closest ? current : closest));
-      const flowRect = flow.getBoundingClientRect();
-      const travel = flowRect.height + viewport;
-      const progress = clamp01((viewport - flowRect.top) / travel);
-      const offset = progress - 0.5;
-      flow.style.setProperty("--story-progress", progress.toFixed(4));
-      flow.style.setProperty("--field-shift", `${(offset * -18).toFixed(2)}px`);
-      flow.style.setProperty("--scope-shift", `${(offset * 9).toFixed(2)}px`);
-      flow.style.setProperty("--outcome-shift", `${(offset * 14).toFixed(2)}px`);
-      flow.style.setProperty("--backdrop-x", `${(offset * 28).toFixed(2)}px`);
-      flow.style.setProperty("--backdrop-y", `${(offset * -36).toFixed(2)}px`);
-    }
-
-    function requestUpdate() {
-      if (frameId === null) {
-        frameId = window.requestAnimationFrame(updateFlow);
-      }
-    }
-
-    function addMotionListeners() {
-      window.addEventListener("scroll", requestUpdate, { passive: true });
-      window.addEventListener("resize", requestUpdate);
-    }
-
-    function removeMotionListeners() {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    }
-
-    function applyMotionPreference() {
-      removeMotionListeners();
-      if (frameId !== null) window.cancelAnimationFrame(frameId);
-      frameId = null;
-      if (reduceMotion.matches) {
-        setActiveStage(2);
-        setStepProgress("1");
-        flow.style.setProperty("--story-progress", "1");
-        flow.style.setProperty("--field-shift", "0px");
-        flow.style.setProperty("--scope-shift", "0px");
-        flow.style.setProperty("--outcome-shift", "0px");
-        flow.style.setProperty("--backdrop-x", "0px");
-        flow.style.setProperty("--backdrop-y", "0px");
-        return;
-      }
-      addMotionListeners();
-      requestUpdate();
-    }
-
-    applyMotionPreference();
-    reduceMotion.addEventListener?.("change", applyMotionPreference);
-    return () => {
-      removeMotionListeners();
-      reduceMotion.removeEventListener?.("change", applyMotionPreference);
-      if (frameId !== null) window.cancelAnimationFrame(frameId);
-      setStepProgress(null);
-      flow.style.removeProperty("--story-progress");
-      flow.style.removeProperty("--field-shift");
-      flow.style.removeProperty("--scope-shift");
-      flow.style.removeProperty("--outcome-shift");
-      flow.style.removeProperty("--backdrop-x");
-      flow.style.removeProperty("--backdrop-y");
-    };
-  }, []);
+  const { flowRef, stepRefs, activeStage } = useApproachStory(copy.approach.steps.length);
+  const stageLabels = [copy.approach.whole, copy.approach.subset, copy.approach.ready];
 
   return (
     <section className="section section-dark approach-section" id="approach" aria-labelledby="approach-title">
@@ -573,12 +461,24 @@ function Approach({ copy }) {
         </h2>
         <p>{copy.approach.body}</p>
       </div>
-      <div className="approach-flow" ref={flowRef} data-active-stage={activeStage}>
+      <div
+        className="approach-flow"
+        ref={flowRef}
+        data-active-stage={activeStage}
+        data-story-mode="scrub"
+      >
         <div className="flow-backdrop" aria-hidden="true">
           <img src={heroPoster} alt="" width="1920" height="1080" decoding="async" loading="lazy" />
         </div>
         <div className="flow-visual" aria-hidden="true">
           <div className="problem-map">
+            <div className="story-meter" aria-hidden="true">
+              {stageLabels.map((label, index) => (
+                <span className={`story-meter-seg story-meter-seg-${index}`} data-label={label} key={label}>
+                  <i />
+                </span>
+              ))}
+            </div>
             <div className="problem-map-head">
               <span>{copy.approach.whole}</span>
               <span>{copy.approach.scale[0]}<br />{copy.approach.scale[1]}</span>
@@ -586,18 +486,29 @@ function Approach({ copy }) {
             <div className="problem-field-shell">
               <div className="problem-field">
                 <div className="problem-grid">
-                  {Array.from({ length: 30 }, (_, index) => <span className={`problem-node${[9, 10, 15, 16].includes(index) ? " focus" : ""}`} key={index} />)}
+                  {Array.from({ length: 30 }, (_, index) => (
+                    <span
+                      className={`problem-node${[9, 10, 15, 16].includes(index) ? " focus" : ""}`}
+                      key={index}
+                    />
+                  ))}
                 </div>
                 <div className="scope-frame">
                   <span className="scope-corner tl" /><span className="scope-corner tr" /><span className="scope-corner bl" /><span className="scope-corner br" />
-                  <span className="scope-label"><span className="scope-copy">{copy.approach.subset}</span><span className="solve-copy">{copy.approach.ready}</span></span>
+                  <span className="scope-label">
+                    <span className="scope-copy">{copy.approach.subset}</span>
+                    <span className="solve-copy">{copy.approach.ready}</span>
+                  </span>
                 </div>
               </div>
             </div>
             <div className="flow-transfer" />
             <div className="solved-outcome">
               <span className="outcome-mark">✓</span>
-              <span><span className="outcome-label">{copy.approach.outcomeLabel}</span><span className="outcome-title">{copy.approach.outcomeTitle}</span></span>
+              <span>
+                <span className="outcome-label">{copy.approach.outcomeLabel}</span>
+                <span className="outcome-title">{copy.approach.outcomeTitle}</span>
+              </span>
             </div>
           </div>
         </div>

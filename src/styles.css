@@ -632,11 +632,16 @@ a {
 
 .approach-flow {
   --story-progress: 0;
+  --story-phase: 0;
+  --find: 0;
+  --scope: 0;
+  --solve: 0;
   --field-shift: 0px;
   --scope-shift: 0px;
   --outcome-shift: 0px;
   --backdrop-x: 0px;
   --backdrop-y: 0px;
+  --diagram-lock: max(var(--scope), var(--solve));
   position: relative;
   display: grid;
   width: 100%;
@@ -664,8 +669,8 @@ a {
   height: calc(100% + 96px);
   object-fit: cover;
   object-position: center 68%;
-  opacity: 0.24;
-  filter: brightness(0.58) saturate(0.78);
+  opacity: calc(0.16 + var(--story-progress) * 0.12);
+  filter: brightness(calc(0.52 + var(--solve) * 0.08)) saturate(calc(0.7 + var(--find) * 0.12));
   transform: translate3d(var(--backdrop-x), var(--backdrop-y), 0) scale(1.04);
   will-change: transform;
 }
@@ -673,7 +678,7 @@ a {
 .flow-backdrop::after {
   position: absolute;
   inset: 0;
-  background: rgba(17, 31, 38, 0.56);
+  background: rgba(17, 31, 38, calc(0.5 + var(--solve) * 0.1));
   content: "";
 }
 
@@ -685,10 +690,10 @@ a {
 
 .flow-visual {
   position: sticky;
-  top: 15vh;
+  top: 12vh;
   display: flex;
-  min-height: 470px;
-  height: 70vh;
+  min-height: 500px;
+  height: 76vh;
   align-items: center;
 }
 
@@ -696,6 +701,42 @@ a {
   position: relative;
   width: 100%;
   max-width: 390px;
+}
+
+.story-meter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.story-meter-seg {
+  position: relative;
+  display: block;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(251, 248, 242, 0.12);
+}
+
+.story-meter-seg i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--accent);
+}
+
+.story-meter-seg-0 i { transform: scaleX(var(--find)); }
+.story-meter-seg-1 i {
+  background: color-mix(in srgb, var(--accent) 70%, var(--success-on-dark));
+  transform: scaleX(var(--scope));
+}
+.story-meter-seg-2 i {
+  background: var(--success-on-dark);
+  transform: scaleX(var(--solve));
 }
 
 .problem-map-head {
@@ -714,8 +755,7 @@ a {
 
 .problem-map-head span:first-child {
   position: relative;
-  color: rgba(251, 248, 242, 0.62);
-  transition: color 420ms ease;
+  color: rgba(251, 248, 242, calc(0.48 + var(--find) * 0.52));
 }
 
 .problem-map-head span:first-child::after {
@@ -725,25 +765,16 @@ a {
   left: 0;
   height: 1px;
   background: var(--accent);
-  opacity: 0;
-  transform: scaleX(0);
+  opacity: var(--find);
+  transform: scaleX(var(--find));
   transform-origin: left;
-  transition: opacity 280ms ease, transform 560ms var(--ease-out);
   content: "";
 }
 
-.approach-flow[data-active-stage="0"] .problem-map-head span:first-child {
-  color: var(--surface);
-}
-
-.approach-flow[data-active-stage="0"] .problem-map-head span:first-child::after {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
 .problem-map-head span:last-child {
-  color: rgba(251, 248, 242, 0.46);
+  color: rgba(251, 248, 242, calc(0.34 + var(--find) * 0.18));
   text-align: right;
+  opacity: calc(0.72 + var(--find) * 0.28);
 }
 
 .problem-field-shell {
@@ -755,8 +786,8 @@ a {
   overflow: hidden;
   height: 276px;
   padding: 20px;
-  border-block: 1px solid rgba(251, 248, 242, 0.18);
-  background: rgba(251, 248, 242, 0.035);
+  border-block: 1px solid rgba(251, 248, 242, calc(0.12 + var(--find) * 0.12));
+  background: rgba(251, 248, 242, calc(0.028 + var(--find) * 0.02));
 }
 
 .problem-grid {
@@ -766,17 +797,17 @@ a {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 8px;
+  opacity: calc(1 - var(--solve) * 0.62);
+  transform: scale(calc(1 - var(--solve) * 0.025));
   transform-origin: center;
-  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
 }
 
 .problem-node {
   position: relative;
   min-width: 0;
-  border: 1px solid rgba(251, 248, 242, 0.16);
+  border: 1px solid rgba(251, 248, 242, calc(0.12 + var(--find) * 0.08));
   border-radius: var(--radius-sm);
-  background: rgba(251, 248, 242, 0.055);
-  transition: background 650ms var(--ease-out), border-color 650ms var(--ease-out);
+  background: rgba(251, 248, 242, calc(0.04 + var(--find) * 0.03));
 }
 
 .problem-node::after {
@@ -793,6 +824,20 @@ a {
   right: 7px;
 }
 
+.problem-node.focus {
+  border-color: color-mix(
+    in srgb,
+    rgba(218, 110, 170, calc(0.18 + var(--scope) * 0.5)) calc((1 - var(--solve)) * 100%),
+    rgba(143, 225, 189, calc(0.2 + var(--solve) * 0.55)) calc(var(--solve) * 100%)
+  );
+  background: color-mix(
+    in srgb,
+    rgba(218, 110, 170, calc(0.05 + var(--scope) * 0.22)) calc((1 - var(--solve)) * 100%),
+    rgba(143, 225, 189, calc(0.06 + var(--solve) * 0.2)) calc(var(--solve) * 100%)
+  );
+  box-shadow: 0 0 0 1px rgba(218, 110, 170, calc(var(--scope) * 0.12 * (1 - var(--solve))));
+}
+
 .scope-frame {
   position: absolute;
   z-index: 2;
@@ -800,22 +845,22 @@ a {
   left: 49%;
   width: 34%;
   height: 43%;
-  border: 1px solid var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) calc((1 - var(--solve)) * 100%), var(--success-on-dark) calc(var(--solve) * 100%));
   border-radius: var(--radius-sm);
-  opacity: 0;
-  box-shadow: 0 0 0 500px rgba(10, 21, 26, 0);
-  transform: translateY(var(--scope-shift)) scale(1.12);
+  opacity: var(--diagram-lock);
+  box-shadow: 0 0 0 500px rgba(10, 21, 26, calc(var(--diagram-lock) * (0.42 + var(--solve) * 0.16)));
+  transform:
+    translateY(var(--scope-shift))
+    scale(calc(1.14 - var(--diagram-lock) * 0.14));
   transform-origin: center;
-  transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out), border-color 600ms ease, box-shadow 700ms ease;
 }
 
 .scope-corner {
   position: absolute;
   width: 11px;
   height: 11px;
-  border-color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) calc((1 - var(--solve)) * 100%), var(--success-on-dark) calc(var(--solve) * 100%));
   border-style: solid;
-  transition: border-color 600ms ease;
 }
 
 .scope-corner.tl { top: -4px; left: -4px; border-width: 2px 0 0 2px; }
@@ -835,64 +880,37 @@ a {
 
 .scope-label > span {
   display: block;
-  transition: opacity 350ms ease, transform 500ms var(--ease-out);
 }
 
-.scope-copy { color: var(--accent); }
-.solve-copy { position: absolute; top: 0; left: 0; color: var(--success-on-dark); opacity: 0; transform: translateY(7px); }
-
-.approach-flow[data-active-stage="1"] .scope-frame,
-.approach-flow[data-active-stage="2"] .scope-frame {
-  opacity: 1;
-  box-shadow: 0 0 0 500px rgba(10, 21, 26, 0.48);
-  transform: translateY(var(--scope-shift)) scale(1);
+.scope-copy {
+  color: var(--accent);
+  opacity: calc(var(--scope) * (1 - var(--solve)));
+  transform: translateY(calc((1 - var(--scope)) * 6px));
 }
 
-.approach-flow[data-active-stage="1"] .scope-frame {
-  transition-delay: 140ms, 0ms, 140ms, 140ms;
+.solve-copy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--success-on-dark);
+  opacity: var(--solve);
+  transform: translateY(calc((1 - var(--solve)) * 7px));
 }
-
-.approach-flow[data-active-stage="1"] .problem-node.focus {
-  border-color: rgba(218, 110, 170, 0.55);
-  background: rgba(218, 110, 170, 0.22);
-  transition-delay: 50ms;
-}
-
-.approach-flow[data-active-stage="2"] .problem-grid {
-  opacity: 0.34;
-  transform: scale(0.975);
-}
-
-.approach-flow[data-active-stage="2"] .problem-node.focus {
-  border-color: rgba(143, 225, 189, 0.65);
-  background: rgba(143, 225, 189, 0.18);
-}
-
-.approach-flow[data-active-stage="2"] .scope-frame {
-  border-color: var(--success-on-dark);
-  box-shadow: 0 0 0 500px rgba(10, 21, 26, 0.62);
-}
-
-.approach-flow[data-active-stage="2"] .scope-corner { border-color: var(--success-on-dark); }
-.approach-flow[data-active-stage="2"] .scope-copy { opacity: 0; transform: translateY(-7px); }
-.approach-flow[data-active-stage="2"] .solve-copy { opacity: 1; transform: none; }
 
 .flow-transfer {
   position: relative;
   width: 1px;
   height: 52px;
   margin-left: 66%;
-  opacity: 0;
-  transition: opacity 450ms ease;
+  opacity: var(--solve);
 }
 
 .flow-transfer::before {
   position: absolute;
   inset: 0;
   background: var(--success-on-dark);
-  transform: scaleY(0);
+  transform: scaleY(var(--solve));
   transform-origin: top;
-  transition: transform 650ms 80ms var(--ease-out);
   content: "";
 }
 
@@ -904,8 +922,7 @@ a {
   height: 7px;
   border-radius: 50%;
   background: var(--success-on-dark);
-  transform: scale(0);
-  transition: transform 350ms 440ms var(--ease-out);
+  transform: scale(var(--solve));
   content: "";
 }
 
@@ -914,16 +931,15 @@ a {
   max-width: 230px;
   margin-left: 38%;
   padding: 13px 15px;
-  border: 1px solid rgba(143, 225, 189, 0.38);
+  border: 1px solid rgba(143, 225, 189, calc(0.12 + var(--solve) * 0.32));
   border-radius: var(--radius-md);
-  opacity: 0.15;
-  background: rgba(143, 225, 189, 0.09);
-  clip-path: inset(0 100% 0 0);
+  opacity: calc(0.08 + var(--solve) * 0.92);
+  background: rgba(143, 225, 189, calc(0.03 + var(--solve) * 0.08));
+  clip-path: inset(0 calc((1 - var(--solve)) * 100%) 0 0);
   grid-template-columns: auto 1fr;
   gap: 13px;
   align-items: center;
   transform: translateY(var(--outcome-shift));
-  transition: opacity 500ms ease, clip-path 720ms var(--ease-out), transform 700ms var(--ease-out);
 }
 
 .outcome-mark {
@@ -932,12 +948,11 @@ a {
   height: 30px;
   place-items: center;
   border-radius: 50%;
-  opacity: 0;
+  opacity: var(--solve);
   color: var(--forest-deep);
   background: var(--success-on-dark);
   font-weight: 800;
-  transform: scale(0.72);
-  transition: opacity 320ms ease, transform 480ms var(--ease-out);
+  transform: scale(calc(0.72 + var(--solve) * 0.28));
 }
 
 .outcome-label,
@@ -946,51 +961,22 @@ a {
 }
 
 .outcome-label {
-  opacity: 0;
+  opacity: calc(var(--solve) * var(--solve));
   color: var(--success-on-dark);
   font-size: 0.68rem;
   font-weight: 700;
-  transform: translateY(6px);
-  transition: opacity 360ms ease, transform 480ms var(--ease-out);
+  transform: translateY(calc((1 - var(--solve)) * 6px));
 }
 
 .outcome-title {
   margin-top: 3px;
-  opacity: 0;
+  opacity: calc(var(--solve) * var(--solve));
   color: var(--surface);
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.15;
-  transform: translateY(7px);
-  transition: opacity 420ms ease, transform 520ms var(--ease-out);
-}
-
-.approach-flow[data-active-stage="2"] .flow-transfer { opacity: 1; }
-.approach-flow[data-active-stage="2"] .flow-transfer::before { transform: scaleY(1); }
-.approach-flow[data-active-stage="2"] .flow-transfer::after { transform: scale(1); }
-.approach-flow[data-active-stage="2"] .solved-outcome {
-  opacity: 1;
-  clip-path: inset(0);
-  transition-delay: 460ms, 460ms, 0ms;
-}
-
-.approach-flow[data-active-stage="2"] .outcome-mark {
-  opacity: 1;
-  transform: scale(1);
-  transition-delay: 640ms;
-}
-
-.approach-flow[data-active-stage="2"] .outcome-label {
-  opacity: 1;
-  transform: none;
-  transition-delay: 720ms;
-}
-
-.approach-flow[data-active-stage="2"] .outcome-title {
-  opacity: 1;
-  transform: none;
-  transition-delay: 800ms;
+  transform: translateY(calc((1 - var(--solve)) * 8px));
 }
 
 .flow-steps {
@@ -1001,11 +987,17 @@ a {
 
 .flow-step {
   --step-progress: 0;
+  --mark-progress: 0;
   --story-accent: var(--accent);
   --story-mark: rgba(218, 110, 170, 0.34);
   display: flex;
-  min-height: 52vh;
+  min-height: 62vh;
   align-items: center;
+}
+
+.flow-step[data-stage="1"] {
+  --story-accent: color-mix(in srgb, var(--accent) 55%, var(--success-on-dark));
+  --story-mark: rgba(200, 150, 190, 0.34);
 }
 
 .flow-step[data-stage="2"] {
@@ -1017,37 +1009,56 @@ a {
   position: relative;
   width: 100%;
   max-width: 540px;
-  padding: 26px 0 28px;
-  border-top: 1px solid rgba(251, 248, 242, calc(0.12 + var(--step-progress) * 0.22));
+  padding: 28px 0 32px;
+  border-top: 1px solid rgba(251, 248, 242, calc(0.1 + var(--step-progress) * 0.24));
 }
 
 .flow-step-inner::before {
   position: absolute;
   top: -1px;
   left: 0;
-  width: 74px;
-  height: 1px;
+  width: 88px;
+  height: 2px;
   background: var(--story-accent);
-  transform: scaleX(calc(0.12 + var(--step-progress) * 0.88));
+  transform: scaleX(calc(0.08 + var(--mark-progress) * 0.92));
   transform-origin: left;
+  content: "";
+}
+
+.flow-step-inner::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -18px;
+  width: 2px;
+  border-radius: 999px;
+  opacity: calc(var(--step-progress) * 0.9);
+  background: linear-gradient(
+    180deg,
+    var(--story-accent) 0%,
+    transparent 100%
+  );
+  transform: scaleY(var(--step-progress));
+  transform-origin: top;
   content: "";
 }
 
 .flow-step-number {
   display: inline-block;
-  opacity: calc(0.42 + var(--step-progress) * 0.58);
+  opacity: calc(0.38 + var(--step-progress) * 0.62);
   color: var(--story-accent);
   font-size: 0.78rem;
   font-weight: 700;
-  transform: translateY(calc((1 - var(--step-progress)) * 8px));
+  letter-spacing: 0.04em;
+  transform: translateY(calc((1 - var(--step-progress)) * 10px));
 }
 
 .flow-step h3 {
-  margin: 13px 0 9px;
-  opacity: calc(0.5 + var(--step-progress) * 0.5);
+  margin: 13px 0 10px;
+  opacity: calc(0.42 + var(--step-progress) * 0.58);
   color: var(--surface);
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  transform: translateY(calc((1 - var(--step-progress)) * 10px));
+  font-size: clamp(1.4rem, 2.3vw, 1.85rem);
+  transform: translateY(calc((1 - var(--step-progress)) * 12px));
 }
 
 .flow-step-title-copy {
@@ -1061,23 +1072,24 @@ a {
 .flow-step-title-copy::after {
   position: absolute;
   right: 0;
-  bottom: -0.14em;
+  bottom: -0.12em;
   left: 0;
-  height: 0.11em;
+  height: 0.12em;
   min-height: 2px;
   background: var(--story-accent);
-  opacity: calc(0.18 + var(--step-progress) * 0.82);
-  transform: scaleX(var(--step-progress));
+  opacity: calc(0.2 + var(--mark-progress) * 0.8);
+  transform: scaleX(var(--mark-progress));
   transform-origin: left center;
   content: "";
 }
 
 .flow-step p {
   max-width: 50ch;
-  opacity: calc(0.52 + var(--step-progress) * 0.48);
-  color: rgba(251, 248, 242, calc(0.58 + var(--step-progress) * 0.28));
-  font-size: 1.04rem;
-  transform: translateY(calc((1 - var(--step-progress)) * 11px));
+  opacity: calc(0.42 + var(--step-progress) * 0.58);
+  color: rgba(251, 248, 242, calc(0.52 + var(--step-progress) * 0.34));
+  font-size: 1.05rem;
+  line-height: 1.65;
+  transform: translateY(calc((1 - var(--step-progress)) * 14px));
 }
 
 .flow-copy-mark {
@@ -1087,10 +1099,14 @@ a {
   background-image: linear-gradient(var(--story-mark), var(--story-mark));
   background-position: 0 88%;
   background-repeat: no-repeat;
-  background-size: calc(var(--step-progress) * 100%) 0.55em;
+  background-size: calc(var(--mark-progress) * 100%) 0.58em;
   font-weight: 600;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+.flow-step.active .flow-step-inner {
+  border-top-color: rgba(251, 248, 242, 0.28);
 }
 
 .track-record-section {
@@ -2239,6 +2255,12 @@ td a:hover {
   }
 
   .approach-flow {
+    --find: 1;
+    --scope: 1;
+    --solve: 1;
+    --story-phase: 3;
+    --story-progress: 1;
+    --diagram-lock: 1;
     display: block;
   }
 
@@ -2247,7 +2269,7 @@ td a:hover {
     top: auto;
     height: auto;
     min-height: 0;
-    margin: 4px 0 36px;
+    margin: 4px 0 28px;
   }
 
   .problem-map {
@@ -2258,14 +2280,30 @@ td a:hover {
     height: 230px;
   }
 
-  .scope-frame {
-    opacity: 1;
-    box-shadow: 0 0 0 500px rgba(10, 21, 26, 0.48);
+  .problem-field-shell,
+  .scope-frame,
+  .solved-outcome {
     transform: none;
   }
 
-  .flow-transfer {
+  .scope-frame {
     opacity: 1;
+    border-color: var(--success-on-dark);
+    box-shadow: 0 0 0 500px rgba(10, 21, 26, 0.58);
+  }
+
+  .scope-copy {
+    opacity: 0;
+  }
+
+  .solve-copy,
+  .flow-transfer,
+  .solved-outcome,
+  .outcome-mark,
+  .outcome-label,
+  .outcome-title {
+    opacity: 1;
+    transform: none;
   }
 
   .flow-transfer::before {
@@ -2277,8 +2315,11 @@ td a:hover {
   }
 
   .solved-outcome {
-    opacity: 1;
     clip-path: inset(0);
+  }
+
+  .story-meter-seg i {
+    transform: scaleX(1);
   }
 
   .flow-step {
@@ -2289,11 +2330,8 @@ td a:hover {
     padding: 22px 0 34px;
   }
 
-  .outcome-mark,
-  .outcome-label,
-  .outcome-title {
-    opacity: 1;
-    transform: none;
+  .flow-step-inner::after {
+    display: none;
   }
 
   .section {
@@ -2436,11 +2474,28 @@ td a:hover {
     min-height: 0;
   }
 
+  .flow-backdrop img,
   .problem-field-shell,
   .scope-frame,
   .solved-outcome,
-  .flow-step-inner {
+  .flow-step-number,
+  .flow-step h3,
+  .flow-step p,
+  .scope-copy,
+  .solve-copy,
+  .outcome-mark,
+  .outcome-label,
+  .outcome-title {
     transform: none !important;
+  }
+
+  .approach-flow {
+    --find: 1;
+    --scope: 1;
+    --solve: 1;
+    --story-phase: 3;
+    --story-progress: 1;
+    --diagram-lock: 1;
   }
 
   .approach-flow .scope-frame {
@@ -2453,41 +2508,41 @@ td a:hover {
     opacity: 0;
   }
 
-  .approach-flow .solve-copy {
-    opacity: 1;
-    transform: none;
-  }
-
+  .approach-flow .solve-copy,
   .approach-flow .flow-transfer,
-  .approach-flow .solved-outcome {
+  .approach-flow .solved-outcome,
+  .approach-flow .outcome-mark,
+  .approach-flow .outcome-label,
+  .approach-flow .outcome-title {
     opacity: 1;
   }
 
   .approach-flow .flow-transfer::before {
-    transform: scaleY(1);
+    transform: scaleY(1) !important;
   }
 
   .approach-flow .flow-transfer::after {
-    transform: scale(1);
+    transform: scale(1) !important;
   }
 
   .approach-flow .solved-outcome {
     clip-path: inset(0);
   }
 
+  .story-meter-seg i {
+    transform: scaleX(1) !important;
+  }
+
   .flow-step {
     --step-progress: 1;
+    --mark-progress: 1;
     min-height: auto;
   }
 
   .flow-step-number,
   .flow-step h3,
-  .flow-step p,
-  .outcome-mark,
-  .outcome-label,
-  .outcome-title {
+  .flow-step p {
     opacity: 1;
-    transform: none;
   }
 
   .flow-step p {
@@ -2496,15 +2551,19 @@ td a:hover {
 
   .flow-step-title-copy::after {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1) !important;
+  }
+
+  .flow-step-inner::before {
+    transform: scaleX(1) !important;
+  }
+
+  .flow-step-inner::after {
+    display: none;
   }
 
   .flow-copy-mark {
-    background-size: 100% 0.55em;
-  }
-
-  .approach-flow {
-    --story-progress: 1;
+    background-size: 100% 0.58em;
   }
 }
 
