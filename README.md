@@ -91,6 +91,7 @@ Organisation strategy and copy context remain in [context.md](context.md).
 ├── drizzle/                 Sites D1 migrations
 ├── .openai/hosting.json     Sites project and binding manifest
 ├── about/, misaal/          English supporting pages
+├── admin/index.html         Static entry for the protected React admin route
 ├── hi/                      Hindi supporting pages
 ├── public/og.png            Social-share card
 ├── src/

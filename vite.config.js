@@ -44,6 +44,7 @@ export default defineConfig(async () => {
   const plugins = [preserveDocumentLinks(), react()];
   const pageInputs = {
     main: resolve(import.meta.dirname, "index.html"),
+    admin: resolve(import.meta.dirname, "admin/index.html"),
     "hi-home": resolve(import.meta.dirname, "hi/index.html"),
     about: resolve(import.meta.dirname, "about/index.html"),
     misaal: resolve(import.meta.dirname, "misaal/index.html"),
