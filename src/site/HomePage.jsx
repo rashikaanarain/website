@@ -461,8 +461,9 @@ function HighlightedText({ segments, className }) {
   ));
 }
 
-function Approach({ copy }) {
-  const { flowRef, stepRefs, activeStage } = useApproachStory(copy.approach.steps.length);
+function Approach({ copy, locale }) {
+  // resyncKey rebinds scrub after language swap; stable step keys keep nodes mounted.
+  const { flowRef, stepRefs, activeStage } = useApproachStory(copy.approach.steps.length, locale);
   const stageLabels = [copy.approach.whole, copy.approach.subset, copy.approach.ready];
 
   return (
@@ -530,8 +531,11 @@ function Approach({ copy }) {
               className={`flow-step${activeStage === index ? " active" : ""}`}
               data-stage={index}
               aria-current={activeStage === index ? "step" : undefined}
-              ref={(node) => { stepRefs.current[index] = node; }}
-              key={title}
+              ref={(node) => {
+                if (node) stepRefs.current[index] = node;
+                else delete stepRefs.current[index];
+              }}
+              key={`approach-step-${index}`}
             >
               <div className="flow-step-inner">
                 <span className="flow-step-number">{String(index + 1).padStart(2, "0")}</span>
@@ -780,7 +784,7 @@ export function HomePage({ locale: requestedLocale }) {
           <main>
             <Hero locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
             <AgamiProof copy={copy} />
-            <Approach copy={copy} />
+            <Approach copy={copy} locale={locale} />
             <WhyNow copy={copy} />
             <TrackRecord locale={locale} copy={copy} />
             <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />

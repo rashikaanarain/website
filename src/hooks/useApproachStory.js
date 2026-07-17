@@ -18,29 +18,38 @@ export function remapProgress(value, start = 0.12, end = 0.78) {
  * Continuous scroll storytelling for the approach section.
  * Writes CSS custom properties so the sticky diagram and step copy scrub
  * with geometry (and reverse cleanly on scroll-up).
+ *
+ * @param {number} stepCount
+ * @param {string|number} [resyncKey] rebind when layout/copy identity changes
+ *   (e.g. locale). Step nodes are always read live from refs so remounts
+ *   after language swap do not leave scrub writing to detached elements.
  */
-export function useApproachStory(stepCount = 3) {
+export function useApproachStory(stepCount = 3, resyncKey = "default") {
   const flowRef = useRef(null);
   const stepRefs = useRef([]);
   const [activeStage, setActiveStage] = useState(0);
 
   useEffect(() => {
     const flow = flowRef.current;
-    const steps = stepRefs.current.filter(Boolean).slice(0, stepCount);
-    if (!flow || steps.length === 0) return undefined;
+    if (!flow) return undefined;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frameId = null;
 
-    function setStaticStory() {
-      const last = Math.max(0, steps.length - 1);
+    function currentSteps() {
+      return stepRefs.current.filter(Boolean).slice(0, stepCount);
+    }
+
+    function setStaticStory(steps) {
+      const nodes = steps.length ? steps : currentSteps();
+      const last = Math.max(0, nodes.length - 1);
       setActiveStage(last);
-      steps.forEach((step) => {
+      nodes.forEach((step) => {
         step.style.setProperty("--step-progress", "1");
         step.style.setProperty("--mark-progress", "1");
       });
       flow.style.setProperty("--story-progress", "1");
-      flow.style.setProperty("--story-phase", String(steps.length));
+      flow.style.setProperty("--story-phase", String(Math.max(nodes.length, stepCount)));
       flow.style.setProperty("--find", "1");
       flow.style.setProperty("--scope", "1");
       flow.style.setProperty("--solve", "1");
@@ -50,10 +59,14 @@ export function useApproachStory(stepCount = 3) {
       flow.style.setProperty("--backdrop-x", "0px");
       flow.style.setProperty("--backdrop-y", "0px");
       flow.dataset.storyMode = "static";
+      flow.dataset.activeStage = String(last);
     }
 
     function updateFlow() {
       frameId = null;
+      const steps = currentSteps();
+      if (!steps.length) return;
+
       const viewport = window.innerHeight || 1;
       const focusLine = viewport * 0.46;
       // Enter lower in the viewport so scrub has a long, readable run.
@@ -84,7 +97,6 @@ export function useApproachStory(stepCount = 3) {
       const find = progresses[0] ?? 0;
       const scope = progresses[1] ?? 0;
       const solve = progresses[2] ?? 0;
-      // Continuous 0→3 phase from cumulative chapter progress.
       const storyPhase = clamp01(find) + clamp01(scope) + clamp01(solve);
 
       setActiveStage((current) => (current === closest ? current : closest));
@@ -131,12 +143,15 @@ export function useApproachStory(stepCount = 3) {
       frameId = null;
 
       if (reduceMotion.matches) {
-        setStaticStory();
+        setStaticStory(currentSteps());
         return;
       }
 
       addMotionListeners();
-      requestUpdate();
+      // Double rAF so post-locale layout (and height morph) settle first.
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(requestUpdate);
+      });
     }
 
     applyMotionPreference();
@@ -146,7 +161,7 @@ export function useApproachStory(stepCount = 3) {
       removeMotionListeners();
       reduceMotion.removeEventListener?.("change", applyMotionPreference);
       if (frameId !== null) window.cancelAnimationFrame(frameId);
-      steps.forEach((step) => {
+      currentSteps().forEach((step) => {
         step.style.removeProperty("--step-progress");
         step.style.removeProperty("--mark-progress");
       });
@@ -165,7 +180,7 @@ export function useApproachStory(stepCount = 3) {
       delete flow.dataset.storyMode;
       delete flow.dataset.activeStage;
     };
-  }, [stepCount]);
+  }, [stepCount, resyncKey]);
 
   return { flowRef, stepRefs, activeStage };
 }
