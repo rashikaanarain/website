@@ -106,10 +106,10 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
 /* collaborators ticker */
 .collab-ticker{ margin-top:6px; background:var(--forest-deep); border-radius:20px; padding:28px 0; overflow:hidden; }
 .collab-ticker .ticker{ display:flex; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
-.collab-ticker .ticker-track{ display:flex; align-items:center; gap:clamp(44px,7vw,96px); padding-left:clamp(44px,7vw,96px); animation:ticker 22s linear infinite; }
+.collab-ticker .ticker-track{ display:flex; align-items:center; gap:clamp(22px,3vw,40px); padding-left:clamp(22px,3vw,40px); animation:ticker 26s linear infinite; }
 .collab-ticker .ticker:hover .ticker-track{ animation-play-state:paused; }
-.collab-ticker img{ height:38px; width:auto; flex:none; opacity:.85; transition:opacity .2s ease; }
-.collab-ticker img:hover{ opacity:1; }
+.ticker-chip{ flex:none; height:74px; display:flex; align-items:center; justify-content:center; padding:0 26px; background:#fff; border-radius:16px; box-shadow:0 8px 22px rgba(0,0,0,.18); }
+.ticker-chip img{ height:44px; width:auto; display:block; }
 @keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 @media (prefers-reduced-motion:reduce){ .collab-ticker .ticker-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
 
@@ -219,18 +219,16 @@ a.team-card{ display:block; text-decoration:none; color:inherit; }
     <div class="collab-ticker" aria-label="Collaborators">
       <div class="ticker">
         <div class="ticker-track">
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
+          <span class="ticker-chip"><img src="../assets/agami-logo.svg" alt="Agami" /></span>
+          <span class="ticker-chip"><img src="../assets/nlsiu.png" alt="NLSIU" /></span>
+          <span class="ticker-chip"><img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" /></span>
+          <span class="ticker-chip"><img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" /></span>
+          <span class="ticker-chip"><img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" /></span>
+          <span class="ticker-chip" aria-hidden="true"><img src="../assets/agami-logo.svg" alt="" /></span>
+          <span class="ticker-chip" aria-hidden="true"><img src="../assets/nlsiu.png" alt="" /></span>
+          <span class="ticker-chip" aria-hidden="true"><img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="" /></span>
+          <span class="ticker-chip" aria-hidden="true"><img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="" /></span>
+          <span class="ticker-chip" aria-hidden="true"><img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="" /></span>
         </div>
       </div>
     </div>
