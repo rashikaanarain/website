@@ -111,8 +111,7 @@ export function useProblemsStory(chapterCount = 3, resyncKey = "default") {
       if (!chapters.length) return;
 
       const viewport = window.innerHeight || 1;
-      const compact = window.matchMedia("(max-width: 900px)").matches
-        || window.matchMedia("(max-height: 719px)").matches;
+      const compact = window.matchMedia("(max-width: 900px)").matches;
       const rects = chapters.map((chapter) => chapter.getBoundingClientRect());
       const frame = problemStoryFrame(rects, viewport, compact, motionQuery.matches);
 
