@@ -49,7 +49,8 @@ p{ margin:0; } a{ color:inherit; }
 .site-nav a.nav-cta:hover{ background:#E58DBB; }
 .lang-switch{ display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 14px; border:1px solid rgba(255,255,255,.2); border-radius:999px; background:rgba(251,248,242,.14); color:var(--paper); font-size:.86rem; font-weight:700; text-decoration:none; white-space:nowrap; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); transition:background .2s ease, color .2s ease, border-color .2s ease; }
 .lang-switch:hover{ background:var(--paper); border-color:var(--paper); color:var(--ink); }
-.brand:focus-visible,.site-nav a:focus-visible,.lang-switch:focus-visible,.btn:focus-visible{ outline:3px solid var(--pink); outline-offset:3px; }
+.nav-toggle{ display:none; min-height:42px; padding:8px 14px; border:1px solid rgba(255,255,255,.2); border-radius:999px; color:var(--paper); background:rgba(251,248,242,.14); font-weight:700; cursor:pointer; }
+.brand:focus-visible,.site-nav a:focus-visible,.lang-switch:focus-visible,.nav-toggle:focus-visible,.btn:focus-visible{ outline:3px solid var(--pink); outline-offset:3px; }
 
 /* hero with image */
 .misaal-hero{ position:relative; min-height:78vh; display:flex; align-items:center; background:var(--forest-deep); padding:clamp(120px,16vh,170px) 0 clamp(50px,8vh,90px); overflow:hidden; }
@@ -115,7 +116,15 @@ p{ margin:0; } a{ color:inherit; }
 .footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
 
 @media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
-@media (max-width:640px){ .site-nav{ display:none; } .site-header{ gap:12px; } .lang-switch{ min-height:40px; padding:7px 13px; } }
+@media (max-width:640px){
+  .site-header{ gap:12px; }
+  .site-nav{ position:absolute; top:70px; right:20px; display:none; width:min(300px,calc(100vw - 40px)); padding:8px; border:0; border-radius:12px; background:var(--paper); box-shadow:0 18px 44px rgba(10,21,26,.3); flex-direction:column; align-items:stretch; }
+  .site-nav[data-open="true"]{ display:flex; }
+  .site-nav a{ color:var(--ink-soft); border-radius:6px; padding:11px 14px; }
+  .site-nav a.nav-cta{ margin-top:4px; text-align:center; }
+  .lang-switch,.nav-toggle{ min-height:40px; padding:7px 13px; }
+  .nav-toggle{ display:inline-flex; align-items:center; }
+}
 </style>
 </head>
 <body>
@@ -123,13 +132,14 @@ p{ margin:0; } a{ color:inherit; }
 <header class="site-header">
   <a class="brand" href="/hi/" aria-label="OpenNyAI का मुखपृष्ठ"><img src="../../assets/opennyai-logo.svg" alt="OpenNyAI" /></a>
   <div class="header-actions">
-    <nav class="site-nav" aria-label="मुख्य नेविगेशन">
+    <nav class="site-nav" id="misaal-navigation" aria-label="मुख्य नेविगेशन">
       <a href="/hi/about/">हमारे बारे में</a>
       <a href="/hi/#approach">हमारा तरीका</a>
       <a href="/hi/misaal/" class="active" aria-current="page">MISAAL</a>
-      <a class="nav-cta" href="#contribute">MISAAL बनाने में सहयोग करें</a>
+      <a class="nav-cta" href="/hi/#problems">समस्याएँ देखें</a>
     </nav>
     <a class="lang-switch" href="/misaal/" lang="en" hreflang="en" aria-label="यह पृष्ठ अंग्रेज़ी में पढ़ें">English</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="misaal-navigation">मेन्यू</button>
   </div>
 </header>
 
@@ -142,7 +152,7 @@ p{ margin:0; } a{ color:inherit; }
       <span class="eyebrow">OpenNyAI की एक परियोजना</span>
       <h1>M.I.S.A.A.L</h1>
       <p class="q">सामाजिक-कानूनी सवाल पर एआई का कैसा जवाब उपयोगकर्ता को गुणवत्तापूर्ण लगता है?</p>
-      <p class="desc">MISAAL—सामाजिक-कानूनी एआई संवादों के आकलन का बहुआयामी बुद्धिमत्ता मानक—इस सवाल को विविध समुदायों के हजारों लोगों तक ले जाने का प्रयास है, ताकि समझा जा सके कि कानून या न्याय से जुड़े सवाल का सचमुच गुणवत्तापूर्ण एआई उत्तर किन तत्वों से बनता है।</p>
+      <p class="desc">MISAAL सामाजिक-कानूनी एआई संवादों के आकलन का बहुआयामी बुद्धिमत्ता मानक है। यह इस सवाल को विविध समुदायों के हजारों लोगों तक ले जाने का प्रयास है, ताकि समझा जा सके कि कानून या न्याय से जुड़े सवाल का सचमुच गुणवत्तापूर्ण एआई उत्तर किन तत्वों से बनता है।</p>
     </div>
   </div>
 </section>
@@ -253,6 +263,25 @@ p{ margin:0; } a{ color:inherit; }
   </div>
   <div class="footer-copy">कॉपीराइट © Vayam Forum for Citizenship (Agami)। सर्वाधिकार सुरक्षित।</div>
 </footer>
+
+<script>
+(() => {
+  const button = document.querySelector('.nav-toggle');
+  const navigation = document.querySelector('#misaal-navigation');
+  if (!button || !navigation) return;
+  button.addEventListener('click', () => {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(open));
+    button.textContent = open ? 'बंद करें' : 'मेन्यू';
+    navigation.dataset.open = String(open);
+  });
+  navigation.addEventListener('click', () => {
+    button.setAttribute('aria-expanded', 'false');
+    button.textContent = 'मेन्यू';
+    navigation.dataset.open = 'false';
+  });
+})();
+</script>
 
 </body>
 </html>

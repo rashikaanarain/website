@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import agamiLogo from "../../assets/agami-logo.svg";
+import ekstepLogo from "../../assets/collaborators/ekstep.svg";
+import nlsiuLogo from "../../assets/collaborators/nlsiu.png";
 import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.png";
+import thoughtworksLogo from "../../assets/collaborators/thoughtworks.svg";
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
 import logoDark from "../../assets/opennyai-logo-dark.svg";
@@ -20,7 +23,7 @@ const PROBLEMS = [
     en: {
       status: "Live project · Big Bail Bash",
       title: "The law says they can go home. The system has not let them.",
-      body: "We are starting with 50 eligible undertrials in one state—finding families, preparing applications, and coordinating lawyers.",
+      body: "We are starting with 50 eligible undertrials in one state. We are finding families, preparing applications, and coordinating lawyers.",
       action: "Help turn eligibility into freedom",
       short: "Turn eligibility into freedom",
       selector: "Undertrials eligible for release",
@@ -28,7 +31,7 @@ const PROBLEMS = [
     hi: {
       status: "सक्रिय पहल · बिग बेल बैश",
       title: "कानून कहता है कि वे घर जा सकते हैं। व्यवस्था ने अभी तक जाने नहीं दिया।",
-      body: "हम एक राज्य में 50 पात्र विचाराधीन कैदियों से शुरुआत कर रहे हैं—परिवारों तक पहुँचना, आवेदन तैयार करना और वकीलों के काम का समन्वय करना।",
+      body: "हम एक राज्य में 50 पात्र विचाराधीन कैदियों से शुरुआत कर रहे हैं। हम परिवारों तक पहुँच रहे हैं, आवेदन तैयार कर रहे हैं और वकीलों के काम का समन्वय कर रहे हैं।",
       action: "कानूनी पात्रता को आज़ादी में बदलने में मदद करें",
       short: "पात्रता को आज़ादी में बदलें",
       selector: "रिहाई के पात्र विचाराधीन कैदी",
@@ -87,36 +90,46 @@ const PROBLEMS = [
 
 const COLLABORATORS = [
   { name: "Agami", src: agamiLogo, width: 692, height: 162, variant: "agami" },
+  { name: "EkStep", src: ekstepLogo, width: 4754, height: 1627, variant: "ekstep" },
+  { name: "NLSIU", src: nlsiuLogo, width: 400, height: 400, variant: "nlsiu" },
+  { name: "Thoughtworks", src: thoughtworksLogo, width: 409, height: 66, variant: "thoughtworks" },
   { name: "Rohini Nilekani Philanthropies", src: rnpLogo, width: 849, height: 389, variant: "rnp" },
   { name: "Trilegal", src: trilegalLogo, width: 500, height: 99, variant: "trilegal" },
   { name: "TresVista", src: tresVistaLogo, width: 400, height: 134, variant: "tresvista" },
 ];
 
-const FOUNDING_PARTNERS = ["EkStep", "NLSIU", "Thoughtworks"];
-
 const COPY = {
   en: {
-    nav: { about: "Why now", approach: "Approach", impact: "Track record", problems: "Explore the problems", menu: "Menu", close: "Close" },
+    nav: {
+      about: "About Us", approach: "Approach", misaal: "MISAAL", problems: "Explore Problems", menu: "Menu", close: "Close",
+      network: {
+        label: "Also visit",
+        toggle: "Show network sites",
+        close: "Close network sites",
+        pucarDesc: "Public Collective for Avoidance and Resolution of Disputes",
+        agamiDesc: "Ideas that serve justice",
+      },
+    },
     hero: {
       context: "Justice, made together",
-      titleBefore: "How can we",
-      titleAccent: "10×",
-      titleAfter: "access to justice?",
+      titleBefore: "How can",
+      titleAccent: "AI",
+      titleAfter: "increase access to justice?",
       lede: "OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4 billion Indians experience law and justice.",
       primary: "Explore the problems",
       secondary: "See how we solve them",
-      problemsTitle: "Problems in motion",
     },
-    agami: {
-      title: "An Agami mission, backed by a field built over years.",
-      statA: "4,000+ changemakers",
-      statB: "2,000+ organisations",
-      body: "OpenNyAI brings Agami's network, trust, and field-building experience into every problem it takes on.",
-      community: "Meet the Agami community",
-      video: "Watch Agami's approach",
+    problems: {
+      title: "Justice problems that should already be moving.",
+      body: "Hover, focus, or tap a problem to see the pathway we are working to unlock.",
+      motionLabels: {
+        bail: ["Eligibility", "Family", "Filing", "Freedom"],
+        wages: ["Work complete", "Claim verified", "Wages received"],
+        safety: ["Harm detected", "Trusted guidance", "Safe next step"],
+      },
     },
     approach: {
-      title: ["We solve ", { highlight: "long-stuck justice problems" }, " with changemaker communities + AI."],
+      title: ["The power of ", { highlight: "communities + AI" }, " can transform justice."],
       body: "Communities bring context, trust, and action. AI brings speed, reach, and coordination. Together, they turn rights on paper into outcomes in people's lives.",
       whole: "The whole stuck problem",
       scale: ["Systemic scale", "Years unresolved"],
@@ -135,12 +148,12 @@ const COPY = {
         },
         {
           title: "Solve it. For real.",
-          body: ["Mobilise communities, institutions, practitioners, and AI in a time-bound sprint—and ", { highlight: "measure the outcome that matters" }, "."],
+          body: ["Mobilise communities, institutions, practitioners, and AI in a time-bound sprint, then ", { highlight: "measure the outcome that matters" }, "."],
         },
       ],
     },
     why: {
-      title: "The opportunities to transform justice are everywhere. So are the people ready to act.",
+      title: ["Opportunities to ", { highlight: "make justice" }, " are everywhere. So are the people ready to act."],
       body: "Across India, justicemakers are already proving what is possible. Communities hold knowledge, trust, and practical experience. AI can multiply their reach and coordination. OpenNyAI brings these abundant assets together around problems ready to move.",
       strengths: [
         ["People who show up", "Lawyers, law students, paralegals, technologists, researchers, and civil-society organisations working as one practical network."],
@@ -195,14 +208,15 @@ const COPY = {
       privacy: "We will use these details only to follow up about OpenNyAI's work.",
     },
     collaborators: {
-      title: "Anchored by Agami, built by many",
-      body: "OpenNyAI is a collaborative mission shaped by organisations across law, technology, public infrastructure, and philanthropy.",
+      title: "OpenNyAI is an Agami mission, built on the work of 4,000+ justicemakers across 2,000+ institutions.",
+      body: "Agami brings people and ideas together so citizens can move from seeking justice to making it. It discovers innovators, connects networks, and builds digital public goods.",
       aria: "OpenNyAI collaborators",
-      founders: "Founding partners",
+      built: "We built OpenNyAI with",
+      agami: "Learn about Agami",
     },
     footer: {
       line: "Community and AI, working together to make justice real.",
-      about: "Why now", approach: "Approach", impact: "Track record", problems: "Problems", misaal: "MISAAL", agami: "Agami", contact: "Contact",
+      about: "About Us", approach: "Approach", impact: "Our Work", problems: "Problems", misaal: "MISAAL", agami: "Agami", contact: "Contact",
     },
     meta: {
       title: "OpenNyAI | Making Justice with AI and Community",
@@ -210,27 +224,36 @@ const COPY = {
     },
   },
   hi: {
-    nav: { about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ देखें", menu: "मेन्यू", close: "बंद करें" },
+    nav: {
+      about: "हमारे बारे में", approach: "हमारा तरीका", misaal: "MISAAL", problems: "समस्याएँ देखें", menu: "मेन्यू", close: "बंद करें",
+      network: {
+        label: "ये भी देखें",
+        toggle: "सहयोगी साइटें देखें",
+        close: "सहयोगी साइटें बंद करें",
+        pucarDesc: "विवादों के परिहार एवं समाधान हेतु सार्वजनिक समूह",
+        agamiDesc: "न्याय की सेवा में विचार",
+      },
+    },
     hero: {
       context: "न्याय, मिलकर बनाया गया",
-      titleBefore: "न्याय तक पहुँच को",
-      titleAccent: "10 गुना",
-      titleAfter: "कैसे बढ़ाएँ?",
+      titleBefore: "",
+      titleAccent: "AI",
+      titleAfter: "से न्याय तक पहुँच कैसे बढ़ाएँ?",
       lede: "OpenNyAI एक सामूहिक पहल है, जो AI और समुदाय की शक्ति से 1.4 अरब भारतीयों के कानून और न्याय के अनुभव को बदल रही है।",
       primary: "समस्याएँ देखें",
       secondary: "जानें कि हम इन्हें कैसे हल करते हैं",
-      problemsTitle: "आगे बढ़ती समस्याएँ",
     },
-    agami: {
-      title: "Agami की एक पहल, वर्षों में तैयार हुए क्षेत्र की ताक़त के साथ।",
-      statA: "4,000+ बदलावकर्मी",
-      statB: "2,000+ संस्थाएँ",
-      body: "OpenNyAI हर समस्या में Agami के नेटवर्क, भरोसे और क्षेत्र-निर्माण के अनुभव को साथ लाता है।",
-      community: "Agami समुदाय से मिलें",
-      video: "Agami का तरीका देखें",
+    problems: {
+      title: "न्याय की वे समस्याएँ जिन्हें अब तक आगे बढ़ जाना चाहिए था।",
+      body: "हर समस्या पर होवर, फ़ोकस या टैप करके देखें कि हम कौन-सा रास्ता खोलने की कोशिश कर रहे हैं।",
+      motionLabels: {
+        bail: ["पात्रता", "परिवार", "आवेदन", "आज़ादी"],
+        wages: ["काम पूरा", "दावा सत्यापित", "मज़दूरी मिली"],
+        safety: ["नुकसान पहचाना", "भरोसेमंद मदद", "सुरक्षित अगला कदम"],
+      },
     },
     approach: {
-      title: ["हम बदलाव लाने वाले समुदायों + AI की शक्ति से ", { highlight: "वर्षों से अटकी न्याय समस्याएँ" }, " हल करते हैं।"],
+      title: ["समुदाय + AI की साझी शक्ति ", { highlight: "न्याय को बदल सकती है" }, "।"],
       body: "समुदाय संदर्भ, भरोसा और कार्रवाई लाते हैं। AI गति, पहुँच और समन्वय बढ़ाता है। साथ मिलकर वे काग़ज़ी अधिकारों को लोगों के जीवन के वास्तविक परिणामों में बदलते हैं।",
       whole: "पूरी अटकी हुई समस्या",
       scale: ["व्यवस्था-स्तर का विस्तार", "वर्षों से अनसुलझी"],
@@ -249,15 +272,15 @@ const COPY = {
         },
         {
           title: "इसे सचमुच हल करें",
-          body: ["समुदायों, संस्थाओं, पेशेवरों और AI को समयबद्ध अभियान में साथ लाएँ—और ", { highlight: "उस परिणाम को मापें जो वास्तव में मायने रखता है" }, "।"],
+          body: ["समुदायों, संस्थाओं, पेशेवरों और AI को समयबद्ध अभियान में साथ लाएँ, फिर ", { highlight: "उस परिणाम को मापें जो वास्तव में मायने रखता है" }, "।"],
         },
       ],
     },
     why: {
-      title: "न्याय को बदलने के अवसर हर ओर हैं। और काम के लिए तैयार लोग भी।",
+      title: ["न्याय ", { highlight: "बनाने के अवसर" }, " हर ओर हैं। और काम के लिए तैयार लोग भी।"],
       body: "भारत भर में न्याय-निर्माता दिखा रहे हैं कि क्या संभव है। समुदायों के पास ज्ञान, भरोसा और व्यावहारिक अनुभव है। AI उनकी पहुँच और समन्वय कई गुना बढ़ा सकता है। OpenNyAI इन प्रचुर शक्तियों को उन समस्याओं के आसपास जोड़ता है जो आगे बढ़ने को तैयार हैं।",
       strengths: [
-        ["काम के लिए सामने आने वाले लोग", "वकील, कानून के विद्यार्थी, पैरालीगल, तकनीक विशेषज्ञ, शोधकर्ता और नागरिक-सामाजिक संस्थाएँ—एक व्यावहारिक नेटवर्क के रूप में।"],
+        ["काम के लिए सामने आने वाले लोग", "वकील, कानून के विद्यार्थी, पैरालीगल, तकनीक विशेषज्ञ, शोधकर्ता और नागरिक-सामाजिक संस्थाएँ, एक व्यावहारिक नेटवर्क के रूप में।"],
         ["मानवीय प्रयास को बढ़ाने वाला AI", "जहाँ यह अड़चन कम करे: लोगों को खोजना, आवेदन तैयार करना, काम का समन्वय करना और परिणामों से सीखना।"],
         ["दूर तक जाने वाली सार्वजनिक संपदा", "खुले औज़ार, डेटा, सरल व्याख्याएँ और कामकाजी ज्ञान, जिन्हें दूसरे बिना अनुमति माँगे अपना और बेहतर बना सकें।"],
       ],
@@ -309,14 +332,15 @@ const COPY = {
       privacy: "हम इन विवरणों का उपयोग केवल OpenNyAI के काम के बारे में आपसे संपर्क करने के लिए करेंगे।",
     },
     collaborators: {
-      title: "Agami की नींव पर, अनेक साथियों ने मिलकर बनाया",
-      body: "OpenNyAI एक साझा पहल है, जिसे कानून, तकनीक, सार्वजनिक डिजिटल ढाँचे और परोपकार के क्षेत्र की संस्थाओं ने मिलकर आकार दिया है।",
+      title: "OpenNyAI, Agami की एक पहल है, जो 2,000+ संस्थाओं के 4,000+ जस्टिसमेकर्स के काम पर बनी है।",
+      body: "Agami लोगों और विचारों को साथ लाता है, ताकि नागरिक न्याय माँगने से आगे बढ़कर न्याय बना सकें। यह नए प्रवर्तकों को खोजता है, नेटवर्क जोड़ता है और डिजिटल सार्वजनिक संपदा बनाता है।",
       aria: "OpenNyAI के सहयोगी",
-      founders: "संस्थापक सहयोगी",
+      built: "हमने OpenNyAI इनके साथ बनाया",
+      agami: "Agami के बारे में जानें",
     },
     footer: {
-      line: "समुदाय और AI—न्याय को वास्तविक बनाने के लिए साथ काम करते हुए।",
-      about: "अभी क्यों", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ", misaal: "MISAAL", agami: "Agami", contact: "संपर्क",
+      line: "समुदाय और AI मिलकर न्याय को वास्तविक बना रहे हैं।",
+      about: "हमारे बारे में", approach: "हमारा तरीका", impact: "हमारा काम", problems: "समस्याएँ", misaal: "MISAAL", agami: "Agami", contact: "संपर्क",
     },
     meta: {
       title: "OpenNyAI | समुदाय और AI के साथ न्याय-निर्माण",
@@ -327,8 +351,11 @@ const COPY = {
 
 function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [networkOpen, setNetworkOpen] = useState(false);
   const collapsed = useCollapsedHeader();
+  const clusterRef = useRef(null);
   const closeMenu = () => setMenuOpen(false);
+  const closeNetwork = () => setNetworkOpen(false);
   const hindi = locale === "hi";
   const nextLocale = hindi ? "en" : "hi";
   const nextPath = pathForLocale(nextLocale);
@@ -339,9 +366,27 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
   useEffect(() => {
     if (collapsed && !wasCollapsedRef.current) {
       setMenuOpen(false);
+      setNetworkOpen(false);
     }
     wasCollapsedRef.current = collapsed;
   }, [collapsed]);
+
+  // Outside pointer + Escape close the network switcher.
+  useEffect(() => {
+    if (!networkOpen) return undefined;
+    const onPointerDown = (event) => {
+      if (!clusterRef.current?.contains(event.target)) setNetworkOpen(false);
+    };
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setNetworkOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [networkOpen]);
 
   function handleLanguageClick(event) {
     // Keep real navigation for modified clicks / open-in-new-tab.
@@ -363,7 +408,7 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
 
   return (
     <header
-      className={`site-header${collapsed ? " is-collapsed" : ""}${menuOpen ? " is-menu-open" : ""}`}
+      className={`site-header${collapsed ? " is-collapsed" : ""}${menuOpen ? " is-menu-open" : ""}${networkOpen ? " is-network-open" : ""}`}
       data-collapsed={collapsed ? "true" : "false"}
     >
       {menuOpen && (
@@ -374,10 +419,27 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
           onClick={closeMenu}
         />
       )}
-      <div className="site-header-cluster">
-        <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
-          <img src={collapsed ? logoDark : logo} alt="OpenNyAI" />
-        </a>
+      <div className="site-header-cluster" ref={clusterRef}>
+        <div className="brand-cluster">
+          <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
+            <img src={collapsed ? logoDark : logo} alt="OpenNyAI" />
+          </a>
+          <button
+            className="network-toggle"
+            type="button"
+            aria-expanded={networkOpen}
+            aria-controls="network-panel"
+            aria-label={copy.nav.network.toggle}
+            onClick={() => {
+              setMenuOpen(false);
+              setNetworkOpen((open) => !open);
+            }}
+          >
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
         <div className="header-actions">
           <a
             className={`language-switch${isSwapping ? " is-swapping" : ""}`}
@@ -396,7 +458,10 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
             type="button"
             aria-expanded={menuOpen}
             aria-controls="primary-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={() => {
+              setNetworkOpen(false);
+              setMenuOpen((open) => !open);
+            }}
           >
             {menuOpen ? copy.nav.close : copy.nav.menu}
           </button>
@@ -406,19 +471,41 @@ function Header({ locale, copy, onSwitchLocale, isSwapping }) {
           className={`site-nav${menuOpen ? " is-open" : ""}`}
           aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}
         >
-          <a href="#about" onClick={closeMenu}>{copy.nav.about}</a>
+          <a href={hindi ? "/hi/about/" : "/about/"} onClick={closeMenu}>{copy.nav.about}</a>
           <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
-          <a href="#impact" onClick={closeMenu}>{copy.nav.impact}</a>
+          <a href={hindi ? "/hi/misaal/" : "/misaal/"} onClick={closeMenu}>{copy.nav.misaal}</a>
           <GlowPrimaryButton className="nav-action-glow">
             <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
           </GlowPrimaryButton>
         </nav>
+        <div className={`network-panel${networkOpen ? " is-open" : ""}`} id="network-panel" inert={!networkOpen}>
+          <div className="network-panel-inner">
+            <div className="network-panel-card">
+              <div className="network-panel-head">
+                <p>{copy.nav.network.label}</p>
+                <button className="network-close" type="button" aria-label={copy.nav.network.close} onClick={closeNetwork}>
+                  <svg viewBox="0 0 14 14" aria-hidden="true">
+                    <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
+              <a className="network-link" href="https://pucar.org/" target="_blank" rel="noreferrer">
+                <strong>PUCAR</strong>
+                <span>{copy.nav.network.pucarDesc}</span>
+              </a>
+              <a className="network-link network-link-agami" href="https://www.agami.in" target="_blank" rel="noreferrer">
+                <img src={agamiLogo} alt="Agami" />
+                <span>{copy.nav.network.agamiDesc}</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
 }
 
-function Hero({ locale, copy, onChooseProblem }) {
+function Hero({ copy }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <HeroMedia />
@@ -426,7 +513,7 @@ function Hero({ locale, copy, onChooseProblem }) {
       <div className="hero-inner">
         <div className="hero-copy">
           <p className="hero-context">{copy.hero.context}</p>
-          <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em> {copy.hero.titleAfter}</h1>
+          <h1 id="hero-title">{copy.hero.titleBefore} <em>{copy.hero.titleAccent}</em>{" "}{copy.hero.titleAfter}</h1>
           <p className="hero-lede">{copy.hero.lede}</p>
           <div className="hero-actions">
             <GlowAccentButton animated>
@@ -435,43 +522,123 @@ function Hero({ locale, copy, onChooseProblem }) {
             <a className="text-link" href="#approach">{copy.hero.secondary} <span aria-hidden="true">↓</span></a>
           </div>
         </div>
-        <div className="hero-problems" id="problems" aria-labelledby="problems-title">
-          <h2 id="problems-title">{copy.hero.problemsTitle}</h2>
-          {PROBLEMS.slice(0, 3).map((problem) => {
-            const text = problem[locale];
-            return (
-              <article className="problem-brief" key={problem.id}>
-                <p className="problem-status">{text.status}</p>
-                <h3>{text.title}</h3>
-                <p>{text.body}</p>
-                <a href="#participate" onClick={() => onChooseProblem(problem.id)}>{text.action} <span aria-hidden="true">→</span></a>
-              </article>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
 }
 
-function AgamiProof({ copy }) {
+function ProblemMotion({ problemId, labels }) {
+  if (problemId === "wages") {
+    return (
+      <div className="problem-motion wage-motion" aria-hidden="true">
+        <div className="wage-ledger">
+          <span className="wage-ledger-title">{labels[0]}</span>
+          <span className="wage-line wage-line-a" />
+          <span className="wage-line wage-line-b" />
+          <span className="wage-line wage-line-c" />
+          <span className="wage-stamp">{labels[1]}</span>
+        </div>
+        <div className="wage-route">
+          <span className="wage-coin">₹</span>
+          <i /><i /><i />
+        </div>
+        <div className="wage-received">
+          <span>₹</span>
+          <strong>{labels[2]}</strong>
+        </div>
+      </div>
+    );
+  }
+
+  if (problemId === "online-safety") {
+    return (
+      <div className="problem-motion safety-motion" aria-hidden="true">
+        <div className="signal-field">
+          {Array.from({ length: 12 }, (_, index) => <i data-signal={index} key={index} />)}
+          <span className="safety-scan">{labels[0]}</span>
+          <span className="safety-shield">✓</span>
+        </div>
+        <div className="safety-path">
+          <span>{labels[1]}</span>
+          <i />
+          <strong>{labels[2]}</strong>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <section className="agami-proof" id="community" aria-labelledby="agami-proof-title" data-entrance>
-      <div className="agami-proof-brand">
-        <img src={agamiLogo} alt="Agami" />
-        <h2 id="agami-proof-title">{copy.agami.title}</h2>
+    <div className="problem-motion bail-motion" aria-hidden="true">
+      <div className="release-file">
+        <span>50</span>
+        <small>{labels[0]}</small>
       </div>
-      <div className="agami-proof-stats" aria-label={`${copy.agami.statA}; ${copy.agami.statB}`}>
-        <strong>{copy.agami.statA}</strong>
-        <span aria-hidden="true">×</span>
-        <strong>{copy.agami.statB}</strong>
+      <div className="release-lane">
+        <span className="release-gate gate-a" />
+        <span className="release-gate gate-b" />
+        <span className="release-gate gate-c" />
+        <i className="release-token">✓</i>
       </div>
-      <div className="agami-proof-copy">
-        <p>{copy.agami.body}</p>
-        <p className="agami-links">
-          <a href="https://www.agami.in" target="_blank" rel="noreferrer">{copy.agami.community} ↗</a>
-          <a href="https://youtu.be/urqgxbqYUWU" target="_blank" rel="noreferrer">{copy.agami.video} ↗</a>
-        </p>
+      <div className="release-home">
+        <span>⌂</span>
+        <strong>{labels[3]}</strong>
+      </div>
+      <ol className="release-steps">
+        {labels.slice(0, 3).map((label) => <li key={label}>{label}</li>)}
+      </ol>
+    </div>
+  );
+}
+
+function ProblemsShowcase({ locale, copy, onChooseProblem }) {
+  const visibleProblems = PROBLEMS.slice(0, 3);
+  const [activeProblemId, setActiveProblemId] = useState(visibleProblems[0].id);
+  const activeProblem = visibleProblems.find(({ id }) => id === activeProblemId) || visibleProblems[0];
+  const activeText = activeProblem[locale];
+  const motionKey = activeProblemId === "online-safety" ? "safety" : activeProblemId;
+
+  return (
+    <section className="problems-showcase" id="problems" aria-labelledby="problems-title">
+      <header className="problems-showcase-intro">
+        <h2 id="problems-title">{copy.problems.title}</h2>
+        <p>{copy.problems.body}</p>
+      </header>
+      <div className="problems-showcase-layout">
+        <div className="problem-lines">
+          {visibleProblems.map((problem, index) => {
+            const text = problem[locale];
+            const active = problem.id === activeProblemId;
+            return (
+              <button
+                className={`problem-line${active ? " is-active" : ""}`}
+                type="button"
+                aria-pressed={active}
+                aria-controls="problem-motion-stage"
+                onClick={() => setActiveProblemId(problem.id)}
+                onFocus={() => setActiveProblemId(problem.id)}
+                onMouseEnter={() => setActiveProblemId(problem.id)}
+                key={problem.id}
+              >
+                <span className="problem-line-number">{String(index + 1).padStart(2, "0")}</span>
+                <span className="problem-line-copy">
+                  <small>{text.status}</small>
+                  <strong>{text.title}</strong>
+                  <span>{text.body}</span>
+                </span>
+                <span className="problem-line-arrow" aria-hidden="true">↗</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="problem-motion-stage" id="problem-motion-stage" aria-live="polite">
+          <div className="problem-motion-canvas" key={activeProblemId}>
+            <ProblemMotion problemId={activeProblemId} labels={copy.problems.motionLabels[motionKey]} />
+          </div>
+          <div className="problem-motion-footer">
+            <p>{activeText.status}</p>
+            <a href="#participate" onClick={() => onChooseProblem(activeProblemId)}>{activeText.action} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -487,13 +654,13 @@ function HighlightedText({ segments, className }) {
 
 function Approach({ copy, locale }) {
   // resyncKey rebinds scrub after language swap; stable step keys keep nodes mounted.
-  const { flowRef, stepRefs, activeStage } = useApproachStory(copy.approach.steps.length, locale);
+  const { flowRef, titleRef, stepRefs, activeStage } = useApproachStory(copy.approach.steps.length, locale);
   const stageLabels = [copy.approach.whole, copy.approach.subset, copy.approach.ready];
 
   return (
     <section className="section section-dark approach-section" id="approach" aria-labelledby="approach-title">
       <div className="section-intro section-intro-wide">
-        <h2 id="approach-title">
+        <h2 id="approach-title" ref={titleRef}>
           <HighlightedText segments={copy.approach.title} className="approach-title-mark" />
         </h2>
         <p>{copy.approach.body}</p>
@@ -506,28 +673,28 @@ function Approach({ copy, locale }) {
       >
         <div className="flow-backdrop" aria-hidden="true">
           <Grainient
-            color1="#E58DBB"
+            color1="#C4789A"
             color2="#1C3540"
             color3="#0A151A"
-            timeSpeed={0.18}
-            colorBalance={0.08}
-            warpStrength={1.1}
-            warpFrequency={4.5}
-            warpSpeed={1.2}
-            warpAmplitude={56.0}
-            blendAngle={-18.0}
-            blendSoftness={0.06}
-            rotationAmount={420.0}
-            noiseScale={2.1}
-            grainAmount={0.08}
-            grainScale={2.2}
+            timeSpeed={0.14}
+            colorBalance={0.1}
+            warpStrength={0.95}
+            warpFrequency={4.0}
+            warpSpeed={1.0}
+            warpAmplitude={60.0}
+            blendAngle={-14.0}
+            blendSoftness={0.14}
+            rotationAmount={320.0}
+            noiseScale={1.9}
+            grainAmount={0.06}
+            grainScale={2.3}
             grainAnimated={false}
-            contrast={1.45}
-            gamma={1.0}
-            saturation={1.05}
-            centerX={0.0}
-            centerY={0.0}
-            zoom={0.95}
+            contrast={1.25}
+            gamma={1.02}
+            saturation={0.92}
+            centerX={0.02}
+            centerY={0.06}
+            zoom={1.0}
           />
         </div>
         <div className="flow-visual" aria-hidden="true">
@@ -607,7 +774,7 @@ function WhyNow({ copy }) {
   return (
     <section className="section" id="about" aria-labelledby="about-title" data-entrance>
       <div className="section-intro">
-        <h2 id="about-title">{copy.why.title}</h2>
+        <h2 id="about-title"><HighlightedText segments={copy.why.title} className="why-title-mark" /></h2>
         <p>{copy.why.body}</p>
       </div>
       <div className="principle-list">
@@ -622,14 +789,14 @@ function WhyNow({ copy }) {
   );
 }
 
-function TrackRecord({ locale, copy }) {
+function WhatWeBuilt({ locale, copy }) {
   return (
-    <section className="section track-record-section" id="impact" aria-labelledby="impact-title" data-entrance>
+    <section className="section impact-section" id="impact" aria-labelledby="impact-title" data-entrance>
       <div className="section-intro section-intro-wide">
         <h2 id="impact-title">{copy.impact.title}</h2>
         <p>{copy.impact.body}</p>
       </div>
-      <div className="track-record-layout">
+      <div className="impact-layout">
         <article className="ner-proof">
           <p className="proof-label">{copy.impact.nerLabel}</p>
           <h3>{copy.impact.nerTitle}</h3>
@@ -760,7 +927,7 @@ function Footer({ locale, copy }) {
         <p>{copy.footer.line}</p>
       </div>
       <nav aria-label={locale === "hi" ? "पादलेख नेविगेशन" : "Footer"}>
-        <a href="#about">{copy.footer.about}</a>
+        <a href={locale === "hi" ? "/hi/about/" : "/about/"}>{copy.footer.about}</a>
         <a href="#approach">{copy.footer.approach}</a>
         <a href="#impact">{copy.footer.impact}</a>
         <a href="#problems">{copy.footer.problems}</a>
@@ -775,31 +942,34 @@ function Footer({ locale, copy }) {
 
 function CollaboratorsBand({ copy }) {
   return (
-    <section className="collaborators-band" aria-labelledby="collaborators-title">
+    <section className="collaborators-band" id="community" aria-labelledby="collaborators-title">
       <div className="collaborators-band-inner">
         <header className="collaborators-band-header">
+          <img src={agamiLogo} alt="Agami" />
           <h2 id="collaborators-title">{copy.collaborators.title}</h2>
           <p>{copy.collaborators.body}</p>
+          <a href="https://www.agami.in" target="_blank" rel="noreferrer">{copy.collaborators.agami} <span aria-hidden="true">↗</span></a>
         </header>
-        <ul className="collaborators-logo-rail" aria-label={copy.collaborators.aria}>
-          {COLLABORATORS.map((collaborator) => (
-            <li className={`collaborator-logo collaborator-logo-${collaborator.variant}`} key={collaborator.name}>
-              <img
-                src={collaborator.src}
-                alt={collaborator.name}
-                width={collaborator.width}
-                height={collaborator.height}
-                decoding="async"
-                loading="lazy"
-              />
-            </li>
-          ))}
-        </ul>
-        <div className="collaborators-founders">
-          <p>{copy.collaborators.founders}</p>
-          <ul aria-label={copy.collaborators.founders}>
-            {FOUNDING_PARTNERS.map((partner) => <li key={partner}>{partner}</li>)}
-          </ul>
+        <p className="collaborators-built">{copy.collaborators.built}</p>
+        <div className="collaborators-logo-ticker" aria-label={copy.collaborators.aria}>
+          <div className="collaborators-logo-track">
+            {[false, true].map((duplicate) => (
+              <ul className="collaborators-logo-rail" aria-hidden={duplicate || undefined} key={duplicate ? "duplicate" : "primary"}>
+                {COLLABORATORS.map((collaborator) => (
+                  <li className={`collaborator-logo collaborator-logo-${collaborator.variant}`} key={collaborator.name}>
+                    <img
+                      src={collaborator.src}
+                      alt={duplicate ? "" : collaborator.name}
+                      width={collaborator.width}
+                      height={collaborator.height}
+                      decoding="async"
+                      loading="lazy"
+                    />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -838,11 +1008,11 @@ export function HomePage({ locale: requestedLocale }) {
       <div className="locale-swap-stage" ref={stageRef}>
         <div className="locale-swap-layer" lang={locale}>
           <main>
-            <Hero locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
-            <AgamiProof copy={copy} />
+            <Hero copy={copy} />
+            <ProblemsShowcase locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
             <Approach copy={copy} locale={locale} />
             <WhyNow copy={copy} />
-            <TrackRecord locale={locale} copy={copy} />
+            <WhatWeBuilt locale={locale} copy={copy} />
             <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
             <CollaboratorsBand copy={copy} />
           </main>

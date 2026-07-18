@@ -76,7 +76,7 @@ function buildMeshGradients(colors) {
 }
 
 /**
- * React Bits BorderGlow — pointer-reactive edge glow.
+ * React Bits BorderGlow: pointer-reactive edge glow.
  * Ported without Tailwind; brand-friendly defaults for OpenNyAI.
  */
 export function BorderGlow({
@@ -292,7 +292,7 @@ export function BorderGlow({
   );
 }
 
-/** Accent CTA shell — Assembly Pink field with brand mesh glow. */
+/** Accent CTA shell: Assembly Pink field with brand mesh glow. */
 export function GlowAccentButton({
   children,
   className = "",
@@ -320,7 +320,7 @@ export function GlowAccentButton({
   );
 }
 
-/** Primary CTA shell — Civic Forest field with restrained pink edge. */
+/** Primary CTA shell: Civic Forest field with restrained pink edge. */
 export function GlowPrimaryButton({ children, className = "", animated = false }) {
   return (
     <BorderGlow

@@ -14,6 +14,14 @@ export function remapProgress(value, start = 0.12, end = 0.78) {
   return smoothstep((value - start) / Math.max(0.0001, end - start));
 }
 
+/** Draw the title mark as the heading travels through the viewport. */
+export function titleMarkProgress(titleTop, viewportHeight, compact = false) {
+  const viewport = Math.max(1, viewportHeight);
+  const start = viewport * (compact ? 0.92 : 0.86);
+  const end = viewport * (compact ? 0.36 : 0.48);
+  return smoothstep((start - titleTop) / Math.max(1, start - end));
+}
+
 /**
  * Continuous scroll storytelling for the approach section.
  * Writes CSS custom properties so the sticky diagram and step copy scrub
@@ -26,6 +34,7 @@ export function remapProgress(value, start = 0.12, end = 0.78) {
  */
 export function useApproachStory(stepCount = 3, resyncKey = "default") {
   const flowRef = useRef(null);
+  const titleRef = useRef(null);
   const stepRefs = useRef([]);
   const [activeStage, setActiveStage] = useState(0);
 
@@ -44,6 +53,7 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       const nodes = steps.length ? steps : currentSteps();
       const last = Math.max(0, nodes.length - 1);
       setActiveStage(last);
+      titleRef.current?.style.setProperty("--title-mark-progress", "1");
       nodes.forEach((step) => {
         step.style.setProperty("--step-progress", "1");
         step.style.setProperty("--mark-progress", "1");
@@ -53,6 +63,10 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       flow.style.setProperty("--find", "1");
       flow.style.setProperty("--scope", "1");
       flow.style.setProperty("--solve", "1");
+      flow.style.setProperty("--lens-scale", "1.12");
+      flow.style.setProperty("--connector-progress", "1");
+      flow.style.setProperty("--node-glow", "1");
+      flow.style.setProperty("--outcome-pulse", "1");
       flow.style.setProperty("--field-shift", "0px");
       flow.style.setProperty("--scope-shift", "0px");
       flow.style.setProperty("--outcome-shift", "0px");
@@ -76,6 +90,12 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       const scrubFull = viewport * (compact ? 0.52 : 0.34);
       const scrubRange = Math.max(1, scrubStart - scrubFull);
       const parallaxScale = compact ? 0.4 : 1;
+
+      const title = titleRef.current;
+      if (title) {
+        const titleProgress = titleMarkProgress(title.getBoundingClientRect().top, viewport, compact);
+        title.style.setProperty("--title-mark-progress", titleProgress.toFixed(4));
+      }
 
       let closest = 0;
       let closestDistance = Number.POSITIVE_INFINITY;
@@ -108,6 +128,16 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
       flow.style.setProperty("--scope", scope.toFixed(4));
       flow.style.setProperty("--solve", solve.toFixed(4));
       flow.style.setProperty("--story-phase", storyPhase.toFixed(4));
+
+      // Derived cues for the three-act diagram.
+      const lensScale = 1 + scope * 0.34 - solve * 0.22;
+      const connector = clamp01((find + scope) * 0.5);
+      const nodeGlow = clamp01(find * 0.55 + scope * 0.45);
+      const outcomePulse = solve * solve;
+      flow.style.setProperty("--lens-scale", lensScale.toFixed(4));
+      flow.style.setProperty("--connector-progress", connector.toFixed(4));
+      flow.style.setProperty("--node-glow", nodeGlow.toFixed(4));
+      flow.style.setProperty("--outcome-pulse", outcomePulse.toFixed(4));
 
       const flowRect = flow.getBoundingClientRect();
       const travel = Math.max(1, flowRect.height + viewport * 0.35);
@@ -169,12 +199,17 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
         step.style.removeProperty("--step-progress");
         step.style.removeProperty("--mark-progress");
       });
+      titleRef.current?.style.removeProperty("--title-mark-progress");
       [
         "--story-progress",
         "--story-phase",
         "--find",
         "--scope",
         "--solve",
+        "--lens-scale",
+        "--connector-progress",
+        "--node-glow",
+        "--outcome-pulse",
         "--field-shift",
         "--scope-shift",
         "--outcome-shift",
@@ -187,5 +222,5 @@ export function useApproachStory(stepCount = 3, resyncKey = "default") {
     };
   }, [stepCount, resyncKey]);
 
-  return { flowRef, stepRefs, activeStage };
+  return { flowRef, titleRef, stepRefs, activeStage };
 }

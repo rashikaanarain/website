@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { clamp01, remapProgress, smoothstep } from "./useApproachStory.js";
+import { clamp01, remapProgress, smoothstep, titleMarkProgress } from "./useApproachStory.js";
 
 describe("approach story scrub math", () => {
   test("clamp01 bounds values", () => {
@@ -22,5 +22,17 @@ describe("approach story scrub math", () => {
     expect(remapProgress(0.5)).toBeGreaterThan(0.2);
     expect(remapProgress(0.5)).toBeLessThan(0.9);
     expect(remapProgress(1)).toBe(1);
+  });
+
+  test("title underline scrubs reversibly through desktop and mobile viewports", () => {
+    expect(titleMarkProgress(900, 1000, false)).toBe(0);
+    expect(titleMarkProgress(480, 1000, false)).toBe(1);
+    expect(titleMarkProgress(680, 1000, false)).toBeGreaterThan(0);
+    expect(titleMarkProgress(680, 1000, false)).toBeLessThan(1);
+
+    expect(titleMarkProgress(920, 1000, true)).toBe(0);
+    expect(titleMarkProgress(360, 1000, true)).toBe(1);
+    expect(titleMarkProgress(680, 1000, true)).toBeGreaterThan(0);
+    expect(titleMarkProgress(680, 1000, true)).toBeLessThan(1);
   });
 });

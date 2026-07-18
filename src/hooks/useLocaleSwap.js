@@ -61,7 +61,7 @@ function clearStageInline(stage) {
 }
 
 function animateHeight(stage, fromHeight, toHeight) {
-  // Prefer WAAPI — more reliable than CSS transitions after inline height locks.
+  // Prefer WAAPI because it is more reliable than CSS transitions after inline height locks.
   if (typeof stage.animate === "function") {
     return new Promise((resolve) => {
       const animation = stage.animate(

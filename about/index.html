@@ -1,299 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About | OpenNyAI</title>
-<link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
-<meta name="description" content="OpenNyAI brings innovators, institutions, resources and ideas across law and AI together to create irreversible change in how citizens experience justice in India." />
-<link rel="canonical" href="https://opennyai.org/about/" />
-<link rel="alternate" hreflang="en" href="https://opennyai.org/about/" />
-<link rel="alternate" hreflang="hi" href="https://opennyai.org/hi/about/" />
-<link rel="alternate" hreflang="x-default" href="https://opennyai.org/about/" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-<script>document.documentElement.classList.add('js');</script>
-<style>
-:root{
-  --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;
-  --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;
-  --green:#30CF8C; --green-soft:#CCEBDE;
-  --pink:#DA6EAA; --pink-soft:#F1D0E2; --plum:#4E2740;
-  --forest:#111F26; --forest-deep:#0A151A;
-  --line:rgba(36,30,26,0.12);
-  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-*,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
-body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.6; }
-h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.05; font-weight:500; }
-p{ margin:0; } a{ color:inherit; }
-.wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,72px); }
-.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em; margin-bottom:18px; color:var(--pink); }
-
-/* buttons */
-.btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:.92rem; text-decoration:none; border:0; cursor:pointer; transition:background .2s ease, transform .2s ease, box-shadow .2s ease; }
-.btn-primary{ background:var(--plum); color:var(--paper); }
-.btn-primary:hover{ background:#5E2F4E; transform:translateY(-1px); box-shadow:0 6px 16px rgba(78,39,64,.32); }
-.btn-ghost{ border:1px solid rgba(36,30,26,.32); color:var(--ink); background:transparent; }
-.btn-ghost:hover{ background:rgba(36,30,26,.06); }
-
-/* header / pill nav */
-.site-header{ position:absolute; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px clamp(20px,4vw,48px); pointer-events:none; }
-.brand{ display:flex; align-items:center; gap:8px; pointer-events:auto; text-decoration:none; }
-.brand img{ height:26px; width:auto; display:block; }
-.header-actions{ display:flex; align-items:center; gap:8px; margin-left:auto; pointer-events:auto; }
-.site-nav{ pointer-events:auto; display:flex; align-items:center; gap:2px; background:rgba(251,248,242,.62); backdrop-filter:blur(16px) saturate(1.6); -webkit-backdrop-filter:blur(16px) saturate(1.6); border:1px solid rgba(26,26,26,.07); border-radius:999px; padding:5px; box-shadow:0 12px 32px rgba(17,31,38,.10), inset 0 1px 0 rgba(255,255,255,.55); }
-.site-nav a{ text-decoration:none; font-size:.9rem; font-weight:600; letter-spacing:.01em; color:var(--ink-soft); padding:8px 15px; border-radius:999px; transition:background .22s ease, color .22s ease; }
-.site-nav a:hover, .site-nav a.active{ background:var(--forest); color:var(--paper); }
-.site-nav a.nav-cta{ background:var(--plum); color:var(--paper); }
-.site-nav a.nav-cta:hover{ background:#5E2F4E; }
-.lang-switch{ display:inline-flex; align-items:center; justify-content:center; min-height:42px; padding:8px 14px; border:1px solid rgba(36,30,26,.16); border-radius:999px; background:rgba(251,248,242,.82); color:var(--ink-soft); font-size:.86rem; font-weight:700; text-decoration:none; white-space:nowrap; box-shadow:0 8px 22px rgba(17,31,38,.08); transition:background .2s ease, color .2s ease, border-color .2s ease; }
-.lang-switch:hover{ background:var(--forest); border-color:var(--forest); color:var(--paper); }
-.brand:focus-visible,.site-nav a:focus-visible,.lang-switch:focus-visible,.btn:focus-visible{ outline:3px solid var(--pink); outline-offset:3px; }
-
-/* page hero */
-.page-hero{ background:var(--cream); padding:clamp(120px,18vh,180px) 0 clamp(40px,6vh,66px); }
-.page-hero h1{ font-size:clamp(2.2rem,5vw,3.4rem); }
-.page-hero p{ margin-top:18px; font-size:clamp(1.05rem,1.4vw,1.2rem); color:var(--ink-soft); max-width:52ch; }
-.ph-inner{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,64px); align-items:center; }
-.ph-photo img{ width:100%; border-radius:20px; display:block; box-shadow:0 24px 60px rgba(17,31,38,.16); }
-@media (max-width:820px){ .ph-inner{ grid-template-columns:1fr; } }
-
-/* sections */
-.section{ padding:clamp(50px,8vh,96px) 0; }
-.section.alt{ background:var(--cream-deep); }
-.section-head{ max-width:640px; margin-bottom:40px; }
-.section h2{ font-size:clamp(1.7rem,3.2vw,2.4rem); }
-.section-head p{ margin-top:14px; color:var(--ink-soft); font-size:1.06rem; }
-
-/* timeline (dark, matches the old site) */
-.timeline-section{ background:var(--forest); color:var(--paper); }
-.tl-head{ text-align:center; margin-bottom:52px; }
-.tl-head h2{ color:var(--pink); font-size:clamp(1.9rem,3.6vw,2.8rem); }
-.tl-head p{ margin-top:12px; color:rgba(251,248,242,.6); font-size:1.05rem; }
-.timeline{ position:relative; max-width:900px; margin:0 auto; }
-.timeline::before{ content:""; position:absolute; left:96px; top:10px; bottom:10px; width:2px; background:rgba(251,248,242,.16); }
-.tl-item{ display:grid; grid-template-columns:82px 1fr; column-gap:34px; padding-bottom:52px; position:relative; }
-.tl-item:last-child{ padding-bottom:0; }
-.tl-year{ text-align:right; font-family:var(--font-display); font-size:1.15rem; line-height:1.25; color:rgba(251,248,242,.42); }
-.tl-item::before{ content:""; position:absolute; left:89px; top:5px; width:15px; height:15px; border-radius:50%; background:var(--pink); box-shadow:0 0 0 4px var(--forest); }
-.tl-month{ font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--green); margin-bottom:6px; }
-.tl-body h3{ font-size:1.28rem; color:var(--paper); margin:0 0 8px; }
-.tl-body p{ color:rgba(251,248,242,.7); font-size:.98rem; max-width:60ch; }
-.tl-body a{ color:var(--green); font-weight:600; text-decoration:none; }
-@media (max-width:600px){
-  .timeline{ padding-left:24px; }
-  .timeline::before{ left:5px; }
-  .tl-item{ grid-template-columns:1fr; column-gap:0; }
-  .tl-year{ text-align:left; color:rgba(251,248,242,.55); margin-bottom:2px; }
-  .tl-item::before{ left:-19px; top:2px; }
-}
-
-/* scroll-reveal micro-animation */
-.js .reveal{ opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
-.js .reveal.in{ opacity:1; transform:none; }
-@media (prefers-reduced-motion:reduce){ .js .reveal{ opacity:1 !important; transform:none !important; transition:none; } }
-
-/* team */
-.team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:20px; }
-.team-card{ text-align:center; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:26px 16px; transition:transform .2s ease, box-shadow .2s ease; }
-.team-card:hover{ transform:translateY(-3px); box-shadow:0 16px 34px rgba(17,31,38,.12); }
-.team-avatar{ width:82px; height:82px; border-radius:50%; margin:0 auto 14px; display:grid; place-items:center; overflow:hidden; background:var(--pink-soft); color:var(--plum); font-family:var(--font-display); font-size:1.5rem; }
-.team-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
-.team-card b{ font-family:var(--font-display); font-weight:500; font-size:1.08rem; display:block; }
-a.team-card{ display:block; text-decoration:none; color:inherit; }
-.team-grid-2{ display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-.team-section-head{ text-align:center; margin-left:auto; margin-right:auto; }
-.team-grid-2 .team-card{ width:min(260px,100%); }
-.team-card .role{ display:block; font-size:.85rem; color:var(--muted); margin-top:3px; }
-.team-card .li{ display:block; margin-top:12px; font-size:.8rem; font-weight:600; color:var(--pink); }
-
-/* collaborators ticker */
-.collab-ticker{ margin-top:6px; background:var(--forest-deep); border-radius:20px; padding:28px 0; overflow:hidden; }
-.collab-ticker .ticker{ display:flex; overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
-.collab-ticker .ticker-track{ display:flex; align-items:center; gap:clamp(44px,7vw,96px); padding-left:clamp(44px,7vw,96px); animation:ticker 22s linear infinite; }
-.collab-ticker .ticker:hover .ticker-track{ animation-play-state:paused; }
-.collab-ticker img{ height:38px; width:auto; flex:none; opacity:.85; transition:opacity .2s ease; }
-.collab-ticker img:hover{ opacity:1; }
-@keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
-@media (prefers-reduced-motion:reduce){ .collab-ticker .ticker-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
-.agami-link{ display:inline-flex; align-items:center; margin-top:22px; padding:13px 18px; border-radius:12px; background:var(--forest-deep); transition:transform .2s ease, box-shadow .2s ease; }
-.agami-link:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(17,31,38,.16); }
-.agami-link img{ display:block; width:auto; height:34px; }
-
-/* cta band */
-.cta-band{ background:var(--forest); text-align:center; padding:clamp(56px,9vh,96px) 0; }
-.cta-band h2{ color:var(--paper); font-size:clamp(1.7rem,3.4vw,2.5rem); max-width:22ch; margin:0 auto; }
-.cta-band p{ color:rgba(251,248,242,.72); margin:16px auto 28px; max-width:52ch; }
-.cta-band .btn-primary{ background:var(--pink); color:var(--ink); }
-.cta-band .btn-primary:hover{ background:#E58DBB; }
-
-/* footer */
-.site-footer{ background:#000; color:rgba(251,248,242,.8); padding:60px clamp(20px,5vw,72px) 30px; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:24px clamp(32px,6vw,96px); align-items:start; }
-.footer-top img{ height:24px; margin-bottom:14px; opacity:.95; }
-.footer-top p{ max-width:42ch; font-size:.92rem; color:rgba(251,248,242,.62); }
-.footer-map{ display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); gap:30px clamp(28px,4vw,56px); }
-.footer-col{ display:flex; flex-direction:column; gap:9px; }
-.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--pink); }
-.footer-col a{ text-decoration:none; font-size:.85rem; color:rgba(251,248,242,.72); }
-.footer-col a:hover{ color:var(--paper); }
-.footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
-
-@media (max-width:860px){ .site-footer{ grid-template-columns:1fr; } }
-@media (max-width:640px){ .site-nav{ display:none; } .site-header{ gap:12px; } .lang-switch{ min-height:40px; padding:7px 13px; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | OpenNyAI</title>
+  <meta name="description" content="Follow OpenNyAI from its beginnings in 2021 to a community-led mission using AI to help more people understand, navigate and make justice." />
+  <link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
+  <link rel="canonical" href="https://opennyai.org/about/" />
+  <link rel="alternate" hreflang="en" href="https://opennyai.org/about/" />
+  <link rel="alternate" hreflang="hi" href="https://opennyai.org/hi/about/" />
+  <link rel="alternate" hreflang="x-default" href="https://opennyai.org/about/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./about.css" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to the story</a>
 
-<header class="site-header">
-  <a class="brand" href="../" aria-label="OpenNyAI home"><img src="../assets/opennyai-logo-dark.svg" alt="OpenNyAI" /></a>
-  <div class="header-actions">
-    <nav class="site-nav" aria-label="Primary">
-      <a href="../about/" class="active" aria-current="page">About</a>
-      <a href="../#approach">Approach</a>
-      <a href="../misaal/">MISAAL</a>
-      <a class="nav-cta" href="../#problems">Explore the problems</a>
-    </nav>
-    <a class="lang-switch" href="/hi/about/" lang="hi" hreflang="hi" aria-label="Read this page in Hindi">हिंदी</a>
-  </div>
-</header>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="OpenNyAI home">
+      <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
+    </a>
+    <div class="header-actions">
+      <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Primary navigation">
+        <a href="../about/" aria-current="page">About Us</a>
+        <a href="../#approach">Approach</a>
+        <a href="../misaal/">MISAAL</a>
+        <a class="nav-cta" href="../#problems">Explore Problems</a>
+      </nav>
+      <a class="language-link" href="/hi/about/" lang="hi" hreflang="hi" aria-label="Read this page in Hindi">हिंदी</a>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" /></svg>
+      </button>
+    </div>
+  </header>
 
-<section class="page-hero">
-  <div class="wrap">
-    <div class="ph-inner">
-      <div>
-        <span class="eyebrow">About OpenNyAI</span>
-        <h1>Justice meets AI</h1>
-        <p>We work to bring innovators, institutions, resources and ideas across the legal and AI domain together, to create irreversible change to how citizens experience justice in India.</p>
-      </div>
-      <div class="ph-photo">
-        <img src="https://framerusercontent.com/images/HvPqK9ZUYZunpeu0S1oNDYFv4.jpg" alt="The OpenNyAI community" loading="lazy" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section timeline-section">
-  <div class="wrap">
-    <div class="tl-head reveal">
-      <h2>A Brief Timeline</h2>
-      <p>Let's start at the beginning and end at the end</p>
-    </div>
-    <div class="timeline">
-      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">April</div><h3>OpenNyAI mission begins</h3><p>OpenNyAI ("Open AI for Justice") began as a collaborative mission between EkStep, NLSIU, ThoughtWorks and Rohini Nilekani Philanthropies, with Agami as anchor partner, to advance access to justice using AI.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2021</div><div class="tl-body"><div class="tl-month">November</div><h3>Legal NLP models launch</h3><p>Three NLP models were released after extensive benchmarking: Named Entity Recognition, Rhetorical Role, and Extractive Summarizer. Trained on roughly 1,000 legal judgments, they reached about 90% average accuracy and were evaluated at SemEval 2022.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">Jul to Sep</div><h3>OpenNyAI Make-a-thon</h3><p>An 8-week online challenge bringing together engineers, technologists, lawyers, designers and business professionals to build applications that use AI to improve legal services and access to justice.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">September</div><h3>KHOJ dataset launch</h3><p>Around 40 student volunteers gathered background on High Court judges across 47 parameters, producing 25,000 data points. Released by the Chief Justice of India, DY Chandrachud, at NLU Odisha, with Civic Data Lab and the Centre for Public Policy, Law and Good Governance.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2022</div><div class="tl-body"><div class="tl-month">December</div><h3>Jugalbandi launch</h3><p>On the heels of ChatGPT, the community built Jugalbandi, an open-source conversational AI stack atop LLMs, Bhashini and WhatsApp to provide critical information and services to Indian citizens. Presented by Satya Nadella in May 2024.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">July</div><h3>1st OpenNyAI Maker Residency</h3><p>Five days of intense building with 45+ entrepreneurs and innovators, 16 mentors, and cohort members prototyping solutions to problems of law and justice.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2023</div><div class="tl-body"><div class="tl-month">August</div><h3>JIVA launch</h3><p>The Judges' Intelligent Virtual Assistant, an AI-powered platform to help judges and practitioners find relevant acts, laws and sections quickly, built as a prototype in collaboration with Parallel.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">February</div><h3>AALAP launch</h3><p>Aalap (Assistant for Legal and Paralegal functions in India), an instruction fine-tuned version of Mistral 7B for specific legal tasks in the Indian context.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">May</div><h3>RAG benchmark exercise begins</h3><p>With no Indian-legal-specific benchmarking datasets for Retrieval Augmented Generation, the community began building a legal dataset spanning different types of legal questions to benchmark retrievers.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">July</div><h3>Jugalbandi Studio release</h3><p>A low/no-code tool to build AI applications using natural language on the Jugalbandi Manager stack, enabling entrepreneurs and citizen developers to construct one-click deployable tools.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2024</div><div class="tl-body"><div class="tl-month">September</div><h3>2nd OpenNyAI Maker Residency</h3><p>Focused on building digital public goods that trigger ecosystem-level change, with deep focus on grievance redressal, scaling paralegal capacity and resolving environmental grievances.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">March</div><h3>3rd OpenNyAI Maker Residency</h3><p>Brought together government actors (DARPG) and 30+ members of the justice ecosystem in Delhi to reimagine public grievance handling systems for the next decade.</p></div></div>
-      <div class="tl-item reveal"><div class="tl-year">2025</div><div class="tl-body"><div class="tl-month">December</div><h3>M.I.S.A.A.L project begins</h3><p>We begin working with community members, paralegals and citizens to create an AI benchmark that truly represents quality responses where citizen legal queries are concerned. <a href="../misaal/">Read about MISAAL &#8594;</a></p></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section alt">
-  <div class="wrap">
-    <div class="section-head team-section-head">
-      <span class="eyebrow">Core team</span>
-      <h2>The people who keep the engines running</h2>
-    </div>
-    <div class="team-grid team-grid-2">
-      <a class="team-card" href="https://www.linkedin.com/in/sachinmalhan/" target="_blank" rel="noopener">
-        <div class="team-avatar"><img src="https://framerusercontent.com/images/J3aaZhai2XPEubEVkjzJJn5eOo.jpg" alt="Sachin Malhan" loading="lazy" /></div>
-        <b>Sachin Malhan</b>
-        <span class="role">Co-founder, Agami</span>
-        <span class="li">LinkedIn &#8599;</span>
-      </a>
-      <a class="team-card" href="https://www.linkedin.com/in/rashika-narain/" target="_blank" rel="noopener">
-        <div class="team-avatar"><img src="../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" /></div>
-        <b>Rashika Narain</b>
-        <span class="role">Curator &amp; Lead, OpenNyAI</span>
-        <span class="li">LinkedIn &#8599;</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Collaborative initiative</span>
-      <h2>Anchored by Agami, built by many</h2>
-      <p>OpenNyAI is Agami’s collaborative AI-for-justice mission. It draws on a network of 4,000+ changemakers from 2,000+ organisations, alongside partnerships across law, technology, philanthropy and government.</p>
-      <a class="agami-link" href="https://www.agami.in" target="_blank" rel="noopener" aria-label="Visit Agami"><img src="../assets/agami-logo.svg" alt="Agami" /></a>
-    </div>
-    <div class="collab-ticker" aria-label="Collaborators">
-      <div class="ticker">
-        <div class="ticker-track">
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/esUyANK2H9whigIE1saLJoFFlFM.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/brdKInOi3XBdaIBs8G4kyZn2rDU.png" alt="Collaborator" aria-hidden="true" />
-          <img src="https://framerusercontent.com/images/I8CQR9orlS84iAWRrA27l2bZZws.png" alt="Collaborator" aria-hidden="true" />
+  <main id="main">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">OpenNyAI, since 2021</span>
+          <h1 id="about-title">Justice is something we can make.</h1>
+          <p>OpenNyAI brings communities and AI together so more people can understand, navigate and shape the systems that affect their lives.</p>
+          <a class="hero-jump" href="#story"><span aria-hidden="true">↓</span>Follow the journey</a>
+        </div>
+        <div class="hero-visual" aria-label="OpenNyAI community gathering">
+          <span class="orbit orbit-one" aria-hidden="true"></span>
+          <span class="orbit orbit-two" aria-hidden="true"></span>
+          <figure class="hero-photo">
+            <img src="../assets/about/community.jpg" alt="OpenNyAI community members gathered in a room" />
+            <figcaption class="hero-caption">A community of lawyers, technologists, public institutions and justicemakers building in the open.</figcaption>
+          </figure>
         </div>
       </div>
+    </section>
+
+    <section class="story-section" id="story" aria-labelledby="story-title">
+      <div class="wrap">
+        <div class="story-intro reveal">
+          <div>
+            <span class="eyebrow">A living timeline</span>
+            <h2 id="story-title">Built in the open, year by year.</h2>
+          </div>
+          <p class="story-deck">OpenNyAI has grown through shared experiments, open infrastructure and people willing to build together. This is the path from an idea in 2021 to a new rhythm of <strong>problem-led sprints in 2026.</strong></p>
+        </div>
+
+        <div class="timeline" data-timeline>
+          <div class="timeline-rail" aria-hidden="true"><span></span></div>
+
+          <section class="timeline-year" aria-labelledby="year-2021">
+            <h2 class="year-label" id="year-2021">2021</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2021-04">April</time>
+                <div class="milestone-copy">
+                  <h3>The OpenNyAI mission begins</h3>
+                  <p>Agami, EkStep Foundation, NLSIU, Thoughtworks and Rohini Nilekani Philanthropies came together around a shared question: how can open AI expand access to justice in India?</p>
+                  <a class="source-link" href="https://docs.jugalbandi.opennyai.org/community-and-collaboration/understanding-the-community-led-spirit-of-our-mission" target="_blank" rel="noopener">Read the community history</a>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2021">Late 2021</time>
+                <div class="milestone-copy">
+                  <h3>Legal NLP building blocks take shape</h3>
+                  <p>Teams began developing open models for Indian legal text, including named entity recognition, rhetorical role labelling and judgment summarisation. The work created reusable foundations for later tools and research.</p>
+                  <a class="source-link" href="https://docs.jugalbandi.opennyai.org/introduction/about-openyai" target="_blank" rel="noopener">Explore the early work</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="timeline-year" aria-labelledby="year-2022">
+            <h2 class="year-label" id="year-2022">2022</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2022-07">July to September</time>
+                <div class="milestone-copy">
+                  <h3>The Make-a-thon opens the doors</h3>
+                  <p>An eight-week online challenge brought engineers, lawyers, designers and entrepreneurs together to build practical AI applications for legal services and access to justice.</p>
+                  <a class="source-link" href="https://docs.jugalbandi.opennyai.org/community-and-collaboration/understanding-the-community-led-spirit-of-our-mission" target="_blank" rel="noopener">See how the community builds</a>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2022-09">September</time>
+                <div class="milestone-copy">
+                  <h3>KHOJ makes judicial data usable</h3>
+                  <p>Student volunteers, CivicDataLab and legal research partners assembled a structured public dataset about High Court judges. It showed what becomes possible when careful civic data work is shared.</p>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2022-12-10">10 December</time>
+                <div class="milestone-copy">
+                  <h3>Jugalbandi is unveiled</h3>
+                  <p>The community introduced an open conversational AI stack that could connect large language models, Indian languages and familiar channels such as WhatsApp to public information and services.</p>
+                  <a class="source-link" href="https://news.microsoft.com/source/asia/features/with-help-from-next-generation-ai-indian-villagers-gain-easier-access-to-government-services/" target="_blank" rel="noopener">See Jugalbandi in use</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="timeline-year" aria-labelledby="year-2023">
+            <h2 class="year-label" id="year-2023">2023</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2023-07-28">28 July to 1 August</time>
+                <div class="milestone-copy">
+                  <h3>The first Maker Residency</h3>
+                  <p>More than 45 entrepreneurs and innovators worked alongside mentors for five focused days, moving from stubborn justice problems to working prototypes.</p>
+                  <figure class="milestone-media">
+                    <img src="../assets/about/maker-residency-2023.jpg" alt="Participants collaborating at the 2023 OpenNyAI Maker Residency" loading="lazy" />
+                    <figcaption>OpenNyAI Maker Residency, 2023. Image from Agami Field Notes.</figcaption>
+                  </figure>
+                  <a class="source-link" href="https://notes.agami.in/p/shaping-tomorrow-blending-ai-and" target="_blank" rel="noopener">Read the residency field note</a>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2023">2023</time>
+                <div class="milestone-copy">
+                  <h3>JIVA explores an AI assistant for judges</h3>
+                  <p>The Judges' Intelligent Virtual Assistant prototype explored how legal professionals could reach relevant acts, provisions and authorities more quickly.</p>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2023-12">December</time>
+                <div class="milestone-copy">
+                  <h3>Jugalbandi Studio launches</h3>
+                  <p>A low-code environment made it easier for domain experts and citizen developers to turn natural-language ideas into deployable AI services.</p>
+                  <figure class="milestone-media">
+                    <img src="../assets/about/jugalbandi-studio.jpg" alt="A presentation introducing Jugalbandi Studio" loading="lazy" />
+                    <figcaption>Introducing Jugalbandi Studio. Image from Agami Field Notes.</figcaption>
+                  </figure>
+                  <a class="source-link" href="https://notes.agami.in/p/jugalbandi-studio-bridging-the-gap" target="_blank" rel="noopener">Read the launch story</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="timeline-year" aria-labelledby="year-2024">
+            <h2 class="year-label" id="year-2024">2024</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2024-01-30">30 January</time>
+                <div class="milestone-copy">
+                  <h3>Aalap speaks to Indian legal tasks</h3>
+                  <p>Aalap, an instruction-tuned language model for Indian legal and paralegal work, gave the open community another foundation to test and improve.</p>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2024">2024</time>
+                <div class="milestone-copy">
+                  <h3>pRAGyoga benchmarks legal retrieval</h3>
+                  <p>The community began building Indian legal question sets and evaluation methods for retrieval-augmented generation, making quality visible rather than assumed.</p>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2024-09-26">26 to 29 September</time>
+                <div class="milestone-copy">
+                  <h3>The second Maker Residency goes deeper</h3>
+                  <p>Builders focused on digital public goods for grievance redressal, paralegal capacity and environmental justice, with the ecosystem around each tool treated as part of the design.</p>
+                  <a class="source-link" href="https://docs.jugalbandi.opennyai.org/community-and-collaboration/understanding-the-community-led-spirit-of-our-mission" target="_blank" rel="noopener">Explore the collaborative model</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="timeline-year" aria-labelledby="year-2025">
+            <h2 class="year-label" id="year-2025">2025</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2025-06-02">2 to 6 June</time>
+                <div class="milestone-copy">
+                  <h3>The third Maker Residency reimagines grievance redressal</h3>
+                  <p>Government actors and more than 30 members of the justice ecosystem met in New Delhi to explore how public grievance systems could become more responsive, inclusive and trusted.</p>
+                  <figure class="milestone-media">
+                    <img src="../assets/about/maker-residency-2025.webp" alt="Participants presenting at the 2025 OpenNyAI Maker Residency in New Delhi" loading="lazy" />
+                    <figcaption>Maker Residency on grievance redressal, New Delhi, 2025. Image from the World Bank.</figcaption>
+                  </figure>
+                  <a class="source-link" href="https://blogs.worldbank.org/en/governance/civic--amplifying-citizens--voice-through-ai-powered-grievance-r" target="_blank" rel="noopener">Read the World Bank account</a>
+                </div>
+              </article>
+
+              <article class="milestone reveal">
+                <time datetime="2025">2025</time>
+                <div class="milestone-copy">
+                  <h3>MISAAL begins with real legal questions</h3>
+                  <p>Community members, paralegals and citizens started shaping an open benchmark for AI answers to Indian legal queries, grounded in what a genuinely useful response should contain.</p>
+                  <a class="source-link" href="../misaal/">Explore MISAAL</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="timeline-year is-finale" aria-labelledby="year-2026">
+            <h2 class="year-label" id="year-2026">2026</h2>
+            <div class="year-events">
+              <article class="milestone reveal">
+                <time datetime="2026-07">July</time>
+                <div class="milestone-copy">
+                  <h3>OpenNyAI Sprints begin</h3>
+                  <p>The mission moves into a repeating sprint model: rally around a stuck justice problem, build in public, test with the people closest to it and share what works. The first circuit is the Big Bail Bash.</p>
+                  <div class="sprint-circuit" aria-label="How an OpenNyAI Sprint works">
+                    <div class="circuit-node is-live"><small>Circuit 01</small><strong>Big Bail Bash</strong></div>
+                    <div class="circuit-node"><small>Build</small><strong>Prototype in public</strong></div>
+                    <div class="circuit-node"><small>Share</small><strong>Open what works</strong></div>
+                  </div>
+                  <a class="sprint-link" href="../#problems">Enter the first circuit</a>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="mission-section" aria-labelledby="mission-title">
+      <div class="wrap">
+        <div class="mission-grid reveal">
+          <div class="mission-copy">
+            <span class="eyebrow">An Agami mission</span>
+            <h2 id="mission-title">Built on the work of <strong>4,000 justicemakers</strong> across 2,000 institutions.</h2>
+          </div>
+          <div class="mission-detail">
+            <p>Agami helps people move from seeking justice to making it. It discovers justice innovators, connects networks around shared challenges and helps build open public goods that others can adapt.</p>
+            <a class="text-link" href="https://www.agami.in/" target="_blank" rel="noopener">Explore Agami</a>
+          </div>
+        </div>
+
+        <div class="collaborators reveal">
+          <p>We built OpenNyAI with</p>
+          <div class="logo-ticker" aria-label="OpenNyAI collaborators">
+            <div class="logo-track">
+              <span class="logo-item"><img src="../assets/agami-logo.svg" alt="Agami" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/ekstep.svg" alt="EkStep Foundation" /></span>
+              <span class="logo-item"><img class="nlsiu" src="../assets/collaborators/nlsiu.png" alt="National Law School of India University" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/thoughtworks.svg" alt="Thoughtworks" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/rohini-nilekani-philanthropies.png" alt="Rohini Nilekani Philanthropies" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/trilegal.png" alt="Trilegal" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/tresvista.png" alt="TresVista" /></span>
+            </div>
+            <div class="logo-track" aria-hidden="true">
+              <span class="logo-item"><img src="../assets/agami-logo.svg" alt="" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/ekstep.svg" alt="" /></span>
+              <span class="logo-item"><img class="nlsiu" src="../assets/collaborators/nlsiu.png" alt="" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/thoughtworks.svg" alt="" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/rohini-nilekani-philanthropies.png" alt="" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/trilegal.png" alt="" /></span>
+              <span class="logo-item"><img src="../assets/collaborators/tresvista.png" alt="" /></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section" aria-labelledby="team-title">
+      <div class="wrap">
+        <div class="team-heading reveal">
+          <div>
+            <span class="eyebrow">Core team</span>
+            <h2 id="team-title">Keeping the mission moving.</h2>
+          </div>
+          <p>A small core team holds the space for a much larger community to meet, make and share.</p>
+        </div>
+        <div class="people-list reveal">
+          <a class="person" href="https://www.linkedin.com/in/sachinmalhan/" target="_blank" rel="noopener">
+            <img src="https://framerusercontent.com/images/J3aaZhai2XPEubEVkjzJJn5eOo.jpg" alt="Sachin Malhan" loading="lazy" />
+            <span><span class="person-name">Sachin Malhan</span><span class="person-role">Co-founder, Agami</span></span>
+            <span class="person-open" aria-hidden="true">↗</span>
+          </a>
+          <a class="person" href="https://www.linkedin.com/in/rashika-narain/" target="_blank" rel="noopener">
+            <img src="../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" />
+            <span><span class="person-name">Rashika Narain</span><span class="person-role">Curator and Lead, OpenNyAI</span></span>
+            <span class="person-open" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
+      <p>Communities and AI working together to make justice more accessible across India.</p>
     </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <h2>Which problem will you help move?</h2>
-    <p>Explore the problems OpenNyAI is working on, see what each one needs, and choose where your time, expertise or network can matter.</p>
-    <a class="btn btn-primary" href="../#problems">Explore the problems</a>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="footer-top">
-    <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
-    <p>Unlocking the power of AI and community to transform how India accesses justice.</p>
-  </div>
-  <div class="footer-map">
-    <div class="footer-col">
-      <p class="footer-col-title">OpenNyAI</p>
-      <a href="../about/">About</a>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="../about/">About Us</a>
       <a href="../#approach">Approach</a>
       <a href="../misaal/">MISAAL</a>
-      <a href="../#problems">Explore the problems</a>
-    </div>
-    <div class="footer-col">
-      <p class="footer-col-title">Ecosystem</p>
-      <a href="https://www.agami.in" target="_blank" rel="noopener">Visit Agami</a>
-      <a href="https://pucar.org" target="_blank" rel="noopener">PUCAR</a>
-      <a href="mailto:hello@opennyai.org">Contact us</a>
-    </div>
-  </div>
-  <div class="footer-copy">Copyright © Vayam Forum for Citizenship (Agami). All Rights Reserved.</div>
-</footer>
+      <a href="../#problems">Explore Problems</a>
+      <a href="https://www.agami.in/" target="_blank" rel="noopener">Agami</a>
+      <a href="mailto:hello@agami.in">Contact</a>
+    </nav>
+    <p class="footer-copy">OpenNyAI is an Agami mission. Built in the open for justice.</p>
+  </footer>
 
-<script>
-  // fade timeline items in as they scroll into view
-  (function(){
-    var els = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)){ els.forEach(function(e){ e.classList.add('in'); }); return; }
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { threshold: 0.15 });
-    els.forEach(function(e){ io.observe(e); });
-  })();
-</script>
-
+  <script type="module" src="./about.js"></script>
 </body>
 </html>
