@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import agamiLogo from "../../assets/agami-logo.svg";
 import ekstepLogo from "../../assets/collaborators/ekstep.svg";
 import nlsiuLogo from "../../assets/collaborators/nlsiu.png";
@@ -6,14 +6,12 @@ import rnpLogo from "../../assets/collaborators/rohini-nilekani-philanthropies.p
 import thoughtworksLogo from "../../assets/collaborators/thoughtworks.svg";
 import tresVistaLogo from "../../assets/collaborators/tresvista.png";
 import trilegalLogo from "../../assets/collaborators/trilegal.png";
-import logoDark from "../../assets/opennyai-logo-dark.svg";
 import logo from "../../assets/opennyai-logo.svg";
 import { useApproachStory } from "../hooks/useApproachStory.js";
-import { useCollapsedHeader } from "../hooks/useCollapsedHeader.js";
-import { pathForLocale, useLocaleSwap } from "../hooks/useLocaleSwap.js";
 import { useParallax } from "../hooks/useParallax.js";
+import { useProblemsStory } from "../hooks/useProblemsStory.js";
 import { useSectionEntrance } from "../hooks/useSectionEntrance.js";
-import { GlowAccentButton, GlowPrimaryButton } from "./BorderGlow.jsx";
+import { GlowAccentButton } from "./BorderGlow.jsx";
 import Grainient from "./Grainient.jsx";
 import { HeroMedia } from "./HeroMedia.jsx";
 
@@ -121,7 +119,6 @@ const COPY = {
     },
     problems: {
       title: "Justice problems that should already be moving.",
-      body: "Hover, focus, or tap a problem to see the pathway we are working to unlock.",
       motionLabels: {
         bail: ["Eligibility", "Family", "Filing", "Freedom"],
         wages: ["Work complete", "Claim verified", "Wages received"],
@@ -245,7 +242,6 @@ const COPY = {
     },
     problems: {
       title: "न्याय की वे समस्याएँ जिन्हें अब तक आगे बढ़ जाना चाहिए था।",
-      body: "हर समस्या पर होवर, फ़ोकस या टैप करके देखें कि हम कौन-सा रास्ता खोलने की कोशिश कर रहे हैं।",
       motionLabels: {
         bail: ["पात्रता", "परिवार", "आवेदन", "आज़ादी"],
         wages: ["काम पूरा", "दावा सत्यापित", "मज़दूरी मिली"],
@@ -349,162 +345,6 @@ const COPY = {
   },
 };
 
-function Header({ locale, copy, onSwitchLocale, isSwapping }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [networkOpen, setNetworkOpen] = useState(false);
-  const collapsed = useCollapsedHeader();
-  const clusterRef = useRef(null);
-  const closeMenu = () => setMenuOpen(false);
-  const closeNetwork = () => setNetworkOpen(false);
-  const hindi = locale === "hi";
-  const nextLocale = hindi ? "en" : "hi";
-  const nextPath = pathForLocale(nextLocale);
-
-  // Close the drawer only while transitioning into the collapsed bar,
-  // not whenever collapsed is already true (that blocked re-opening after scroll).
-  const wasCollapsedRef = useRef(false);
-  useEffect(() => {
-    if (collapsed && !wasCollapsedRef.current) {
-      setMenuOpen(false);
-      setNetworkOpen(false);
-    }
-    wasCollapsedRef.current = collapsed;
-  }, [collapsed]);
-
-  // Outside pointer + Escape close the network switcher.
-  useEffect(() => {
-    if (!networkOpen) return undefined;
-    const onPointerDown = (event) => {
-      if (!clusterRef.current?.contains(event.target)) setNetworkOpen(false);
-    };
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") setNetworkOpen(false);
-    };
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [networkOpen]);
-
-  function handleLanguageClick(event) {
-    // Keep real navigation for modified clicks / open-in-new-tab.
-    if (
-      event.defaultPrevented
-      || event.button !== 0
-      || event.metaKey
-      || event.ctrlKey
-      || event.shiftKey
-      || event.altKey
-    ) {
-      return;
-    }
-
-    event.preventDefault();
-    closeMenu();
-    onSwitchLocale(nextLocale);
-  }
-
-  return (
-    <header
-      className={`site-header${collapsed ? " is-collapsed" : ""}${menuOpen ? " is-menu-open" : ""}${networkOpen ? " is-network-open" : ""}`}
-      data-collapsed={collapsed ? "true" : "false"}
-    >
-      {menuOpen && (
-        <button
-          className="nav-scrim"
-          type="button"
-          aria-label={hindi ? "मेन्यू बंद करें" : "Close menu"}
-          onClick={closeMenu}
-        />
-      )}
-      <div className="site-header-cluster" ref={clusterRef}>
-        <div className="brand-cluster">
-          <a className="brand-home" href="#top" aria-label={hindi ? "OpenNyAI मुखपृष्ठ" : "OpenNyAI home"}>
-            <img src={collapsed ? logoDark : logo} alt="OpenNyAI" />
-          </a>
-          <button
-            className="network-toggle"
-            type="button"
-            aria-expanded={networkOpen}
-            aria-controls="network-panel"
-            aria-label={copy.nav.network.toggle}
-            onClick={() => {
-              setMenuOpen(false);
-              setNetworkOpen((open) => !open);
-            }}
-          >
-            <svg viewBox="0 0 12 12" aria-hidden="true">
-              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        </div>
-        <div className="header-actions">
-          <a
-            className={`language-switch${isSwapping ? " is-swapping" : ""}`}
-            href={nextPath}
-            lang={nextLocale}
-            hrefLang={nextLocale}
-            aria-busy={isSwapping || undefined}
-            onClick={handleLanguageClick}
-          >
-            <span className="language-switch-label">
-              {hindi ? "English" : "हिंदी"}
-            </span>
-          </a>
-          <button
-            className="nav-toggle"
-            type="button"
-            aria-expanded={menuOpen}
-            aria-controls="primary-navigation"
-            onClick={() => {
-              setNetworkOpen(false);
-              setMenuOpen((open) => !open);
-            }}
-          >
-            {menuOpen ? copy.nav.close : copy.nav.menu}
-          </button>
-        </div>
-        <nav
-          id="primary-navigation"
-          className={`site-nav${menuOpen ? " is-open" : ""}`}
-          aria-label={hindi ? "मुख्य नेविगेशन" : "Primary"}
-        >
-          <a href={hindi ? "/hi/about/" : "/about/"} onClick={closeMenu}>{copy.nav.about}</a>
-          <a href="#approach" onClick={closeMenu}>{copy.nav.approach}</a>
-          <a href={hindi ? "/hi/misaal/" : "/misaal/"} onClick={closeMenu}>{copy.nav.misaal}</a>
-          <GlowPrimaryButton className="nav-action-glow">
-            <a className="btn btn-primary nav-action" href="#problems" onClick={closeMenu}>{copy.nav.problems}</a>
-          </GlowPrimaryButton>
-        </nav>
-        <div className={`network-panel${networkOpen ? " is-open" : ""}`} id="network-panel" inert={!networkOpen}>
-          <div className="network-panel-inner">
-            <div className="network-panel-card">
-              <div className="network-panel-head">
-                <p>{copy.nav.network.label}</p>
-                <button className="network-close" type="button" aria-label={copy.nav.network.close} onClick={closeNetwork}>
-                  <svg viewBox="0 0 14 14" aria-hidden="true">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                  </svg>
-                </button>
-              </div>
-              <a className="network-link" href="https://pucar.org/" target="_blank" rel="noreferrer">
-                <strong>PUCAR</strong>
-                <span>{copy.nav.network.pucarDesc}</span>
-              </a>
-              <a className="network-link network-link-agami" href="https://www.agami.in" target="_blank" rel="noreferrer">
-                <img src={agamiLogo} alt="Agami" />
-                <span>{copy.nav.network.agamiDesc}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
 function Hero({ copy }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -592,52 +432,67 @@ function ProblemMotion({ problemId, labels }) {
 
 function ProblemsShowcase({ locale, copy, onChooseProblem }) {
   const visibleProblems = PROBLEMS.slice(0, 3);
-  const [activeProblemId, setActiveProblemId] = useState(visibleProblems[0].id);
-  const activeProblem = visibleProblems.find(({ id }) => id === activeProblemId) || visibleProblems[0];
-  const activeText = activeProblem[locale];
-  const motionKey = activeProblemId === "online-safety" ? "safety" : activeProblemId;
+  const { storyRef, chapterRefs, sceneRefs } = useProblemsStory(visibleProblems.length, locale);
 
   return (
-    <section className="problems-showcase" id="problems" aria-labelledby="problems-title">
+    <section className="problems-showcase" id="problems" aria-labelledby="problems-title" ref={storyRef}>
       <header className="problems-showcase-intro">
         <h2 id="problems-title">{copy.problems.title}</h2>
-        <p>{copy.problems.body}</p>
       </header>
       <div className="problems-showcase-layout">
-        <div className="problem-lines">
+        <ol className="problem-lines">
           {visibleProblems.map((problem, index) => {
             const text = problem[locale];
-            const active = problem.id === activeProblemId;
+            const motionKey = problem.id === "online-safety" ? "safety" : problem.id;
             return (
-              <button
-                className={`problem-line${active ? " is-active" : ""}`}
-                type="button"
-                aria-pressed={active}
-                aria-controls="problem-motion-stage"
-                onClick={() => setActiveProblemId(problem.id)}
-                onFocus={() => setActiveProblemId(problem.id)}
-                onMouseEnter={() => setActiveProblemId(problem.id)}
+              <li
+                className="problem-chapter"
+                data-problem={problem.id}
+                ref={(node) => {
+                  if (node) chapterRefs.current[index] = node;
+                  else delete chapterRefs.current[index];
+                }}
                 key={problem.id}
               >
-                <span className="problem-line-number">{String(index + 1).padStart(2, "0")}</span>
-                <span className="problem-line-copy">
-                  <small>{text.status}</small>
-                  <strong>{text.title}</strong>
-                  <span>{text.body}</span>
-                </span>
-                <span className="problem-line-arrow" aria-hidden="true">↗</span>
-              </button>
+                <article className="problem-line" aria-labelledby={`problem-${problem.id}-title`}>
+                  <span className="problem-line-number">{String(index + 1).padStart(2, "0")}</span>
+                  <div className="problem-line-copy">
+                    <p className="problem-line-status">{text.status}</p>
+                    <h3 id={`problem-${problem.id}-title`}>{text.title}</h3>
+                    <p className="problem-line-body">{text.body}</p>
+                    <a className="problem-line-action" href="#participate" onClick={() => onChooseProblem(problem.id)}>
+                      {text.action} <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                </article>
+                <div className="problem-inline-motion" aria-hidden="true">
+                  <div className="problem-motion-canvas">
+                    <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} />
+                  </div>
+                </div>
+              </li>
             );
           })}
-        </div>
-        <div className="problem-motion-stage" id="problem-motion-stage" aria-live="polite">
-          <div className="problem-motion-canvas" key={activeProblemId}>
-            <ProblemMotion problemId={activeProblemId} labels={copy.problems.motionLabels[motionKey]} />
-          </div>
-          <div className="problem-motion-footer">
-            <p>{activeText.status}</p>
-            <a href="#participate" onClick={() => onChooseProblem(activeProblemId)}>{activeText.action} <span aria-hidden="true">→</span></a>
-          </div>
+        </ol>
+        <div className="problem-motion-stage" aria-hidden="true">
+          {visibleProblems.map((problem, index) => {
+            const motionKey = problem.id === "online-safety" ? "safety" : problem.id;
+            return (
+              <div
+                className="problem-motion-scene"
+                data-problem={problem.id}
+                ref={(node) => {
+                  if (node) sceneRefs.current[index] = node;
+                  else delete sceneRefs.current[index];
+                }}
+                key={problem.id}
+              >
+                <div className="problem-motion-canvas">
+                  <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -772,7 +627,7 @@ function Approach({ copy, locale }) {
 
 function WhyNow({ copy }) {
   return (
-    <section className="section" id="about" aria-labelledby="about-title" data-entrance>
+    <section className="section" id="about" aria-labelledby="about-title">
       <div className="section-intro">
         <h2 id="about-title"><HighlightedText segments={copy.why.title} className="why-title-mark" /></h2>
         <p>{copy.why.body}</p>
@@ -976,15 +831,15 @@ function CollaboratorsBand({ copy }) {
   );
 }
 
-export function HomePage({ locale: requestedLocale }) {
-  const { locale, isSwapping, stageRef, switchLocale } = useLocaleSwap(requestedLocale);
+export function HomePage({ locale = "en" }) {
   const copy = COPY[locale];
   const [selectedProblem, setSelectedProblem] = useState("bail");
   useParallax();
   useSectionEntrance();
 
   useEffect(() => {
-    const absoluteUrl = new URL(pathForLocale(locale), window.location.origin).href;
+    const homePath = locale === "hi" ? "/hi/" : "/";
+    const absoluteUrl = new URL(homePath, window.location.origin).href;
     document.documentElement.lang = locale;
     document.documentElement.dataset.locale = locale;
     document.title = copy.meta.title;
@@ -998,27 +853,17 @@ export function HomePage({ locale: requestedLocale }) {
   }, [copy, locale]);
 
   return (
-    <div className="site-shell" id="top" data-swapping={isSwapping ? "true" : undefined}>
-      <Header
-        locale={locale}
-        copy={copy}
-        isSwapping={isSwapping}
-        onSwitchLocale={switchLocale}
-      />
-      <div className="locale-swap-stage" ref={stageRef}>
-        <div className="locale-swap-layer" lang={locale}>
-          <main>
-            <Hero copy={copy} />
-            <ProblemsShowcase locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
-            <Approach copy={copy} locale={locale} />
-            <WhyNow copy={copy} />
-            <WhatWeBuilt locale={locale} copy={copy} />
-            <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
-            <CollaboratorsBand copy={copy} />
-          </main>
-          <Footer locale={locale} copy={copy} />
-        </div>
-      </div>
+    <div className="home-route" id="route-main" lang={locale}>
+      <main>
+        <Hero copy={copy} />
+        <ProblemsShowcase locale={locale} copy={copy} onChooseProblem={setSelectedProblem} />
+        <Approach copy={copy} locale={locale} />
+        <WhyNow copy={copy} />
+        <WhatWeBuilt locale={locale} copy={copy} />
+        <Participate locale={locale} copy={copy} selectedProblem={selectedProblem} onChooseProblem={setSelectedProblem} />
+        <CollaboratorsBand copy={copy} />
+      </main>
+      <Footer locale={locale} copy={copy} />
     </div>
   );
 }

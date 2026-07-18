@@ -13,29 +13,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./about.css" />
+  <meta data-route-style="bundled" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to the story</a>
-
-  <header class="site-header">
-    <a class="brand" href="../" aria-label="OpenNyAI home">
-      <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
-    </a>
-    <div class="header-actions">
-      <nav class="site-nav" id="primary-nav" data-site-nav aria-label="Primary navigation">
-        <a href="../about/" aria-current="page">About Us</a>
-        <a href="../#approach">Approach</a>
-        <a href="../misaal/">MISAAL</a>
-        <a class="nav-cta" href="../#problems">Explore Problems</a>
-      </nav>
-      <a class="language-link" href="/hi/about/" lang="hi" hreflang="hi" aria-label="Read this page in Hindi">हिंदी</a>
-      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" /></svg>
-      </button>
-    </div>
-  </header>
+  <div id="root"></div>
+  <template id="route-content">
 
   <main id="main">
     <section class="about-hero" aria-labelledby="about-title">
@@ -322,6 +305,7 @@
     <p class="footer-copy">OpenNyAI is an Agami mission. Built in the open for justice.</p>
   </footer>
 
-  <script type="module" src="./about.js"></script>
+  </template>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

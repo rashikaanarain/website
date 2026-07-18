@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 <script>document.documentElement.classList.add('js');</script>
-<style>
+<style type="text/plain" data-route-style>
 :root{
   --cream:#F6F1E6; --cream-deep:#ECE2CE; --paper:#FBF8F2;
   --ink:#241E1A; --ink-soft:#55493F; --muted:#8A7E6E;
@@ -128,20 +128,9 @@ p{ margin:0; } a{ color:inherit; }
 </style>
 </head>
 <body>
+<div id="root"></div>
+<template id="route-content">
 
-<header class="site-header">
-  <a class="brand" href="../" aria-label="OpenNyAI home"><img src="../assets/opennyai-logo.svg" alt="OpenNyAI" /></a>
-  <div class="header-actions">
-    <nav class="site-nav" id="misaal-navigation" aria-label="Primary">
-      <a href="../about/">About Us</a>
-      <a href="../#approach">Approach</a>
-      <a href="../misaal/" class="active" aria-current="page">MISAAL</a>
-      <a class="nav-cta" href="../#problems">Explore Problems</a>
-    </nav>
-    <a class="lang-switch" href="/hi/misaal/" lang="hi" hreflang="hi" aria-label="Read this page in Hindi">हिंदी</a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="misaal-navigation">Menu</button>
-  </div>
-</header>
 
 <!-- Hero -->
 <section class="misaal-hero">
@@ -264,24 +253,8 @@ p{ margin:0; } a{ color:inherit; }
   <div class="footer-copy">Copyright © Vayam Forum for Citizenship (Agami). All Rights Reserved.</div>
 </footer>
 
-<script>
-(() => {
-  const button = document.querySelector('.nav-toggle');
-  const navigation = document.querySelector('#misaal-navigation');
-  if (!button || !navigation) return;
-  button.addEventListener('click', () => {
-    const open = button.getAttribute('aria-expanded') !== 'true';
-    button.setAttribute('aria-expanded', String(open));
-    button.textContent = open ? 'Close' : 'Menu';
-    navigation.dataset.open = String(open);
-  });
-  navigation.addEventListener('click', () => {
-    button.setAttribute('aria-expanded', 'false');
-    button.textContent = 'Menu';
-    navigation.dataset.open = 'false';
-  });
-})();
-</script>
+</template>
+<script type="module" src="/src/main.jsx"></script>
 
 </body>
 </html>
