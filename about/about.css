@@ -474,7 +474,7 @@ html[lang="hi"] .story-intro h2 {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: clamp(60px, 8.3vw, 112px);
+  left: calc(clamp(88px, 13vw, 176px) + clamp(32px, 6vw, 92px) - 5px);
   width: 2px;
   background: rgba(36, 30, 26, 0.1);
   pointer-events: none;
@@ -833,6 +833,11 @@ html[lang="hi"] .collaborators > p {
   max-height: 56px;
 }
 
+.logo-item img.light-logo {
+  filter: brightness(0);
+  opacity: 0.78;
+}
+
 .team-section {
   padding: clamp(80px, 10vw, 130px) 0;
   background: var(--cream-deep);
@@ -1003,14 +1008,17 @@ html[lang="hi"] .collaborators > p {
     background: rgba(9, 20, 25, 0.97);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
     transform: translateY(-8px);
-    transition: opacity 180ms ease, transform 180ms ease;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
   }
 
   .js .site-nav.is-open {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
     transform: translateY(0);
+    transition-delay: 0s;
   }
 
   .site-nav a {
@@ -1048,7 +1056,7 @@ html[lang="hi"] .collaborators > p {
   }
 
   .timeline-rail {
-    left: 78px;
+    left: 93px;
   }
 
   .year-label::after {
@@ -1199,7 +1207,11 @@ html[lang="hi"] .collaborators > p {
   }
 
   .logo-track {
+    width: 100%;
+    flex: none;
     flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
     animation: none;
   }
 

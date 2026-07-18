@@ -2904,7 +2904,7 @@ input:disabled {
 .collaborator-logo:hover img { filter: none; opacity: 1; }
 .collaborator-logo-agami img { width: min(100%, 174px); }
 .collaborator-logo-ekstep img { width: min(100%, 150px); }
-.collaborator-logo-nlsiu img { width: min(100%, 72px); max-height: 78px; }
+.collaborator-logo-nlsiu img { width: min(100%, 72px); max-height: 78px; filter: none; opacity: 1; }
 .collaborator-logo-thoughtworks img { width: min(100%, 178px); }
 .collaborator-logo-rnp img { width: min(100%, 156px); max-height: 76px; }
 .collaborator-logo-trilegal img { width: min(100%, 172px); }

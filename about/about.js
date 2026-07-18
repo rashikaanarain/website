@@ -1,10 +1,15 @@
 (function () {
   const menuButton = document.querySelector("[data-menu-toggle]");
   const menu = document.querySelector("[data-site-nav]");
+  const isHindi = document.documentElement.lang === "hi";
+  const menuLabels = isHindi
+    ? { open: "नेविगेशन मेन्यू खोलें", close: "नेविगेशन मेन्यू बंद करें" }
+    : { open: "Open navigation menu", close: "Close navigation menu" };
 
   function closeMenu() {
     if (!menuButton || !menu) return;
     menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", menuLabels.open);
     menu.classList.remove("is-open");
     document.body.classList.remove("nav-open");
   }
@@ -13,6 +18,7 @@
     menuButton.addEventListener("click", function () {
       const willOpen = menuButton.getAttribute("aria-expanded") !== "true";
       menuButton.setAttribute("aria-expanded", String(willOpen));
+      menuButton.setAttribute("aria-label", willOpen ? menuLabels.close : menuLabels.open);
       menu.classList.toggle("is-open", willOpen);
       document.body.classList.toggle("nav-open", willOpen);
     });
@@ -26,7 +32,7 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
         closeMenu();
         menuButton.focus();
       }

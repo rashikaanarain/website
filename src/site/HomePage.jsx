@@ -208,7 +208,7 @@ const COPY = {
       privacy: "We will use these details only to follow up about OpenNyAI's work.",
     },
     collaborators: {
-      title: "OpenNyAI is an Agami mission, built on the work of 4,000+ justicemakers across 2,000+ institutions.",
+      title: "OpenNyAI is an Agami mission, built on the work of 4,000 justicemakers across 2,000 institutions.",
       body: "Agami brings people and ideas together so citizens can move from seeking justice to making it. It discovers innovators, connects networks, and builds digital public goods.",
       aria: "OpenNyAI collaborators",
       built: "We built OpenNyAI with",
@@ -332,7 +332,7 @@ const COPY = {
       privacy: "हम इन विवरणों का उपयोग केवल OpenNyAI के काम के बारे में आपसे संपर्क करने के लिए करेंगे।",
     },
     collaborators: {
-      title: "OpenNyAI, Agami की एक पहल है, जो 2,000+ संस्थाओं के 4,000+ जस्टिसमेकर्स के काम पर बनी है।",
+      title: "OpenNyAI, Agami की एक पहल है, जो 2,000 संस्थाओं के 4,000 जस्टिसमेकर्स के काम पर बनी है।",
       body: "Agami लोगों और विचारों को साथ लाता है, ताकि नागरिक न्याय माँगने से आगे बढ़कर न्याय बना सकें। यह नए प्रवर्तकों को खोजता है, नेटवर्क जोड़ता है और डिजिटल सार्वजनिक संपदा बनाता है।",
       aria: "OpenNyAI के सहयोगी",
       built: "हमने OpenNyAI इनके साथ बनाया",
