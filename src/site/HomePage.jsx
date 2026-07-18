@@ -124,6 +124,11 @@ const COPY = {
         wages: ["Work complete", "Claim verified", "Wages received"],
         safety: ["Harm detected", "Trusted guidance", "Safe next step"],
       },
+      motionJourneys: {
+        bail: "Eligibility to freedom",
+        wages: "Work complete to wages received",
+        safety: "Harm detected to a safe next step",
+      },
     },
     approach: {
       title: ["The power of ", { highlight: "communities + AI" }, " can transform justice."],
@@ -247,6 +252,11 @@ const COPY = {
         wages: ["काम पूरा", "दावा सत्यापित", "मज़दूरी मिली"],
         safety: ["नुकसान पहचाना", "भरोसेमंद मदद", "सुरक्षित अगला कदम"],
       },
+      motionJourneys: {
+        bail: "पात्रता से आज़ादी तक",
+        wages: "काम पूरा होने से मज़दूरी मिलने तक",
+        safety: "नुकसान की पहचान से सुरक्षित अगले कदम तक",
+      },
     },
     approach: {
       title: ["समुदाय + AI की साझी शक्ति ", { highlight: "न्याय को बदल सकती है" }, "।"],
@@ -367,65 +377,34 @@ function Hero({ copy }) {
   );
 }
 
-function ProblemMotion({ problemId, labels }) {
-  if (problemId === "wages") {
-    return (
-      <div className="problem-motion wage-motion" aria-hidden="true">
-        <div className="wage-ledger">
-          <span className="wage-ledger-title">{labels[0]}</span>
-          <span className="wage-line wage-line-a" />
-          <span className="wage-line wage-line-b" />
-          <span className="wage-line wage-line-c" />
-          <span className="wage-stamp">{labels[1]}</span>
-        </div>
-        <div className="wage-route">
-          <span className="wage-coin">₹</span>
-          <i /><i /><i />
-        </div>
-        <div className="wage-received">
-          <span>₹</span>
-          <strong>{labels[2]}</strong>
-        </div>
-      </div>
-    );
-  }
-
-  if (problemId === "online-safety") {
-    return (
-      <div className="problem-motion safety-motion" aria-hidden="true">
-        <div className="signal-field">
-          {Array.from({ length: 12 }, (_, index) => <i data-signal={index} key={index} />)}
-          <span className="safety-scan">{labels[0]}</span>
-          <span className="safety-shield">✓</span>
-        </div>
-        <div className="safety-path">
-          <span>{labels[1]}</span>
-          <i />
-          <strong>{labels[2]}</strong>
-        </div>
-      </div>
-    );
-  }
+function ProblemMotion({ problemId, labels, index, journey }) {
+  const steps = problemId === "bail"
+    ? [labels[0], `${labels[1]} + ${labels[2]}`, labels[3]]
+    : labels;
 
   return (
-    <div className="problem-motion bail-motion" aria-hidden="true">
-      <div className="release-file">
-        <span>50</span>
-        <small>{labels[0]}</small>
+    <div className="problem-motion pathway-motion" data-problem={problemId} aria-hidden="true">
+      <div className="pathway-heading">
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <p>{journey}</p>
       </div>
-      <div className="release-lane">
-        <span className="release-gate gate-a" />
-        <span className="release-gate gate-b" />
-        <span className="release-gate gate-c" />
-        <i className="release-token">✓</i>
+      <div className="pathway-route">
+        <span className="pathway-track" />
+        <span className="pathway-track-progress" />
+        <span className="pathway-runner"><i /></span>
+        <ol>
+          {steps.map((label, stepIndex) => (
+            <li className={`pathway-step pathway-step-${stepIndex + 1}`} key={label}>
+              <span>{stepIndex + 1}</span>
+              <strong>{label}</strong>
+            </li>
+          ))}
+        </ol>
       </div>
-      <div className="release-home">
-        <span>⌂</span>
-        <strong>{labels[3]}</strong>
+      <div className="pathway-outcome">
+        <span>{steps[2]}</span>
+        <i aria-hidden="true">↗</i>
       </div>
-      <ol className="release-steps">
-        {labels.slice(0, 3).map((label) => <li key={label}>{label}</li>)}
-      </ol>
     </div>
   );
 }
@@ -467,7 +446,7 @@ function ProblemsShowcase({ locale, copy, onChooseProblem }) {
                 </article>
                 <div className="problem-inline-motion" aria-hidden="true">
                   <div className="problem-motion-canvas">
-                    <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} />
+                    <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} index={index} journey={copy.problems.motionJourneys[motionKey]} />
                   </div>
                 </div>
               </li>
@@ -488,7 +467,7 @@ function ProblemsShowcase({ locale, copy, onChooseProblem }) {
                 key={problem.id}
               >
                 <div className="problem-motion-canvas">
-                  <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} />
+                  <ProblemMotion problemId={problem.id} labels={copy.problems.motionLabels[motionKey]} index={index} journey={copy.problems.motionJourneys[motionKey]} />
                 </div>
               </div>
             );

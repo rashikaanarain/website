@@ -14,7 +14,6 @@ import {
 const NAV_COPY = {
   en: {
     about: "About Us",
-    approach: "Approach",
     misaal: "MISAAL",
     problems: "Explore Problems",
     menu: "Menu",
@@ -32,7 +31,6 @@ const NAV_COPY = {
   },
   hi: {
     about: "हमारे बारे में",
-    approach: "हमारा तरीका",
     misaal: "MISAAL",
     problems: "समस्याएँ देखें",
     menu: "मेन्यू",
@@ -197,9 +195,6 @@ export function SiteHeader({ locale, currentPage, navigate, preload, isNavigatin
             aria-current={currentPage === PUBLIC_PAGE_IDS.ABOUT ? "page" : undefined}
           >
             {copy.about}
-          </SiteLink>
-          <SiteLink href={`${homePath}#approach`} navigate={navigate} preload={preload} onNavigate={closeMenu}>
-            {copy.approach}
           </SiteLink>
           <SiteLink
             href={misaalPath}

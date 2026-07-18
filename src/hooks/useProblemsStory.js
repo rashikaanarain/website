@@ -73,9 +73,7 @@ function writeMotionFrame(node, chapterFrame) {
   node.style.setProperty("--phase-enter", enter.toFixed(4));
   node.style.setProperty("--phase-resolve", resolve.toFixed(4));
   node.style.setProperty("--phase-outcome", outcome.toFixed(4));
-  node.style.setProperty("--release-token-x", `${(-2 + motionProgress * 86).toFixed(2)}%`);
-  node.style.setProperty("--wage-coin-x", `${(-122 + motionProgress * 242).toFixed(2)}px`);
-  node.style.setProperty("--wage-coin-rotation", `${(-72 + motionProgress * 90).toFixed(2)}deg`);
+  node.style.setProperty("--pathway-x", `${(4 + motionProgress * 92).toFixed(2)}%`);
 }
 
 /**
@@ -172,9 +170,7 @@ export function useProblemsStory(chapterCount = 3, resyncKey = "default") {
           "--phase-enter",
           "--phase-resolve",
           "--phase-outcome",
-          "--release-token-x",
-          "--wage-coin-x",
-          "--wage-coin-rotation",
+          "--pathway-x",
           "--scene-weight",
         ].forEach((name) => node.style.removeProperty(name));
         delete node.dataset.active;
