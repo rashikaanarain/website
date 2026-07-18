@@ -199,17 +199,18 @@ a{ color:inherit; }
 .cta-band h2, .cta-band p, .signup input, .signup .btn{ transition:opacity .25s ease; }
 
 /* ---------- approach: sleek vertical scroll funnel ---------- */
-.approach-flow{ display:grid; grid-template-columns:220px 1fr; gap:clamp(30px,5vw,72px); align-items:start; margin-top:6px; }
-.flow-visual{ position:sticky; top:26vh; height:44vh; display:flex; flex-direction:column; align-items:center; }
-.flow-cap{ font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(251,248,242,.5); }
-.flow-cap.done{ color:var(--green); }
-.flow-cap.top{ margin-bottom:14px; }
-.flow-cap.bottom{ margin-top:14px; }
-.flow-funnel-wrap{ position:relative; flex:1; width:64px; }
-.flow-funnel{ width:100%; height:100%; display:block; overflow:visible; }
-/* the funnel line fills as you progress */
-.flow-fill{ transition:height .55s cubic-bezier(.4,0,.2,1); }
-.flow-dot{ position:absolute; left:50%; top:6%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:var(--paper); box-shadow:0 0 0 5px rgba(218,110,170,.25); transition:top .55s cubic-bezier(.4,0,.2,1); }
+.approach-flow{ display:grid; grid-template-columns:300px 1fr; gap:clamp(30px,5vw,72px); align-items:start; margin-top:6px; }
+.flow-visual{ position:sticky; top:24vh; height:52vh; display:flex; align-items:center; justify-content:center; }
+.bail-visual{ position:relative; width:260px; height:300px; }
+.scene{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; opacity:0; transition:opacity .5s ease; }
+.flow-visual[data-stage="0"] .scene-0,
+.flow-visual[data-stage="1"] .scene-1,
+.flow-visual[data-stage="2"] .scene-2{ opacity:1; }
+.scene svg{ width:200px; height:200px; display:block; }
+.scene-cap{ margin-top:14px; }
+.scene-cap b{ display:block; font-family:var(--font-display); font-weight:500; font-size:1.5rem; color:var(--paper); line-height:1; }
+.scene-cap span{ display:block; margin:6px auto 0; font-size:.82rem; color:rgba(251,248,242,.6); max-width:26ch; }
+.scene-cap.done b{ color:var(--green); }
 .flow-step{ min-height:34vh; display:flex; flex-direction:column; justify-content:center; }
 .flow-step .num{ font-family:var(--font-display); font-size:2.2rem; color:var(--pink); line-height:1; }
 .flow-step h3{ font-size:clamp(1.25rem,2vw,1.6rem); color:var(--paper); margin:10px 0 8px; }
@@ -222,7 +223,7 @@ a{ color:inherit; }
   .flow-step{ min-height:auto; padding-bottom:30px; }
   .js .flow-step{ opacity:1; transform:none; }
 }
-@media (prefers-reduced-motion:reduce){ .js .flow-step{ opacity:1; transform:none; } .flow-dot{ transition:none; } }
+@media (prefers-reduced-motion:reduce){ .js .flow-step{ opacity:1; transform:none; } .scene{ transition:none; } }
 
 /* ---------- collaborators ticker ---------- */
 .collab-strip{ background:var(--forest-deep); padding:clamp(34px,5vh,56px) 0; overflow:hidden; }
@@ -330,7 +331,7 @@ a{ color:inherit; }
     <div class="hero-copy">
       <span class="eyebrow">Justice · AI · Community</span>
       <h1 class="hero-title">How can we <em>10x</em> access to justice?</h1>
-      <p class="hero-lede">OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4&nbsp;billion Indians experience law and justice, solving long-stuck problems for real people.</p>
+      <p class="hero-lede">OpenNyAI is a collective unlocking the power of AI and community to transform how 1.4&nbsp;billion Indians experience law and justice.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#join">Join the Mission</a>
         <a class="btn btn-ghost" href="about/">About OpenNyAI <span class="btn-arrow" aria-hidden="true">↓</span></a>
@@ -359,43 +360,51 @@ a{ color:inherit; }
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Our approach</span>
-      <h2>We solve long-stuck justice problems, for a defined group of real people.</h2>
-      <p>We start with problems that have stayed unresolved for too long. Then we narrow the scope, work with community and AI, and build a time-bound solution. As something real, for people who have been waiting long enough.</p>
+      <h2>We solve long-stuck justice problems with the power of community and AI.</h2>
+      <p>Here is how it works, told through one live example: the Big Bail Bash. Scroll through it.</p>
     </div>
 
     <div class="approach-flow">
-      <div class="flow-visual" aria-hidden="true">
-        <div class="flow-cap top">Big stuck problem</div>
-        <div class="flow-funnel-wrap">
-          <svg class="flow-funnel" viewBox="0 0 120 600" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="funnelGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#DA6EAA"/>
-                <stop offset=".5" stop-color="#DA6EAA"/>
-                <stop offset="1" stop-color="#30CF8C"/>
-              </linearGradient>
-            </defs>
-            <path d="M6,6 L114,6 L70,594 L50,594 Z" fill="url(#funnelGrad)"/>
-          </svg>
-          <div class="flow-dot"></div>
+      <div class="flow-visual" data-stage="0" aria-hidden="true">
+        <div class="scene scene-0">
+          <svg viewBox="0 0 200 200"><g fill="#DA6EAA">
+            <circle cx="38" cy="46" r="4.5"/><circle cx="72" cy="34" r="4.5"/><circle cx="108" cy="44" r="4.5"/><circle cx="146" cy="52" r="4.5"/><circle cx="176" cy="74" r="4.5"/>
+            <circle cx="30" cy="86" r="4.5"/><circle cx="62" cy="74" r="4.5"/><circle cx="96" cy="86" r="4.5"/><circle cx="132" cy="78" r="4.5"/><circle cx="164" cy="104" r="4.5"/>
+            <circle cx="44" cy="120" r="4.5"/><circle cx="80" cy="114" r="4.5"/><circle cx="114" cy="122" r="4.5"/><circle cx="150" cy="138" r="4.5"/><circle cx="34" cy="152" r="4.5"/>
+            <circle cx="66" cy="158" r="4.5"/><circle cx="100" cy="150" r="4.5"/><circle cx="136" cy="164" r="4.5"/><circle cx="170" cy="150" r="4.5"/><circle cx="56" cy="182" r="4.5"/>
+          </g></svg>
+          <div class="scene-cap"><b>≈1,20,000</b><span>entitled to release, scattered across India</span></div>
         </div>
-        <div class="flow-cap bottom done">Solved</div>
+        <div class="scene scene-1">
+          <svg viewBox="0 0 200 200">
+            <path d="M100 34 C 70 34 48 57 48 88 C 48 128 100 172 100 172 C 100 172 152 128 152 88 C 152 57 130 34 100 34 Z" fill="none" stroke="#DA6EAA" stroke-width="7"/>
+            <circle cx="100" cy="86" r="17" fill="#DA6EAA"/>
+          </svg>
+          <div class="scene-cap"><b>Madhya Pradesh</b><span>one state we can act on right now</span></div>
+        </div>
+        <div class="scene scene-2">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="58" fill="#30CF8C"/>
+            <path d="M74 100 l18 18 l34 -40" fill="none" stroke="#0A151A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="scene-cap done"><b>Released</b><span>eligibility turned into freedom</span></div>
+        </div>
       </div>
       <div class="flow-steps">
         <div class="flow-step active" data-stage="0">
           <div class="num">01</div>
-          <h3>Find the stuck challenge</h3>
-          <p>Start with justice problems that have stayed unresolved across people, processes or institutions for too long.</p>
+          <h3>The big bail problem</h3>
+          <p>Across India, roughly 1,20,000 undertrials are legally entitled to release under Section 479 BNSS, yet they stay in jail because nobody filed the paperwork.</p>
         </div>
         <div class="flow-step" data-stage="1">
           <div class="num">02</div>
-          <h3>Narrow the real-world scope</h3>
-          <p>Define a subset we can act on now: a region, an affected group, an issue type or a limited operating context.</p>
+          <h3>Narrow to one place</h3>
+          <p>We start where we can act now: Madhya Pradesh. We find the people who already qualify, and the lawyers who can file for them.</p>
         </div>
         <div class="flow-step" data-stage="2">
           <div class="num">03</div>
-          <h3>Solve it. For real.</h3>
-          <p>Build with affected communities, AI builders and institutions in a limited period creating impact.</p>
+          <h3>Solve it, for real</h3>
+          <p>Templated bail applications, pro bono lawyers and live case tracking turn eligibility into release, one person at a time.</p>
         </div>
       </div>
     </div>
@@ -434,7 +443,6 @@ a{ color:inherit; }
 <section class="section" id="outputs" style="background:var(--cream-deep);">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Impact</span>
       <h2>Outputs you can use and build on</h2>
       <p>OpenNyAI's impact lives in practical public goods: models, tools and shared knowledge that justice changemakers can access, adapt and improve.</p>
     </div>
@@ -562,16 +570,14 @@ a{ color:inherit; }
   // Approach: as you scroll each step, light it up and slide the funnel marker
   (function(){
     var steps = document.querySelectorAll('.flow-step');
-    var dot = document.querySelector('.flow-dot');
-    var tops = ['8%','50%','92%'];
+    var visual = document.querySelector('.flow-visual');
     if (!steps.length || !('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if (en.isIntersecting){
           steps.forEach(function(s){ s.classList.remove('active'); });
           en.target.classList.add('active');
-          var i = +en.target.getAttribute('data-stage');
-          if (dot) dot.style.top = tops[i] || '8%';
+          if (visual) visual.setAttribute('data-stage', en.target.getAttribute('data-stage') || '0');
         }
       });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
