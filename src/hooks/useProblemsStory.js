@@ -5,11 +5,11 @@ export function segmentProgress(progress, start = 0, end = 1) {
   return smoothstep((progress - start) / Math.max(0.0001, end - start));
 }
 
-export function problemChapterProgress(chapterTop, viewportHeight, compact = false) {
+export function problemChapterProgress(chapterAnchor, viewportHeight, compact = false) {
   const viewport = Math.max(1, viewportHeight);
   const start = viewport * (compact ? 0.86 : 0.82);
   const end = viewport * (compact ? 0.34 : 0.28);
-  return smoothstep((start - chapterTop) / Math.max(1, start - end));
+  return smoothstep((start - chapterAnchor) / Math.max(1, start - end));
 }
 
 export function problemStoryPosition(rects, viewportHeight, compact = false) {
@@ -51,7 +51,10 @@ export function problemStoryFrame(rects, viewportHeight, compact = false, reduce
     activeIndex,
     storyPosition,
     chapters: rects.map((rect, index) => {
-      const progressAnchor = compact ? rect.top + rect.height * 0.52 : rect.top;
+      // Both scene selection and animation progress follow the chapter's visual
+      // center on desktop. This prevents a scene from animating before the
+      // sticky canvas has entered the viewport. Compact timing stays unchanged.
+      const progressAnchor = rect.top + rect.height * (compact ? 0.52 : 0.5);
       const progress = problemChapterProgress(progressAnchor, viewportHeight, compact);
       const motionProgress = reducedMotion ? 1 : progress;
       return {

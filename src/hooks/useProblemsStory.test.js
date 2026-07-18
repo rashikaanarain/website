@@ -65,12 +65,20 @@ describe("problem story geometry", () => {
     });
   });
 
-  test("compact chapters scrub around the inline visual instead of finishing above it", () => {
+  test("desktop chapters animate while their center crosses the pinned stage", () => {
+    const frame = problemStoryFrame([{ top: 520, height: 560 }], 900, false, false);
+
+    expect(frame.chapters[0].motionProgress).toBe(0);
+
+    const centered = problemStoryFrame([{ top: 170, height: 560 }], 900, false, false);
+    expect(centered.chapters[0].motionProgress).toBeGreaterThan(0.5);
+    expect(centered.chapters[0].motionProgress).toBeLessThan(0.8);
+  });
+
+  test("compact chapters keep scrubbing around the inline visual", () => {
     const rects = [{ top: 160, height: 760 }];
-    const desktop = problemStoryFrame(rects, 844, false, false);
     const compact = problemStoryFrame(rects, 844, true, false);
 
-    expect(desktop.chapters[0].motionProgress).toBe(1);
     expect(compact.chapters[0].motionProgress).toBeGreaterThan(0);
     expect(compact.chapters[0].motionProgress).toBeLessThan(1);
   });
