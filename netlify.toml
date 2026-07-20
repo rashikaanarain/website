@@ -5,6 +5,9 @@
   publish = "dist"
   command = "bun run build"
 
+[build.environment]
+  NETLIFY_USE_BUN = "true"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
