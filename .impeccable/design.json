@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-14T16:46:38Z",
+  "title": "Design System: OpenNyAI",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Civic Forest",
+        "canonical": "#111F26",
+        "tonalRamp": ["#071014", "#111F26", "#1C3540", "#315363", "#5D7782", "#91A3AA", "#C8D0D3", "#F1F4F5"]
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Assembly Pink",
+        "canonical": "#DA6EAA",
+        "tonalRamp": ["#351524", "#612B47", "#91466F", "#DA6EAA", "#E58DBB", "#EDB4D1", "#F5DAE9", "#FCF2F7"]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Working Canvas",
+        "canonical": "#F6F1E6",
+        "tonalRamp": ["#28251F", "#49443B", "#6C6559", "#91887A", "#B5AC9E", "#D5CEC1", "#E9E3D8", "#F6F1E6"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Archive Paper",
+        "canonical": "#FBF8F2",
+        "tonalRamp": ["#292724", "#4B4843", "#6E6962", "#938D84", "#B8B2A9", "#D9D4CC", "#ECE8E2", "#FBF8F2"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#241E1A",
+        "tonalRamp": ["#120E0C", "#241E1A", "#443A32", "#66584C", "#8B7D70", "#B0A398", "#D5CDC6", "#F4F0EC"]
+      },
+      "success": {
+        "role": "success",
+        "displayName": "Resolved Green",
+        "canonical": "#176B4A",
+        "tonalRamp": ["#092217", "#10472F", "#176B4A", "#2E8E68", "#5BAF8C", "#8DCEB3", "#C0E7D5", "#EDF9F3"]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Direct Red",
+        "canonical": "#A33B32",
+        "tonalRamp": ["#2D0E0B", "#5A1E19", "#852F28", "#A33B32", "#C7645C", "#DF958F", "#F0C8C4", "#FBEFEE"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Public Display", "purpose": "One primary public statement per page." },
+      "headline": { "displayName": "Section Argument", "purpose": "Major public section claims." },
+      "title": { "displayName": "Named Work", "purpose": "Projects and meaningful content groups." },
+      "body": { "displayName": "Working Copy", "purpose": "Explanations, data, and admin content." },
+      "label": { "displayName": "Control Label", "purpose": "Navigation, controls, fields, and table headers." }
+    },
+    "shadows": [
+      { "name": "navigation-lift", "value": "0 8px 20px rgba(17,31,38,.10)", "purpose": "Separates public navigation from changing page content." },
+      { "name": "interactive-lift", "value": "0 4px 8px rgba(17,31,38,.12)", "purpose": "Optional hover response for genuinely raised links." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Transforms and spatial feedback." },
+      { "name": "duration-fast", "value": "180ms", "purpose": "Control and color state changes." },
+      { "name": "duration-medium", "value": "320ms", "purpose": "Small spatial transitions." },
+      { "name": "parallax-limit", "value": "48px", "purpose": "Maximum travel for supporting public layers." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "680px" },
+      { "name": "stacked", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action on a light surface.",
+      "html": "<button class=\"ds-btn-primary\">Join the mission</button>",
+      "css": ".ds-btn-primary { min-height:44px; padding:11px 20px; border:0; border-radius:999px; color:var(--surface); background:var(--forest); font:600 .9rem/1.2 var(--font-body); transition:transform 180ms cubic-bezier(.22,1,.36,1), background 180ms ease; } .ds-btn-primary:hover { background:var(--forest-hover); transform:translateY(-2px); } .ds-btn-primary:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }"
+    },
+    {
+      "name": "Accent Button",
+      "kind": "button",
+      "refersTo": "button-accent",
+      "description": "The single focal action on a dark surface.",
+      "html": "<button class=\"ds-btn-accent\">Join the list</button>",
+      "css": ".ds-btn-accent { min-height:44px; padding:11px 20px; border:0; border-radius:999px; color:var(--ink); background:var(--accent); font:600 .9rem/1.2 var(--font-body); transition:transform 180ms cubic-bezier(.22,1,.36,1), background 180ms ease; } .ds-btn-accent:hover { background:var(--accent-hover); transform:translateY(-2px); } .ds-btn-accent:focus-visible { outline:2px solid var(--surface); outline-offset:3px; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A labelled, solid field for public and admin forms.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-email\">Email address</label><input class=\"ds-field\" id=\"ds-email\" type=\"email\" placeholder=\"you@example.org\">",
+      "css": ".ds-field-label { display:block; margin-bottom:8px; color:var(--ink); font:600 .9rem/1.25 var(--font-body); } .ds-field { width:100%; min-height:46px; padding:11px 14px; border:1px solid var(--line-strong); border-radius:6px; color:var(--ink); background:var(--surface); font:400 1rem/1.65 var(--font-body); } .ds-field:focus-visible { border-color:var(--ink); outline:2px solid var(--canvas); outline-offset:2px; }"
+    },
+    {
+      "name": "Public Navigation",
+      "kind": "nav",
+      "description": "A solid, quiet navigation group without glass effects.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#about\">About</a><a href=\"#approach\">Approach</a><a href=\"#participate\">Participate</a></nav>",
+      "css": ".ds-nav { display:flex; gap:4px; padding:5px; border:0; border-radius:12px; background:var(--surface); box-shadow:0 8px 20px rgba(17,31,38,.10); font-family:var(--font-body); } .ds-nav a { padding:8px 12px; border-radius:6px; color:var(--ink-soft); font-size:.9rem; font-weight:600; text-decoration:none; } .ds-nav a:hover { color:var(--ink); background:var(--canvas); } .ds-nav a:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }"
+    },
+    {
+      "name": "Content Panel",
+      "kind": "card",
+      "refersTo": "content-panel",
+      "description": "A bounded surface used only when grouping adds meaning.",
+      "html": "<article class=\"ds-panel\"><h3>A community that shows up</h3><p>People working as one practical network.</p></article>",
+      "css": ".ds-panel { max-width:360px; padding:24px; border:1px solid var(--line); border-radius:12px; color:var(--ink); background:var(--surface); } .ds-panel h3 { margin:0 0 10px; font:500 1.35rem/1.15 var(--font-display); } .ds-panel p { margin:0; color:var(--ink-soft); font:400 1rem/1.65 var(--font-body); }"
+    },
+    {
+      "name": "Admin Table",
+      "kind": "custom",
+      "description": "A compact, legible product table for signup records.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Email</th><th>Joined</th></tr></thead><tbody><tr><td>person@example.org</td><td>14 Jul 2026</td></tr></tbody></table>",
+      "css": ".ds-table { width:100%; border-collapse:collapse; color:var(--ink); background:transparent; font:400 .96rem/1.5 var(--font-body); text-align:left; } .ds-table th,.ds-table td { padding:16px 12px; border-bottom:1px solid var(--line); } .ds-table th { color:var(--muted); font-size:.82rem; font-weight:650; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Civic Workshop",
+    "overview": "OpenNyAI should feel like entering a well-run place where difficult public work is made tangible. Materials are quiet, structure is visible, and the human outcome remains in the foreground. The public surface uses scale, pacing, and restrained depth to invite participation; the admin surface uses the same proportions and colors with denser, task-first typography. The system rejects generic AI and SaaS landing-page clichés. No repeated eyebrow scaffolding, decorative status theatre, telemetry language, glass panels, ornamental gradients, or floating card collections. Parallax is a spatial cue, never a spectacle, and all content remains readable without motion.",
+    "keyCharacteristics": [
+      "Warm neutral canvas with a dark civic anchor and one human accent.",
+      "Serif display voice for public storytelling; sans-serif for every product control.",
+      "Open layouts structured by rules, alignment, and whitespace before containers.",
+      "Flat at rest, tactile only in response to interaction.",
+      "Public expression and admin restraint built from the same primitives."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Assembly Pink should occupy less than ten percent of a screen and identify a real point of attention.", "section": "colors" },
+      { "name": "The Legibility Rule", "body": "Bright color never carries small body copy. Use Civic Forest or Ink for text on light surfaces.", "section": "colors" },
+      { "name": "The No Eyebrow Rule", "body": "Never place tiny tracked uppercase labels above headings. Establish hierarchy with the heading, a short lead, alignment, or a structural rule.", "section": "typography" },
+      { "name": "The Product Type Rule", "body": "Admin controls, navigation, tables, and states use Source Sans 3 only; display type never enters product chrome.", "section": "typography" },
+      { "name": "The Flat-at-Rest Rule", "body": "If a surface needs both a border and a shadow before interaction, remove the shadow.", "section": "elevation" },
+      { "name": "The Motion-with-Meaning Rule", "body": "Parallax may shift decorative or supporting layers by at most 48px across a viewport. It never moves body copy, form controls, or data tables and is fully disabled for reduced motion.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do lead each section with one claim and use whitespace to make its hierarchy obvious.",
+      "Do use the shared color, type, spacing, radius, focus, and motion tokens on both public and admin surfaces.",
+      "Do keep parallax transform-only, subtle, and optional.",
+      "Do show inline success and error feedback for every form action.",
+      "Do reserve cards for projects, records, or choices that genuinely need a boundary."
+    ],
+    "donts": [
+      "Don't use generic AI and SaaS landing-page clichés.",
+      "Don't use tiny uppercase eyebrow labels as repeated section scaffolding.",
+      "Don't add decorative status theatre such as live dots, system labels, telemetry, command-line language, or fake operational dashboards.",
+      "Don't use glassmorphism, excessive pills, floating card grids, or ornamental gradients.",
+      "Don't make admin interfaces visually novel at the expense of legibility and task speed.",
+      "Don't pair a decorative border with a wide soft shadow, use gradients for text, or place accent stripes on one side of a container."
+    ]
+  }
+}

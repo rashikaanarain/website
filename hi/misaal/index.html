@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MISAAL | OpenNyAI</title>
-<link rel="icon" type="image/svg+xml" href="../assets/opennyai-logo-dark.svg" />
-<meta name="description" content="MISAAL: the Multi-dimensional Intelligence Standard for Assessment of socio-Legal AI Interactions. What does a user regard as a high quality AI response to a socio-legal query?" />
-<link rel="canonical" href="https://opennyai.org/misaal/" />
+<link rel="icon" type="image/svg+xml" href="../../assets/opennyai-logo-dark.svg" />
+<meta name="description" content="MISAAL सामाजिक-कानूनी एआई संवादों के आकलन का बहुआयामी मानक है, जो यह समझता है कि उपयोगकर्ता की नज़र में गुणवत्तापूर्ण एआई उत्तर कैसा होना चाहिए।" />
+<link rel="canonical" href="https://opennyai.org/hi/misaal/" />
 <link rel="alternate" hreflang="en" href="https://opennyai.org/misaal/" />
 <link rel="alternate" hreflang="hi" href="https://opennyai.org/hi/misaal/" />
 <link rel="alternate" hreflang="x-default" href="https://opennyai.org/misaal/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;family=Noto+Serif+Devanagari:wght@400;500;600&amp;display=swap" rel="stylesheet" />
 <script>document.documentElement.classList.add('js');</script>
 <style type="text/plain" data-route-style>
 :root{
@@ -22,16 +22,16 @@
   --pink:#DA6EAA; --pink-soft:#F1D0E2; --plum:#4E2740;
   --forest:#111F26; --forest-deep:#0A151A;
   --line:rgba(36,30,26,0.12);
-  --font-display:'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body:'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display:'Noto Serif Devanagari', 'Noto Serif', serif;
+  --font-body:'Noto Sans Devanagari', 'Noto Sans', sans-serif;
 }
 *,*::before,*::after{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
 body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.6; }
-h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.05; font-weight:500; }
+h1,h2,h3{ font-family:var(--font-display); margin:0; line-height:1.25; font-weight:500; }
 p{ margin:0; } a{ color:inherit; }
 .wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,72px); }
-.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em; margin-bottom:16px; color:var(--pink); }
+.eyebrow{ display:block; font-size:.78rem; font-weight:600; text-transform:none; letter-spacing:.035em; line-height:1.5; margin-bottom:16px; color:var(--pink); }
 
 .btn{ display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:.92rem; text-decoration:none; border:0; cursor:pointer; transition:background .2s ease, transform .2s ease, box-shadow .2s ease; }
 .btn-primary{ background:var(--pink); color:var(--ink); }
@@ -61,7 +61,7 @@ p{ margin:0; } a{ color:inherit; }
 .misaal-hero .q, .misaal-hero .desc{ margin-left:auto; margin-right:auto; }
 .misaal-hero .eyebrow{ color:var(--pink); }
 .misaal-hero h1{ color:var(--paper); font-size:clamp(2.6rem,7vw,4.4rem); letter-spacing:.04em; }
-.misaal-hero .q{ margin-top:20px; font-family:var(--font-display); font-weight:500; font-size:clamp(1.35rem,2.6vw,2rem); color:var(--paper); line-height:1.15; }
+.misaal-hero .q{ margin-top:20px; font-family:var(--font-display); font-weight:500; font-size:clamp(1.35rem,2.6vw,2rem); color:var(--paper); line-height:1.35; }
 .misaal-hero .desc{ margin-top:18px; color:rgba(251,248,242,.82); font-size:1.08rem; max-width:62ch; }
 
 /* sections */
@@ -78,7 +78,7 @@ p{ margin:0; } a{ color:inherit; }
 .std-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:clamp(18px,2.2vw,26px); }
 .std-card{ background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:26px 24px; position:relative; }
 .std-card .pct{ position:absolute; top:22px; right:22px; font-family:var(--font-display); font-size:1.5rem; color:var(--pink); line-height:1; }
-.std-card .kicker{ font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--pink); }
+.std-card .kicker{ font-size:.72rem; font-weight:700; letter-spacing:.035em; text-transform:none; line-height:1.5; color:var(--pink); }
 .std-card h3{ font-size:1.2rem; margin:8px 0 8px; padding-right:48px; }
 .std-card p{ color:var(--ink-soft); font-size:.95rem; }
 
@@ -110,7 +110,7 @@ p{ margin:0; } a{ color:inherit; }
 .footer-top p{ max-width:42ch; font-size:.92rem; color:rgba(251,248,242,.62); }
 .footer-map{ display:grid; grid-template-columns:repeat(2,minmax(150px,1fr)); gap:30px clamp(28px,4vw,56px); }
 .footer-col{ display:flex; flex-direction:column; gap:9px; }
-.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--pink); }
+.footer-col-title{ margin:0 0 4px; font-size:.68rem; font-weight:700; letter-spacing:.035em; text-transform:none; line-height:1.5; color:var(--pink); }
 .footer-col a{ text-decoration:none; font-size:.85rem; color:rgba(251,248,242,.72); }
 .footer-col a:hover{ color:var(--paper); }
 .footer-copy{ grid-column:1/-1; border-top:1px solid rgba(251,248,242,.12); margin-top:14px; padding-top:22px; font-size:.8rem; color:rgba(251,248,242,.5); }
@@ -134,14 +134,14 @@ p{ margin:0; } a{ color:inherit; }
 
 <!-- Hero -->
 <section class="misaal-hero">
-  <div class="bg"><img src="https://framerusercontent.com/images/ykLhvMXOXdSWDTt6ZzAzPY9Nrg.jpg" alt="The MISAAL community" /></div>
+  <div class="bg"><img src="https://framerusercontent.com/images/ykLhvMXOXdSWDTt6ZzAzPY9Nrg.jpg" alt="MISAAL समुदाय" /></div>
   <div class="overlay"></div>
   <div class="wrap">
     <div class="inner">
-      <span class="eyebrow">A project of OpenNyAI</span>
+      <span class="eyebrow">OpenNyAI की एक परियोजना</span>
       <h1>MISAAL</h1>
-      <p class="q">What does a user regard as a high quality AI response for a socio-legal query?</p>
-      <p class="desc">The Multi-dimensional Intelligence Standard for Assessment of socio-Legal AI Interactions is an effort to take this question to thousands of users inside diverse communities, and surface the elements that truly represent a quality AI response to a query pertaining to law or justice.</p>
+      <p class="q">सामाजिक-कानूनी सवाल पर एआई का कैसा जवाब उपयोगकर्ता को गुणवत्तापूर्ण लगता है?</p>
+      <p class="desc">MISAAL सामाजिक-कानूनी एआई संवादों के आकलन का बहुआयामी बुद्धिमत्ता मानक है। यह इस सवाल को विविध समुदायों के हजारों लोगों तक ले जाने का प्रयास है, ताकि समझा जा सके कि कानून या न्याय से जुड़े सवाल का सचमुच गुणवत्तापूर्ण एआई उत्तर किन तत्वों से बनता है।</p>
     </div>
   </div>
 </section>
@@ -150,18 +150,18 @@ p{ margin:0; } a{ color:inherit; }
 <section class="section" id="standards">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">The standards</span>
-      <h2>Seven dimensions of a high quality answer</h2>
-      <p>Each dimension carries a community importance score, based on what real users told us matters most.</p>
+      <span class="eyebrow">मानक</span>
+      <h2>गुणवत्तापूर्ण उत्तर के सात आयाम</h2>
+      <p>हर आयाम के साथ समुदाय द्वारा तय महत्त्व का अंक जुड़ा है, जो बताता है कि वास्तविक उपयोगकर्ताओं के लिए सबसे अधिक मायने क्या रखता है।</p>
     </div>
     <div class="std-grid">
-      <div class="std-card"><span class="pct">12%</span><p class="kicker">Accessibility</p><h3>Understandable by everyone</h3><p>Accessible when it can be understood and used by people with different literacy levels, languages, abilities and levels of digital familiarity, in clear, simple language.</p></div>
-      <div class="std-card"><span class="pct">9%</span><p class="kicker">Contextuality</p><h3>Fits the user's reality</h3><p>Contextual when it reflects the user's specific situation, location, needs and constraints, seeking relevant details and avoiding generic answers.</p></div>
-      <div class="std-card"><span class="pct">18%</span><p class="kicker">Sensitivity</p><h3>Aware of risk and emotion</h3><p>Sensitive when it recognizes vulnerability, risk and emotional context, communicates respectfully and responds appropriately to the seriousness of the situation.</p></div>
-      <div class="std-card"><span class="pct">25%</span><p class="kicker">Practicality</p><h3>Guidance you can follow</h3><p>Practical when the guidance can be realistically followed in the user's context, offering actionable steps and avoiding advice that is inaccessible or unverifiable.</p></div>
-      <div class="std-card"><span class="pct">20%</span><p class="kicker">Non-judgmentalism</p><h3>Respect without stigma</h3><p>Non-judgmental when it treats users with respect regardless of situation, choices or background, avoiding blame or moral evaluation.</p></div>
-      <div class="std-card"><span class="pct">8%</span><p class="kicker">Transparency</p><h3>Clear about its basis</h3><p>Transparent when it explains its reasoning and limits, makes sources visible, communicates uncertainty and justifies its guidance.</p></div>
-      <div class="std-card"><span class="pct">3%</span><p class="kicker">Care</p><h3>Supportive and dignified</h3><p>Caring when it acknowledges emotional experience and supports the user with patience, reassurance and dignity, helping them feel empowered to act.</p></div>
+      <div class="std-card"><span class="pct">12%</span><p class="kicker">सुलभता</p><h3>सबके लिए समझने योग्य</h3><p>उत्तर तब सुलभ है, जब अलग-अलग साक्षरता स्तर, भाषाओं, क्षमताओं और डिजिटल परिचय वाले लोग उसे स्पष्ट, सरल भाषा में समझ और इस्तेमाल कर सकें।</p></div>
+      <div class="std-card"><span class="pct">9%</span><p class="kicker">संदर्भ-संगति</p><h3>उपयोगकर्ता की वास्तविकता के अनुरूप</h3><p>उत्तर तब संदर्भ-संगत है, जब वह उपयोगकर्ता की परिस्थिति, स्थान, ज़रूरतों और सीमाओं को ध्यान में रखे, ज़रूरी विवरण पूछे और सामान्यीकृत जवाब से बचे।</p></div>
+      <div class="std-card"><span class="pct">18%</span><p class="kicker">संवेदनशीलता</p><h3>जोखिम और भावनाओं की समझ</h3><p>उत्तर तब संवेदनशील है, जब वह असुरक्षा, जोखिम और भावनात्मक संदर्भ को पहचाने, सम्मान से संवाद करे और स्थिति की गंभीरता के अनुरूप प्रतिक्रिया दे।</p></div>
+      <div class="std-card"><span class="pct">25%</span><p class="kicker">व्यावहारिकता</p><h3>जिस पर अमल किया जा सके</h3><p>उत्तर तब व्यावहारिक है, जब उसकी सलाह उपयोगकर्ता की परिस्थिति में वास्तव में अपनाई जा सके, वह करने योग्य कदम बताए और ऐसी सलाह से बचे जिस तक पहुँचना या जिसे सत्यापित करना संभव न हो।</p></div>
+      <div class="std-card"><span class="pct">20%</span><p class="kicker">बिना आँके व्यवहार</p><h3>बिना कलंक या दोष के सम्मान</h3><p>उत्तर तब व्यक्ति को बिना आँके साथ देता है, जब उसकी परिस्थिति, चुनाव या पृष्ठभूमि कुछ भी हो, वह उसे सम्मान दे और दोषारोपण, कलंक या नैतिक निर्णय न थोपे।</p></div>
+      <div class="std-card"><span class="pct">8%</span><p class="kicker">पारदर्शिता</p><h3>अपने आधार के बारे में स्पष्ट</h3><p>उत्तर तब पारदर्शी है, जब वह अपने तर्क और सीमाएँ बताए, स्रोत स्पष्ट करे, अनिश्चितता साझा करे और दिए गए मार्गदर्शन का आधार समझाए।</p></div>
+      <div class="std-card"><span class="pct">3%</span><p class="kicker">परवाह</p><h3>सहायक और गरिमापूर्ण</h3><p>उत्तर में परवाह तब दिखती है, जब वह व्यक्ति के भावनात्मक अनुभव को स्वीकार करे, धैर्य, भरोसे और गरिमा के साथ सहारा दे और उसे कार्रवाई करने में समर्थ महसूस कराए।</p></div>
     </div>
   </div>
 </section>
@@ -170,13 +170,13 @@ p{ margin:0; } a{ color:inherit; }
 <section class="section alt">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">The scale of the effort</span>
-      <h2>Built with people who know the ground</h2>
+      <span class="eyebrow">प्रयास का पैमाना</span>
+      <h2>ज़मीनी अनुभव रखने वालों के साथ निर्मित</h2>
     </div>
     <div class="metrics">
-      <div class="metric"><b>22</b><span>Domain experts</span></div>
-      <div class="metric"><b>100+</b><span>Paralegals and frontline workers</span></div>
-      <div class="metric"><b>10,000*</b><span>Real user interactions</span></div>
+      <div class="metric"><b>22</b><span>विषय-विशेषज्ञ</span></div>
+      <div class="metric"><b>100+</b><span>पैरालीगल और अग्रिम पंक्ति के कार्यकर्ता</span></div>
+      <div class="metric"><b>10,000*</b><span>वास्तविक उपयोगकर्ता संवाद</span></div>
     </div>
   </div>
 </section>
@@ -185,16 +185,16 @@ p{ margin:0; } a{ color:inherit; }
 <section class="section" id="council">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Community Council</span>
-      <h2>Guided by leaders close to the ground</h2>
-      <p>MISAAL draws from a community of justice sector leaders with unparalleled access and insight into the ground realities of access to justice.</p>
+      <span class="eyebrow">सामुदायिक परिषद</span>
+      <h2>ज़मीन से जुड़े नेताओं का मार्गदर्शन</h2>
+      <p>MISAAL न्याय क्षेत्र के ऐसे नेताओं के समुदाय से दिशा पाता है, जिनकी न्याय तक पहुँच की ज़मीनी वास्तविकताओं पर असाधारण पकड़ और सीधा अनुभव है।</p>
     </div>
     <div class="council-grid">
       <a class="cc" href="https://www.linkedin.com/in/aishani-rai-154839203" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/Je6gyX891JSVVHsOnlp8DoOKeHw.jpeg" alt="Aishani Rai" loading="lazy" /><span class="cc-name">Aishani Rai</span></a>
       <a class="cc" href="https://www.linkedin.com/in/anisha-gopi-20451931" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/xmx6h5QGmM1NCDPJUkYJsp2BA.jpeg" alt="Anisha Gopi" loading="lazy" /><span class="cc-name">Anisha Gopi</span></a>
-      <a class="cc" href="https://www.linkedin.com/in/startupwithsyed" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/UYvjt13rP13RmzbRGL1JImLLJ50.jpeg" alt="Council member" loading="lazy" /></a>
-      <a class="cc" href="https://www.linkedin.com/in/a3harva" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/m2LY8US84e2153YK2CbJLkHbmM.jpeg" alt="Council member" loading="lazy" /></a>
-      <div class="cc"><img src="https://framerusercontent.com/images/j2uKrOuGwk95t8UDpbkBaWlAI0.jpeg" alt="Council member" loading="lazy" /></div>
+      <a class="cc" href="https://www.linkedin.com/in/startupwithsyed" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/UYvjt13rP13RmzbRGL1JImLLJ50.jpeg" alt="सामुदायिक परिषद सदस्य" loading="lazy" /></a>
+      <a class="cc" href="https://www.linkedin.com/in/a3harva" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/m2LY8US84e2153YK2CbJLkHbmM.jpeg" alt="सामुदायिक परिषद सदस्य" loading="lazy" /></a>
+      <div class="cc"><img src="https://framerusercontent.com/images/j2uKrOuGwk95t8UDpbkBaWlAI0.jpeg" alt="सामुदायिक परिषद सदस्य" loading="lazy" /></div>
       <a class="cc" href="https://www.linkedin.com/in/dubeydushyant" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/tAsYDRyy7h54FuHiIY1C3y9jRM.jpg" alt="Dushyant Dubey" loading="lazy" /><span class="cc-name">Dushyant Dubey</span></a>
       <a class="cc" href="https://www.linkedin.com/in/gupta-himanshu" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/GwEmsfmBAqCx6a9AynovbRlrXA.jpg" alt="Himanshu Gupta" loading="lazy" /><span class="cc-name">Himanshu Gupta</span></a>
       <a class="cc" href="https://www.linkedin.com/in/lakshmi-nambiar-17436916a" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/aIapSGeaSYZiz9JA4AY8kaohqsk.jpeg" alt="Lakshmi Nambiar" loading="lazy" /><span class="cc-name">Lakshmi Nambiar</span></a>
@@ -203,8 +203,8 @@ p{ margin:0; } a{ color:inherit; }
       <a class="cc" href="https://www.linkedin.com/in/pravinnikams" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/TzXDv3vHBsuC7QivIaUZznUNNY.jpeg" alt="Pravin Nikam" loading="lazy" /><span class="cc-name">Pravin Nikam</span></a>
       <a class="cc" href="https://www.linkedin.com/in/vibha-nadig-39a362191" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/HAr0UcalHRFEhelZtcCXGDHyvs.jpeg" alt="Vibha Nadig" loading="lazy" /><span class="cc-name">Vibha Nadig</span></a>
       <a class="cc" href="https://www.linkedin.com/in/nivedita-krishna-107b989" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/akNh4gzzfCFJlZKgaiFIXP2dUCU.png" alt="Nivedita Krishna" loading="lazy" /><span class="cc-name">Nivedita Krishna</span></a>
-      <div class="cc"><img src="https://framerusercontent.com/images/jK2NKqmbeJlJ3vL3onhOdFJ7dH0.webp" alt="Council member" loading="lazy" /></div>
-      <div class="cc"><img src="https://framerusercontent.com/images/OpdmHx92gQwlHOEsrvWagEF9k.jpeg" alt="Council member" loading="lazy" /></div>
+      <div class="cc"><img src="https://framerusercontent.com/images/jK2NKqmbeJlJ3vL3onhOdFJ7dH0.webp" alt="सामुदायिक परिषद सदस्य" loading="lazy" /></div>
+      <div class="cc"><img src="https://framerusercontent.com/images/OpdmHx92gQwlHOEsrvWagEF9k.jpeg" alt="सामुदायिक परिषद सदस्य" loading="lazy" /></div>
       <a class="cc" href="https://www.linkedin.com/in/sultan-ahmad-44491125" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/iUZXpquUng7NhUVhUEpk4r1bkc.jpg" alt="Sultan Ahmad" loading="lazy" /><span class="cc-name">Sultan Ahmad</span></a>
       <a class="cc" href="https://www.linkedin.com/in/sourav-karmakar-41a24612a" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/NRDqVE4c1meenoWiqnAiWrKK3Q.jpeg" alt="Sourav Karmakar" loading="lazy" /><span class="cc-name">Sourav Karmakar</span></a>
       <a class="cc" href="https://www.linkedin.com/in/yashaswini-basu" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/K2dzsLoOiGVKu3HbgjYoCG9pzs.jpeg" alt="Yashaswini Basu" loading="lazy" /><span class="cc-name">Yashaswini Basu</span></a>
@@ -216,7 +216,7 @@ p{ margin:0; } a{ color:inherit; }
       <a class="cc" href="https://www.linkedin.com/in/madeeha-majid-0912" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/WKZLmDZrnciwa5XVxCm9r3zsyk.jpeg" alt="Madeeha Majid" loading="lazy" /><span class="cc-name">Madeeha Majid</span></a>
       <a class="cc" href="https://www.linkedin.com/in/faisalmlalani" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/wCkaZ9ymBllj6gscU1i5HJSnv8.png" alt="Faisal Lalani" loading="lazy" /><span class="cc-name">Faisal Lalani</span></a>
       <a class="cc" href="https://www.linkedin.com/in/katerina-fiadziuk" target="_blank" rel="noopener"><img src="https://framerusercontent.com/images/vOGp6LXKXqhr3lI3dI4232DkRs8.png" alt="Katerina Fiadziuk" loading="lazy" /><span class="cc-name">Katerina Fiadziuk</span></a>
-      <a class="cc" href="https://www.linkedin.com/in/rashika-narain" target="_blank" rel="noopener"><img src="../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" /><span class="cc-name">Rashika Narain</span></a>
+      <a class="cc" href="https://www.linkedin.com/in/rashika-narain" target="_blank" rel="noopener"><img src="../../assets/rashika.jpeg" alt="Rashika Narain" loading="lazy" /><span class="cc-name">Rashika Narain</span></a>
     </div>
   </div>
 </section>
@@ -224,33 +224,33 @@ p{ margin:0; } a{ color:inherit; }
 <!-- CTA -->
 <section class="cta-band" id="contribute">
   <div class="wrap">
-    <h2>Help build the benchmark</h2>
-    <p>Are you a paralegal, lawyer, community worker or citizen with legal questions worth capturing? Come contribute to MISAAL.</p>
-    <a class="btn btn-primary" href="mailto:hello@opennyai.org?subject=Contributing%20to%20MISAAL">Get involved</a>
+    <h2>बेंचमार्क बनाने में सहयोग करें</h2>
+    <p>क्या आप पैरालीगल, वकील, सामुदायिक कार्यकर्ता या ऐसे नागरिक हैं जिनके कानूनी सवाल दर्ज किए जाने चाहिए? MISAAL में अपना योगदान दें।</p>
+    <a class="btn btn-primary" href="mailto:hello@opennyai.org?subject=MISAAL%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%AF%E0%A5%8B%E0%A4%97%E0%A4%A6%E0%A4%BE%E0%A4%A8">सहयोग करें</a>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-top">
-    <img src="../assets/opennyai-logo.svg" alt="OpenNyAI" />
-    <p>Unlocking the power of AI and community to transform how India accesses justice.</p>
+    <img src="../../assets/opennyai-logo.svg" alt="OpenNyAI" />
+    <p>एआई और समुदाय की शक्ति से भारत में न्याय तक पहुँच को बदलना।</p>
   </div>
   <div class="footer-map">
     <div class="footer-col">
       <p class="footer-col-title">OpenNyAI</p>
-      <a href="../about/">About Us</a>
-      <a href="../#approach">Approach</a>
-      <a href="../misaal/">MISAAL</a>
-      <a href="../#problems">Explore Problems</a>
+      <a href="/hi/about/">हमारे बारे में</a>
+      <a href="/hi/#approach">हमारा तरीका</a>
+      <a href="/hi/misaal/">MISAAL</a>
+      <a href="/hi/#problems">समस्याएँ देखें</a>
     </div>
     <div class="footer-col">
-      <p class="footer-col-title">Ecosystem</p>
-      <a href="https://www.agami.in" target="_blank" rel="noopener">Visit Agami</a>
+      <p class="footer-col-title">इकोसिस्टम</p>
+      <a href="https://www.agami.in" target="_blank" rel="noopener">Agami पर जाएँ</a>
       <a href="https://pucar.org" target="_blank" rel="noopener">PUCAR</a>
-      <a href="mailto:hello@opennyai.org">Contact us</a>
+      <a href="mailto:hello@opennyai.org">संपर्क करें</a>
     </div>
   </div>
-  <div class="footer-copy">Copyright © Vayam Forum for Citizenship (Agami). All Rights Reserved.</div>
+  <div class="footer-copy">कॉपीराइट © Vayam Forum for Citizenship (Agami)। सर्वाधिकार सुरक्षित।</div>
 </footer>
 
 </template>
